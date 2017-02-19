@@ -34,12 +34,12 @@ PARSER_END(RubyParser)
  */
 SKIP :                              
 {
-    " "
-    | "\t"
+    // " " | 
+    "\t"
     | "\f"
     | "\r"
     | "\13"
-    | "\v"
+//  | "\v"
 }
 
 /*
@@ -75,32 +75,30 @@ TOKEN :
 	| <EXT_space : " ">
 	| <EXT_dot : ".">
 	| <EXT_acute : "`">
+	| <EXT_if : "if">
+	| <EXT_do : "do">
+	| <EXT_unless : "unless">
+	| <EXT_while : "while">
+	| <EXT_until : "until">
+	| <EXT_rescue : "rescue">
 	| <keyword_class : "class">
     | <keyword_module : "module">
     | <keyword_def : "def">
     | <keyword_undef : "undef">
     | <keyword_begin : "begin">
-    | <keyword_rescue : "rescue">
     | <keyword_ensure : "ensure">
     | <keyword_end : "end">
-    | <keyword_if : "if">
-    | <keyword_unless : "unless">
     | <keyword_then : "then">
     | <keyword_elsif : "elsif">
     | <keyword_else : "else">
     | <keyword_case : "case">
     | <keyword_when : "when">
-    | <keyword_while : "while">
-    | <keyword_until : "until">
     | <keyword_for : "for">
     | <keyword_break : "break">
     | <keyword_next : "next">
     | <keyword_redo : "redo">
     | <keyword_retry : "retry">
     | <keyword_in : "in">
-    | <keyword_do : "do">
-    | <keyword_do_cond : "do">
-    | <keyword_do_block : "do">
     | <keyword_return : "return">
     | <keyword_yield : "yield">
     | <keyword_super : "super">
@@ -111,11 +109,6 @@ TOKEN :
     | <keyword_and : "and">
     | <keyword_or : "or">
     | <keyword_not : "not">
-    | <modifier_if : "if">
-    | <modifier_unless : "unless">
-    | <modifier_while : "while">
-    | <modifier_until : "until">
-    | <modifier_rescue : "rescue">
     | <keyword_alias : "alias">
     | <keyword_defined : "defined?">
     | <keyword_BEGIN : "BEGIN">
@@ -127,13 +120,7 @@ TOKEN :
     | <tCOLON3 : ":: at EXPR_BEG">
     | <tOP_ASGN : "+=" |"-=" |"*=" |"/=" |"%=" |"**=" |"&=" |"|=" |"^=" |"<<=" |">>=" |"&&=" |"||="> 
     | <tASSOC : "=>">
-    | <tLPAREN : "(">
-    | <tRPAREN : ")">
-    | <tLBRACK : "[">
-    | <tLBRACE : "{">
-    | <tSTAR : "*">
     | <tDSTAR : "**arg">
-    | <tAMPER : "&">
     | <tLAMBDA : "->">
     | <tUPLUS : "unary+">
     | <tUMINUS : "unary-">
@@ -194,26 +181,192 @@ TOKEN :
 	| <STUB_tFLOAT : "STUB_tFLOAT">
 	| <STUB_tRATIONAL : "STUB_tRATIONAL">
 	| <STUB_tIMAGINARY : "STUB_tIMAGINARY">
-	| <STUB_tNTH_REF : "STUB_tNTH_REF">
-	| <STUB_tBACK_REF : "STUB_tBACK_REF">
 	| <STUB_tLABEL : "STUB_tLABEL">
-	| <STUB_tFID : "STUB_tFID">
 	| <STUB_tLABEL_END : "STUB_tLABEL_END">
+	| <STUB_none : "">
+}
+
+/*
+ * Extended productions
+ * Address problems with duplicated tokens
+ */
+
+/*
+ * @ExtProduction
+ * Do not used?
+ */
+void keyword_if() : 
+{}
+{
+	<EXT_if>
+}
+
+/*
+ * @ExtProduction
+ */
+void tAMPER() : 
+{}
+{
+	<EXT_amper>
+}
+
+/*
+ * @ExtProduction
+ */
+void tSTAR() : 
+{}
+{
+	<EXT_star>
+}
+
+/*
+ * @ExtProduction
+ */
+void tLBRACE() : 
+{}
+{
+	<EXT_lbrace>
+}
+ 	
+/*
+ * @ExtProduction
+ */
+void tLBRACK() : 
+{}
+{
+	<EXT_lsqbracket>
+}
+
+/*
+ * @ExtProduction
+ */
+void tRPAREN() : 
+{}
+{
+	<EXT_rparen>
+}
+
+/*
+ * @ExtProduction
+ */
+void tLPAREN() : 
+{}
+{
+	<EXT_lparen>
+}
+
+/*
+ * @ExtProduction
+ */
+void keyword_rescue() : 
+{}
+{
+	<EXT_rescue>
+}
+
+/*
+ * @ExtProduction
+ */
+void modifier_rescue() : 
+{}
+{
+	<EXT_rescue>
+}
+
+/*
+ * @ExtProduction
+ */
+void keyword_until() : 
+{}
+{
+	<EXT_until>
+}
+
+/*
+ * @ExtProduction
+ */
+void modifier_until() : 
+{}
+{
+	<EXT_until>
+}
+
+/*
+ * @ExtProduction
+ */
+void keyword_while() : 
+{}
+{
+	<EXT_while>
+}
+
+/*
+ * @ExtProduction
+ */
+void modifier_while() : 
+{}
+{
+	<EXT_while>
+}
+
+/*
+ * @ExtProduction
+ */
+void keyword_unless() : 
+{}
+{
+	<EXT_unless>
+}
+
+/*
+ * @ExtProduction
+ */
+void modifier_unless() : 
+{}
+{
+	<EXT_unless>
+}
+
+/*
+ * @ExtProduction
+ */
+void keyword_do() : 
+{}
+{
+	<EXT_do>
+}
+
+/*
+ * @ExtProduction
+ */
+void keyword_do_cond() : 
+{}
+{
+	<EXT_do>
+}
+
+/*
+ * @ExtProduction
+ */
+void keyword_do_block() : 
+{}
+{
+	<EXT_do>
+}
+
+/*
+ * @ExtProduction
+ */
+void modifier_if() : 
+{}
+{
+	<EXT_if>
 }
 
 /*
  *	Stub productions for undefined in parse.y tokens
  *	Total: 37
  */
-
-/*
- * @StubProduction
- */
-void tNTH_REF() : 
-{}
-{
-	<STUB_tNTH_REF>
-}
 
 /*
  * @StubProduction
@@ -267,15 +420,6 @@ void tCONSTANT() :
 {}
 {
 	<STUB_tCONSTANT>
-}
-
-/*
- * @StubProduction
- */
-void tFID() : 
-{}
-{
-	<STUB_tFID>
 }
 
 /*
@@ -506,15 +650,6 @@ void tNTH_REF() :
 /*
  * @StubProduction
  */
-void tBACK_REF() : 
-{}
-{
-	<STUB_tBACK_REF>
-}
-
-/*
- * @StubProduction
- */
 void tLABEL() : 
 {}
 {
@@ -565,7 +700,7 @@ void tLABEL_END() :
 void tLBRACE_ARG() :
 {}
 {
-	<tLBRACE> arg()
+	tLBRACE() arg()
 }
 
 /*
@@ -575,7 +710,7 @@ void tLBRACE_ARG() :
 void tLPAREN_ARG() :
 {}
 {
-	<tLPAREN> arg()
+	tLPAREN() arg()
 }
 
 /*
@@ -607,6 +742,7 @@ void top_compstmt()	:
  * 		| top_stmts terms top_stmt
  * 		| error top_stmt
  * 		;
+ * @Recursion
  */
 void top_stmts() : 
 {}
@@ -678,6 +814,7 @@ void compstmt() :
  * 		| stmts terms stmt_or_begin
  * 		| error stmt
  * 		;
+ * @Recursion
  */
 void stmts() :
 {}
@@ -721,6 +858,7 @@ void stmt_or_begin() :
  * 		| mlhs '=' mrhs_arg
  * 		| expr
  * 		;
+ * @Recursion
  */
 void stmt() :
 {}
@@ -730,11 +868,11 @@ void stmt() :
 	| <keyword_alias> tGVAR() tBACK_REF()
 	| <keyword_alias> tGVAR() tNTH_REF()
 	| <keyword_def> undef_list()
-	| stmt() <modifier_if> expr_value()
-	| stmt() <modifier_unless> expr_value()
-	| stmt() <modifier_while> expr_value()
-	| stmt() <modifier_until> expr_value()
-	| stmt() <modifier_rescue> stmt()
+	| stmt() modifier_if() expr_value()
+	| stmt() modifier_unless() expr_value()
+	| stmt() modifier_while() expr_value()
+	| stmt() modifier_until() expr_value()
+	| stmt() modifier_rescue() stmt()
 	| <keyword_END> <EXT_lbrace> compstmt() <EXT_rbrace>
 	| command_asgn()
 	| mlhs() <EXT_equal> command_call()
@@ -779,7 +917,7 @@ void command_rhs() :
 {}
 {
 	command_call()   prec() <tOP_ASGN>
-	| command_call() <modifier_rescue> stmt()
+	| command_call() modifier_rescue() stmt()
 	| command_asgn()
 }
 
@@ -792,6 +930,7 @@ void command_rhs() :
  * 		| '!' command_call
  * 		| arg
  * 		;
+ * @Recursion
  */
 void expr() :
 {}
@@ -906,7 +1045,7 @@ void mlhs() :
 {}
 {
 	mlhs_basic()
-	| <tLPAREN> mlhs_inner() rparen()
+	| tLPAREN() mlhs_inner() rparen()
 }
 
 /*
@@ -919,7 +1058,7 @@ void mlhs_inner() :
 {}
 {
 	mlhs_basic()
-	| <tLPAREN> mlhs_inner() rparen()
+	| tLPAREN() mlhs_inner() rparen()
 }
 
 /*
@@ -941,14 +1080,14 @@ void mlhs_basic() :
 {
 	mlhs_head()
 	| mlhs_head() mlhs_item()
-	| mlhs_head() <tSTAR> mlhs_node()
-	| mlhs_head() <tSTAR> mlhs_node() <EXT_comma> mlhs_post()
-	| mlhs_head() <tSTAR>
-	| mlhs_head() <tSTAR> <EXT_comma> mlhs_post()
-	| <tSTAR> mlhs_node()
-	| <tSTAR> mlhs_node() <EXT_comma> mlhs_post()
-	| <tSTAR>
-	| <tSTAR> <EXT_comma> mlhs_post()
+	| mlhs_head() tSTAR() mlhs_node()
+	| mlhs_head() tSTAR() mlhs_node() <EXT_comma> mlhs_post()
+	| mlhs_head() tSTAR()
+	| mlhs_head() tSTAR() <EXT_comma> mlhs_post()
+	| tSTAR() mlhs_node()
+	| tSTAR() mlhs_node() <EXT_comma> mlhs_post()
+	| tSTAR()
+	| tSTAR() <EXT_comma> mlhs_post()
 }
 
 /*
@@ -961,14 +1100,15 @@ void mlhs_item() :
 {}
 {
 	mlhs_node()
-	| <tLPAREN> mlhs_inner() rparen()
+	| tLPAREN() mlhs_inner() rparen()
 }
 
 /*
  * @Production
- * mlhs_head()	: mlhs_item() ','
- * 		| mlhs_head() mlhs_item() ','
+ * mlhs_head	: mlhs_item ','
+ * 		| mlhs_head mlhs_item ','
  * 		;
+ * @Recursion
  */
 void mlhs_head() :
 {}
@@ -983,6 +1123,7 @@ void mlhs_head() :
  * mlhs_post	: mlhs_item
  * 		| mlhs_post ',' mlhs_item
  *		;
+ * @Recursion
  */
 void mlhs_post() :
 {}
@@ -1123,6 +1264,7 @@ void fitem() :
  * undef_list	: fitem
  * 		| undef_list ','  fitem
  * 		;
+ * @Recursion 
  */
 void undef_list() :
 {}
@@ -1186,7 +1328,7 @@ void op() :
 	| <EXT_plus>		
 	| <EXT_minus>		
 	| <EXT_star>		
-	| <tSTAR>		
+	| tSTAR()		
 	| <EXT_slash>		
 	| <EXT_percent>		
 	| <tPOW>		
@@ -1210,10 +1352,10 @@ void op() :
  * 		| <keyword_end> | <keyword_ensure> | <keyword_false>
  * 		| <keyword_for> | <keyword_in> | <keyword_module> | <keyword_next>
  * 		| <keyword_nil> | keyword_not | <keyword_or> | <keyword_redo>
- * 		| <keyword_rescue> | keyword_retry | keyword_return | <keyword_self>
+ * 		| keyword_rescue() | keyword_retry | keyword_return | <keyword_self>
  * 		| keyword_super | keyword_then | <keyword_true> | <keyword_def>
- * 		| <keyword_when> | keyword_yield | keyword_if | <keyword_unless>
- * 		| <keyword_while> | <keyword_until>
+ * 		| <keyword_when> | keyword_yield | keyword_if | keyword_unless()
+ * 		| keyword_while() | keyword_until()
  * 		;
  */
 void reswords() :
@@ -1223,14 +1365,14 @@ void reswords() :
 	| <keyword_BEGIN> | <keyword_END>
 	| <keyword_alias> | <keyword_and> | <keyword_BEGIN> 
 	| <keyword_break> | <keyword_case> | <keyword_class> | <keyword_def>
-	| <keyword_defined> | <keyword_do> | <keyword_else> | <keyword_elsif>
+	| <keyword_defined> | keyword_do() | <keyword_else> | <keyword_elsif>
 	| <keyword_end> | <keyword_ensure> | <keyword_false>
 	| <keyword_for> | <keyword_in> | <keyword_module> | <keyword_next>
 	| <keyword_nil> | <keyword_not> | <keyword_or> | <keyword_redo>
-	| <keyword_rescue> | <keyword_retry> | <keyword_return> | <keyword_self>
+	| keyword_rescue() | <keyword_retry> | <keyword_return> | <keyword_self>
 	| <keyword_super> | <keyword_then> | <keyword_true> | <keyword_def>
-	| <keyword_when> | <keyword_yield> | <keyword_if> | <keyword_unless>
-	| <keyword_while> | <keyword_until>
+	| <keyword_when> | <keyword_yield> | keyword_if() | keyword_unless()
+	| keyword_while() | keyword_until()
 }
 
 /*
@@ -1278,6 +1420,7 @@ void reswords() :
  * 		| arg '?' arg opt_nl ':' arg
  * 		| primary
  * 		;
+ * @Recursion
  */
 void arg() :
 {}
@@ -1364,7 +1507,7 @@ void arg_rhs() :
 {}
 {
 	arg()   prec() <tOP_ASGN>
-	| arg() <modifier_rescue> arg()
+	| arg() modifier_rescue() arg()
 }
 
 /*
@@ -1448,7 +1591,7 @@ void command_args() :
 void block_arg() :
 {}
 {
-	<tAMPER> arg_value()
+	tAMPER() arg_value()
 }
 
 /*
@@ -1471,14 +1614,15 @@ void opt_block_arg() :
  * 		| args ',' arg_value
  * 		| args ',' tSTAR arg_value
  * 		;
+ * @Recursion
  */
 void args() :
 {}
 {
 	arg_value()
-	| <tSTAR> arg_value()
+	| tSTAR() arg_value()
 	| args() <EXT_comma> arg_value()
-	| args() <EXT_comma> <tSTAR> arg_value()
+	| args() <EXT_comma> tSTAR() arg_value()
 }
 
 /*
@@ -1505,8 +1649,8 @@ void mrhs() :
 {}
 {
 	args() <EXT_comma> arg_value()
-	| args() <EXT_comma> <tSTAR> arg_value()
-	| <tSTAR> arg_value()
+	| args() <EXT_comma> tSTAR() arg_value()
+	| tSTAR() arg_value()
 }
 
 /*
@@ -1531,7 +1675,7 @@ void mrhs() :
  * 		| tLPAREN compstmt ')'
  * 		| primary_value tCOLON2 tCONSTANT
  * 		| <tCOLON3> tCONSTANT
- * 		| <tLBRACK> aref_args ']'
+ * 		| tLBRACK() aref_args ']'
  * 		| tLBRACE assoc_list '}'
  * 		| keyword_return
  * 		| keyword_yield '(' call_args rparen
@@ -1610,11 +1754,11 @@ void primary() :
 	| tLPAREN_ARG()  rparen()
 	| tLPAREN_ARG()
 	  stmt()  rparen()
-	| <tLPAREN> compstmt() <EXT_rparen>
+	| tLPAREN() compstmt() <EXT_rparen>
 	| primary_value() <tCOLON2> tCONSTANT()
 	| <tCOLON3> tCONSTANT()
-	| <tLBRACK> aref_args() <EXT_rsqbracket>
-	| <tLBRACE> assoc_list() <EXT_rbrace>
+	| tLBRACK() aref_args() <EXT_rsqbracket>
+	| tLBRACE() assoc_list() <EXT_rbrace>
 	| <keyword_return>
 	| <keyword_yield> <EXT_lparen> call_args() rparen()
 	| <keyword_yield> <EXT_lparen> rparen()
@@ -1634,10 +1778,10 @@ void primary() :
 	  compstmt()
 	  opt_else()
 	  k_end()
-	| k_while()  expr_value() do() 
+	| k_while()  expr_value() do1() 
 	  compstmt()
 	  k_end()
-	| k_until()  expr_value() do() 
+	| k_until()  expr_value() do1() 
 	  compstmt()
 	  k_end()
 	| k_case() expr_value() opt_terms()
@@ -1645,7 +1789,7 @@ void primary() :
 	  k_end()
 	| k_case() opt_terms() case_body() k_end()
 	| k_for() for_var() <keyword_in>
-	  expr_value() do()
+	  expr_value() do1()
 	  compstmt()
 	  k_end()
 	| k_class() cpath() superclass()
@@ -1676,6 +1820,7 @@ void primary() :
  * @Production
  * primary_value	: primary
  * 		;
+ * @Recursion
  */
 void primary_value() :
 {}
@@ -1702,40 +1847,40 @@ void k_begin() :
 void k_if() :
 {}
 {
-	<keyword_if>
+	keyword_if()
 }
 
 /*
  * @Production
- * k_unless	: <keyword_unless>
+ * k_unless	: keyword_unless()
  * 		;
  */
 void k_unless() :
 {}
 {
-	<keyword_unless>
+	keyword_unless()
 }
 
 /*
  * @Production
- * k_while		: <keyword_while>
+ * k_while		: keyword_while()
  * 		;
  */
 void k_while() :
 {}
 {
-	<keyword_while>
+	keyword_while()
 }
 
 /*
  * @Production
- * k_until		: <keyword_until>
+ * k_until		: keyword_until()
  * 		;
  */
 void k_until() :
 {}
 {
-	<keyword_until>
+	keyword_until()
 }
 
 /*
@@ -1825,11 +1970,11 @@ void then() :
  * 		| keyword_do_cond
  * 		;
  */
-void do() :
+void do1() :
 {}
 {
 	term()
-	| <keyword_do_cond>
+	| keyword_do_cond()
 }
 
 /*
@@ -1885,7 +2030,7 @@ void f_marg() :
 {}
 {
 	f_norm_arg()
-	| <tLPAREN> f_margs() rparen()
+	| tLPAREN() f_margs() rparen()
 }
 
 /*
@@ -1893,6 +2038,7 @@ void f_marg() :
  * f_marg_list	: f_marg
  * 		| f_marg_list ',' f_marg
  * 		;
+ * @Recursion
  */
 void f_marg_list() :
 {}
@@ -1918,14 +2064,14 @@ void f_margs() :
 {}
 {
 	f_marg_list()
-	| f_marg_list() <EXT_comma> <tSTAR> f_norm_arg()
-	| f_marg_list() <EXT_comma> <tSTAR> f_norm_arg() <EXT_comma> f_marg_list()
-	| f_marg_list() <EXT_comma> <tSTAR>
-	| f_marg_list() <EXT_comma> <tSTAR> <EXT_comma> f_marg_list()
-	| <tSTAR> f_norm_arg()
-	| <tSTAR> f_norm_arg() <EXT_comma> f_marg_list()
-	| <tSTAR>
-	| <tSTAR> <EXT_comma> f_marg_list()
+	| f_marg_list() <EXT_comma> tSTAR() f_norm_arg()
+	| f_marg_list() <EXT_comma> tSTAR() f_norm_arg() <EXT_comma> f_marg_list()
+	| f_marg_list() <EXT_comma> tSTAR()
+	| f_marg_list() <EXT_comma> tSTAR() <EXT_comma> f_marg_list()
+	| tSTAR() f_norm_arg()
+	| tSTAR() f_norm_arg() <EXT_comma> f_marg_list()
+	| tSTAR()
+	| tSTAR() <EXT_comma> f_marg_list()
 }
 
 /*
@@ -1955,7 +2101,7 @@ void opt_block_args_tail() :
 {}
 {
 	<EXT_comma> block_args_tail()
-	|
+	| none() // TODO
 }
 
 /*
@@ -2043,6 +2189,7 @@ void opt_bv_decl() :
  * bv_decls	: bvar
  * 		| bv_decls ',' bvar
  * 		;
+ * @Recursion
  */
 void bv_decls() :
 {}
@@ -2113,14 +2260,14 @@ void lambda_body() :
 
 /*
  * @Production
- * do_block	: <keyword_do_block>
+ * do_block	: keyword_do_block()
  * 		do_body <keyword_end>
  * 		;
  */
 void do_block() :
 {}
 {
-	<keyword_do_block>
+	keyword_do_block()
 	do_body() <keyword_end>
 }
 
@@ -2131,6 +2278,7 @@ void do_block() :
  * 		| block_call call_op2 operation2 opt_paren_args brace_block
  * 		| block_call call_op2 operation2 command_args do_block
  * 		;
+ * @Recursion
  */
 void block_call() :
 {}
@@ -2189,7 +2337,7 @@ void brace_block() :
 {
 	<EXT_lbrace>
 	  brace_body() <EXT_rbrace>
-	| <keyword_do>
+	| keyword_do()
 	  do_body() <keyword_end>
 }
 
@@ -2245,7 +2393,7 @@ void cases() :
 
 /*
  * @Production
- * opt_rescue	: <keyword_rescue> exc_list exc_var then
+ * opt_rescue	: keyword_rescue() exc_list exc_var then
  * 		compstmt
  * 		opt_rescue
  * 		| none
@@ -2254,7 +2402,7 @@ void cases() :
 void opt_rescue() :
 {}
 {
-	<keyword_rescue> exc_list() exc_var() then()
+	keyword_rescue() exc_list() exc_var() then()
 	  compstmt()
 	  opt_rescue()
 	| none()
@@ -2333,6 +2481,7 @@ void strings() :
  * 		| string1
  * 		| string string1
  * 		;
+ * @Recursion
  */
 void string() :
 {}
@@ -2393,18 +2542,20 @@ void words() :
  * word_list	: 
  * 		| word_list word ' '
  * 		;
+ * @Recursion
  */
 void word_list() :
 {}
 {
-	| word_list() word() <EXT_space>
+	none() /* TODO */ | word_list() word() <EXT_space>
 }
 
 /*
-	 * @Production
-	 * word		: string_content
-			| word string_content
-			;
+ * @Production
+ * word		: string_content
+ *			| word string_content
+ *			;
+ * @Recursion
  */
 void word() :
 {}
@@ -2431,11 +2582,12 @@ void symbols() :
  * symbol_list	: 
  * 		| symbol_list word ' '
  * 		;
+ * @Recursion
  */
 void symbol_list() :
 {}
 {
-	| symbol_list() word() <EXT_space>
+	 none() /* TODO */ | symbol_list() word() <EXT_space>
 }
 
 /*
@@ -2469,11 +2621,12 @@ void qsymbols() :
  * qword_list	: 
  * 		| qword_list tSTRING_CONTENT ' '
  * 		;
+ * @Recursion
  */
 void qword_list() :
 {}
 {
-	| qword_list() tSTRING_CONTENT() <EXT_space>
+	none() /* TODO */ | qword_list() tSTRING_CONTENT() <EXT_space>
 }
 
 /*
@@ -2481,11 +2634,12 @@ void qword_list() :
  * qsym_list	: 
  * 		| qsym_list tSTRING_CONTENT ' '
  * 		;
+ * @Recursion
  */
 void qsym_list() :
 {}
 {
-	| qsym_list() tSTRING_CONTENT() <EXT_space>
+	none() /* TODO */ | qsym_list() tSTRING_CONTENT() <EXT_space>
 }
 
 /*
@@ -2493,11 +2647,12 @@ void qsym_list() :
  * string_contents : 
  * 		| string_contents string_content
  * 		;
+ * @Recursion
  */
 void string_contents() :
 {}
 {
-	| string_contents() string_content()
+	none() /* TODO */ | string_contents() string_content()
 }
 
 /*
@@ -2505,11 +2660,12 @@ void string_contents() :
  * xstring_contents: 
  * 		| xstring_contents string_content
  * 		;
+ * @Recursion
  */
 void xstring_contents() :
 {}
 {
-	| xstring_contents() string_content()
+	none() /* TODO */ | xstring_contents() string_content()
 }
 
 /*
@@ -2517,11 +2673,12 @@ void xstring_contents() :
  * regexp_contents: 
  * 		| regexp_contents string_content
  * 		;
+ * @Recursion
  */
 void regexp_contents() :
 {}
 {
-	| regexp_contents() string_content()
+	none() /* TODO */ | regexp_contents() string_content()
 }
 
 /*
@@ -2722,7 +2879,7 @@ void superclass() :
 {
 	<EXT_langbracket>
 	expr_value() term()
-	|
+	| none() /* TODO */ 
 }
 
 /*
@@ -2765,7 +2922,7 @@ void opt_args_tail() :
 {}
 {
 	<EXT_comma> args_tail()
-	|
+	| none() /* TODO */ 
 }
 
 /*
@@ -2804,7 +2961,7 @@ void f_args() :
 	| f_rest_arg() opt_args_tail()
 	| f_rest_arg() <EXT_comma> f_arg() opt_args_tail()
 	| args_tail()
-	| 
+	| none() /* TODO */ 
 }
 
 /*
@@ -2858,7 +3015,7 @@ void f_arg_item() :
 {}
 {
 	f_arg_asgn()
-	| <tLPAREN> f_margs() rparen()
+	| tLPAREN() f_margs() rparen()
 }
 
 /*
@@ -2866,6 +3023,7 @@ void f_arg_item() :
  * f_arg		: f_arg_item
  * 		| f_arg ',' f_arg_item
  * 		;
+ * @Recursion
  */
 void f_arg() :
 {}
@@ -2916,6 +3074,7 @@ void f_block_kw() :
  * f_block_kwarg	: f_block_kw
  * 		| f_block_kwarg ',' f_block_kw
  * 		;
+ * @Recursion
  */
 void f_block_kwarg() :
 {}
@@ -2929,6 +3088,7 @@ void f_block_kwarg() :
  * f_kwarg		: f_kw
  * 		| f_kwarg ',' f_kw
  * 		;
+ * @Recursion
  */
 void f_kwarg() :
 {}
@@ -2990,6 +3150,7 @@ void f_block_opt() :
  * f_block_optarg	: f_block_opt
  * 		| f_block_optarg ',' f_block_opt
  * 		;
+ * @Recursion
  */
 void f_block_optarg() :
 {}
@@ -3003,6 +3164,7 @@ void f_block_optarg() :
  * f_optarg	: f_opt
  * 		| f_optarg ',' f_opt
  * 		;
+ * @Recursion
  */
 void f_optarg() :
 {}
@@ -3021,7 +3183,7 @@ void restarg_mark() :
 {}
 {
 	<EXT_star>
-	| <tSTAR>
+	| tSTAR()
 }
 
 /*
@@ -3040,14 +3202,14 @@ void f_rest_arg() :
 /*
  * @Production
  * blkarg_mark	: '&'
- * 		| <tAMPER>
+ * 		| tAMPER()
  * 		;
  */
 void blkarg_mark() :
 {}
 {
 	<EXT_amper>
-	| <tAMPER>
+	| tAMPER()
 }
 
 /*
@@ -3105,6 +3267,7 @@ void assoc_list() :
  * assocs		: assoc
  * 		| assocs ',' assoc
  * 		;
+ * @Recursion
  */
 void assocs() :
 {}
@@ -3225,7 +3388,7 @@ void call_op2() :
 void opt_terms() :
 {}
 {
-	| terms()
+	none() /* TODO */ | terms()
 }
 
 /*
@@ -3237,7 +3400,7 @@ void opt_terms() :
 void opt_nl() :
 {}
 {
-	| <EXT_newline>
+	none() /* TODO */ | <EXT_newline>
 }
 
 /*
@@ -3272,7 +3435,7 @@ void rbracket() :
 void trailer() :
 {}
 {
-	| <EXT_newline>
+	none() /* TODO */ | <EXT_newline>
 	| <EXT_comma>
 }
 
@@ -3294,6 +3457,7 @@ void term() :
  * terms		: term
  * 		| terms ';' 
  * 		;
+ * @Recursion
  */
 void terms() :
 {}
@@ -3310,5 +3474,5 @@ void terms() :
 void none() :
 {}
 {
-
+	<STUB_none>
 }
