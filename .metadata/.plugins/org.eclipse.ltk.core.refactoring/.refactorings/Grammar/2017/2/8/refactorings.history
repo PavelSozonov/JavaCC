@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename compilation unit &apos;Grammar.java&apos; to &apos;RubyParserjj.java&apos;&#x0A;- Original project: &apos;Grammar&apos;&#x0A;- Original element: &apos;Grammar.java&apos;&#x0A;- Renamed element: &apos;RubyParserjj.java&apos;" description="Rename compilation unit &apos;Grammar.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src&lt;{Grammar.java" name="RubyParserjj.java" references="false" stamp="1487500684945" version="1.0"/>
-</session>
