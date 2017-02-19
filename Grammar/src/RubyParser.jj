@@ -126,8 +126,8 @@ TOKEN :
     | <tCOLON2 : "::">
     | <tCOLON3 : ":: at EXPR_BEG">
     | <tOP_ASGN : "+=" |"-=" |"*=" |"/=" |"%=" |"**=" |"&=" |"|=" |"^=" |"<<=" |">>=" |"&&=" |"||="> 
-    | <tASSOC : "=>"
-    | <tLPAREN : "("
+    | <tASSOC : "=>">
+    | <tLPAREN : "(">
     | <tRPAREN : ")">
     | <tLBRACK : "[">
     | <tLBRACE : "{">
