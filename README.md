@@ -1,1 +1,1 @@
-# JavaCC
+# JavaCC Ruby
