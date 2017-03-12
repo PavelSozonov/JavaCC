@@ -1,23 +1,29 @@
 PARSER_BEGIN(RubyParser)
 
+package java.cc;
+
 import java.io.StringReader;
 import java.io.Reader;
 
 public class RubyParser {
 
-/**  
-  A String based constructor for ease of use.
-  **/
+	private class Metrics {
+		private final static int AMOUNT_OF_METRICS = 23;
+		public long metrics[] = new long[AMOUNT_OF_METRICS];
+	}
+
+	/*  
+	 * A String based constructor for ease of use
+	 */
     public RubyParser(String s) {
         this((Reader)(new StringReader(s))); 
-        
     }
        
     public static void main(String args[]) {
         try {
-              String query = args[0];
-              RubyParser parser = new RubyParser(query);
-              parser.parse();
+              String inputProgram = args[0];
+              RubyParser parser = new RubyParser(inputProgram);
+              parser.program();
         }
         catch(Exception e) {
               e.printStackTrace();
@@ -34,17 +40,17 @@ PARSER_END(RubyParser)
  */
 SKIP :                              
 {
-    // " " | 
+    /* " " | */ 
     "\t"
     | "\f"
     | "\r"
     | "\13"
-//  | "\v"
+	/* | "\v" */ // Cause compile problems
 }
 
 /*
  * Tokens
- * Total: 107 (without 37 stubs, 107 + 37 = 144)
+ * Total: 94 (without 37 stubs, 94 + 35 = 129)
  */
 TOKEN : 
 { 
@@ -147,7 +153,7 @@ TOKEN :
      * must be processed in output JavaCC parser
      * according to "static int parser_yylex(struct parser_params *parser)" 
      * from parse.y
-     * Total: 37
+     * Total: 35
      */
 	| <STUB_tNTH_REF : "STUB_tNTH_REF">
 	| <STUB_tBACK_REF : "STUB_tBACK_REF">
@@ -1117,6 +1123,11 @@ void mlhs_head() :
 	| mlhs_head() mlhs_item() <EXT_comma>
 }
 
+void mlhs_head_left_recursion_resolve() :
+{}
+{
+	mlhs_head() mlhs_item() <EXT_comma>
+}
 
 /*
  * @Production
@@ -1131,6 +1142,23 @@ void mlhs_post() :
 	mlhs_item()
 	| mlhs_post() <EXT_comma> mlhs_item()
 }
+
+/*
+void mlhs_post() :
+{}
+{
+	mlhs_item() mlhs_post2()
+}
+
+void mlhs_post2() :
+{}
+{
+	none()
+	| <EXT_comma> mlhs_item() mlhs_post2()
+}
+
+
+*/
 
 /*
  * @Production
