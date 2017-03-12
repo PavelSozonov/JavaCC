@@ -5,6 +5,12 @@ import java.io.Reader;
 
 public class RubyParser14 {
 
+	InputStream input;
+
+	boolean inputFromFile = true;
+
+	String file = "code.rb"; 
+	
 	private class Metrics {
 		private final static int AMOUNT_OF_METRICS = 23;
 		public long metrics[] = new long[AMOUNT_OF_METRICS];
@@ -13,22 +19,36 @@ public class RubyParser14 {
 	/*  
 	 * A String based constructor for ease of use
 	 */
-    public RubyParser14(String s) {
-        this((Reader)(new StringReader(s))); 
-    }
-       
-    public static void main(String args[]) {
-        try {
-              //String inputProgram = args[0];
-              //String inputProgram = "def bubble_sort(array) n = array.length loop do swapped = false (n-1).times do |i| if array[i] > array[i+1] array[i], array[i+1] = array[i+1], array[i] swapped = true end end break if not swapped end array end";
-              String inputProgram = "a = [4,6,7,5]";
-              RubyParser14 parser = new RubyParser14(inputProgram);
-              parser.PROGRAM();
-        }
-        catch(Exception e) {
-              e.printStackTrace();
-        }
-    }
+	public RubyParser14(String s) {
+		this((Reader)(new StringReader(s))); 
+	}
+   
+	public static void main(String args[]) {
+		try {
+			//String inputProgram = args[0];
+			//String inputProgram = "def bubble_sort(array) n = array.length loop do swapped = false (n-1).times do |i| if array[i] > array[i+1] array[i], array[i+1] = array[i+1], array[i] swapped = true end end break if not swapped end array end";
+			//String inputProgram = "a = [4,6,7,5]";
+
+			if (inputFromFile) {
+				System.out.println("Reading from file " + file + " ...");
+				try {
+					input = new java.io.FileInputStream(file);
+				} catch (java.io.FileNotFoundException e) {
+					System.out.println("File " + file + " not found.");
+					return;
+				}
+			} else {
+				System.out.println("Reading from standard input ...");
+				input = System.in;
+			}
+              
+			RubyParser14 parser = new RubyParser14(input);
+			parser.PROGRAM();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
 
 PARSER_END(RubyParser14)
@@ -682,50 +702,6 @@ TOKEN : { <keyword_not : "not"> }
  * Empty token
  */
 TOKEN : { <eps : ""> }
-TOKEN : { <eps1 : "!@#e1"> } // Unexisting sequence
-TOKEN : { <eps2 : "!@#e2"> } // Unexisting sequence
-TOKEN : { <eps3 : "!@#e3"> } // Unexisting sequence
-TOKEN : { <eps4 : "!@#e4"> } // Unexisting sequence
-TOKEN : { <eps5 : "!@#e5"> } // Unexisting sequence
-TOKEN : { <eps6 : "!@#e6"> } // Unexisting sequence
-TOKEN : { <eps7 : "!@#e7"> } // Unexisting sequence
-TOKEN : { <eps8 : "!@#e8"> } // Unexisting sequence
-TOKEN : { <eps9 : "!@#e9"> } // Unexisting sequence
-TOKEN : { <eps10 : "!@#e10"> } // Unexisting sequence
-TOKEN : { <eps11 : "!@#e11"> } // Unexisting sequence
-TOKEN : { <eps12 : "!@#e12"> } // Unexisting sequence
-TOKEN : { <eps13 : "!@#e13"> } // Unexisting sequence
-TOKEN : { <eps14 : "!@#e14"> } // Unexisting sequence
-TOKEN : { <eps15 : "!@#e15"> } // Unexisting sequence
-TOKEN : { <eps16 : "!@#e16"> } // Unexisting sequence
-TOKEN : { <eps17 : "!@#e17"> } // Unexisting sequence
-TOKEN : { <eps18 : "!@#e18"> } // Unexisting sequence
-TOKEN : { <eps19 : "!@#e19"> } // Unexisting sequence
-TOKEN : { <eps20 : "!@#e20"> } // Unexisting sequence
-TOKEN : { <eps21 : "!@#e21"> } // Unexisting sequence
-TOKEN : { <eps22 : "!@#e22"> } // Unexisting sequence
-TOKEN : { <eps23 : "!@#e23"> } // Unexisting sequence
-TOKEN : { <eps24 : "!@#e24"> } // Unexisting sequence
-TOKEN : { <eps25 : "!@#e25"> } // Unexisting sequence
-TOKEN : { <eps26 : "!@#e26"> } // Unexisting sequence
-TOKEN : { <eps27 : "!@#e27"> } // Unexisting sequence
-TOKEN : { <eps28 : "!@#e28"> } // Unexisting sequence
-TOKEN : { <eps29 : "!@#e29"> } // Unexisting sequence
-TOKEN : { <eps30 : "!@#e30"> } // Unexisting sequence
-TOKEN : { <eps31 : "!@#e31"> } // Unexisting sequence
-TOKEN : { <eps32 : "!@#e32"> } // Unexisting sequence
-TOKEN : { <eps33 : "!@#e33"> } // Unexisting sequence
-TOKEN : { <eps34 : "!@#e34"> } // Unexisting sequence
-TOKEN : { <eps35 : "!@#e35"> } // Unexisting sequence
-TOKEN : { <eps36 : "!@#e36"> } // Unexisting sequence
-TOKEN : { <eps37 : "!@#e37"> } // Unexisting sequence
-TOKEN : { <eps38 : "!@#e38"> } // Unexisting sequence
-TOKEN : { <eps39 : "!@#e39"> } // Unexisting sequence
-TOKEN : { <eps40 : "!@#e40"> } // Unexisting sequence
-TOKEN : { <eps41 : "!@#e41"> } // Unexisting sequence
-TOKEN : { <eps42 : "!@#e42"> } // Unexisting sequence
-TOKEN : { <eps43 : "!@#e43"> } // Unexisting sequence
-TOKEN : { <eps44 : "!@#e44"> } // Unexisting sequence
 
 /*
  * @Production
@@ -794,7 +770,7 @@ void STMT() :
 	| <keyword_alias> FNAME() FNAME() STMT2()
 	| <keyword_BEGIN> <lbrace> COMPSTMT() <rbrace> STMT2()
 	| <keyword_END> <lbrace> COMPSTMT() <rbrace> STMT2()
-	| [<eps>]LHS() <equal> COMMAND() [<keyword_do> [<pipe> [BLOCK_VAR()] <pipe>] COMPSTMT() <keyword_end>] STMT2() // hook [<eps>]
+	| LHS() <equal> COMMAND() [<keyword_do> [<pipe> [BLOCK_VAR()] <pipe>] COMPSTMT() <keyword_end>] STMT2()
 	| EXPR() STMT2()
 }
 
@@ -840,11 +816,11 @@ void EXPR() :
 {}
 {
 	MLHS() <equal> MRHS() EXPR2()
-	| [<eps>]<keyword_return> CALL_ARGS() EXPR2() // hook [<eps>]
-	| [<eps1>]<keyword_yield> CALL_ARGS() EXPR2() // hook [<eps>]
-	| [<eps2>]<keyword_not> EXPR() EXPR2() // hook [<eps>]
-	| [<eps3>]COMMAND() EXPR2()
-	| [<eps4>]<exclamation> COMMAND() EXPR2() // hook [<eps>]
+	| <keyword_return> CALL_ARGS() EXPR2()
+	| <keyword_yield> CALL_ARGS() EXPR2()
+	| <keyword_not> EXPR() EXPR2()
+	| COMMAND() EXPR2()
+	| <exclamation> COMMAND() EXPR2()
 	| ARG() EXPR2()
 }
 
@@ -852,7 +828,7 @@ void EXPR2() :
 {}
 {
 	<keyword_or> EXPR() EXPR2()
-	| [<eps5>]<keyword_or> EXPR() EXPR2() // hook [<eps>]
+	| <keyword_or> EXPR() EXPR2()
 	| <eps>
 }
 
@@ -879,10 +855,10 @@ void CALL() :
 void COMMAND() : 
 {}
 {
-	[<eps6>]OPERATION() CALL_ARGS() // hook [<eps>]
-	| [<eps7>]PRIMARY() <dot> OPERATION() CALL_ARGS() // hook [<eps>]
-	| [<eps8>]PRIMARY() <colon2> OPERATION() CALL_ARGS() // hook [<eps>]
-	| [<eps9>]<keyword_super> CALL_ARGS() // hook [<eps>]
+	OPERATION() CALL_ARGS()
+	| PRIMARY() <dot> OPERATION() CALL_ARGS()
+	| PRIMARY() <colon2> OPERATION() CALL_ARGS()
+	| <keyword_super> CALL_ARGS()
 }
 
 /*
@@ -913,8 +889,8 @@ void COMMAND() :
 //{}
 //{
 //	OPERATION() [<lparen> [CALL_ARGS()] <rparen>] FUNCTION2()
-//	| [<eps10>]<keyword_super> <lparen> [CALL_ARGS()] <rparen> FUNCTION2() // hook [<eps>]
-//	| [<eps11>]<keyword_super> FUNCTION2() // hook [<eps>]
+//	| <keyword_super> <lparen> [CALL_ARGS()] <rparen> FUNCTION2()
+//	| <keyword_super> FUNCTION2()
 //}
 //
 //void FUNCTION2() : 
@@ -922,8 +898,8 @@ void COMMAND() :
 //{
 //	<dot> OPERATION() <lparen> [CALL_ARGS()] <rparen> FUNCTION2()
 //	| <colon2> OPERATION() <lparen> [CALL_ARGS()] <rparen> FUNCTION2()
-//	| [<eps12>]<dot> OPERATION() FUNCTION2() // hook [<eps>]
-//	| [<eps13>]<colon2> OPERATION() FUNCTION2() // hook [<eps>]
+//	| <dot> OPERATION() FUNCTION2()
+//	| <colon2> OPERATION() FUNCTION2()
 //	| <eps>
 //}
 
@@ -932,8 +908,8 @@ void COMMAND() :
 //{
 //	OPERATION() [<lparen> [CALL_ARGS()] <rparen>] FUNCTION2()
 ////1
-//    | [<eps38>]<lparen> COMPSTMT() <rparen> PRIMARY2() <dot> OPERATION() <lparen> [CALL_ARGS()] <rparen> FUNCTION2()
-//	| [<eps39>]LITERAL() PRIMARY2() <dot> OPERATION() <lparen> [CALL_ARGS()] <rparen> FUNCTION2()
+//    | <lparen> COMPSTMT() <rparen> PRIMARY2() <dot> OPERATION() <lparen> [CALL_ARGS()] <rparen> FUNCTION2()
+//	| LITERAL() PRIMARY2() <dot> OPERATION() <lparen> [CALL_ARGS()] <rparen> FUNCTION2()
 //	| VARIABLE() PRIMARY2() <dot> OPERATION() <lparen> [CALL_ARGS()] <rparen> FUNCTION2()
 //	| <colon2> IDENTIFIER() PRIMARY2() <dot> OPERATION() <lparen> [CALL_ARGS()] <rparen> FUNCTION2()
 //	| <lsqbracket> [ARGS()[<comma>]] <rsqbracket> PRIMARY2() <dot> OPERATION() <lparen> [CALL_ARGS()] <rparen> FUNCTION2()
@@ -951,10 +927,10 @@ void COMMAND() :
 //	| <keyword_class> IDENTIFIER() [<less> IDENTIFIER()] COMPSTMT() <keyword_end> PRIMARY2() <dot> OPERATION() <lparen> [CALL_ARGS()] <rparen> FUNCTION2()
 //	| <keyword_module> IDENTIFIER() COMPSTMT() <keyword_end> PRIMARY2() <dot> OPERATION() <lparen> [CALL_ARGS()] <rparen> FUNCTION2()
 //	| <keyword_def> FNAME() ARGDECL() COMPSTMT() <keyword_end> PRIMARY2() <dot> OPERATION() <lparen> [CALL_ARGS()] <rparen> FUNCTION2()
-//	| [<eps17>]<keyword_def> SINGLETON() (<dot> | <colon2>) FNAME() ARGDECL() COMPSTMT() <keyword_end> PRIMARY2() <dot> OPERATION() <lparen> [CALL_ARGS()] <rparen> FUNCTION2() // hook [<eps>]
+//	| <keyword_def> SINGLETON() (<dot> | <colon2>) FNAME() ARGDECL() COMPSTMT() <keyword_end> PRIMARY2() <dot> OPERATION() <lparen> [CALL_ARGS()] <rparen> FUNCTION2()
 ////2
-//	| [<eps35>]<lparen> COMPSTMT() <rparen> PRIMARY2() <colon2> OPERATION() <lparen> [CALL_ARGS()] <rparen> FUNCTION2()
-//	| [<eps40>]LITERAL() PRIMARY2() <colon2> OPERATION() <lparen> [CALL_ARGS()] <rparen> FUNCTION2()
+//	| <lparen> COMPSTMT() <rparen> PRIMARY2() <colon2> OPERATION() <lparen> [CALL_ARGS()] <rparen> FUNCTION2()
+//	| LITERAL() PRIMARY2() <colon2> OPERATION() <lparen> [CALL_ARGS()] <rparen> FUNCTION2()
 //	| VARIABLE() PRIMARY2() <colon2> OPERATION() <lparen> [CALL_ARGS()] <rparen> FUNCTION2()
 //	| <colon2> IDENTIFIER() PRIMARY2() <colon2> OPERATION() <lparen> [CALL_ARGS()] <rparen> FUNCTION2()
 //	| <lsqbracket> [ARGS()[<comma>]] <rsqbracket> PRIMARY2() <colon2> OPERATION() <lparen> [CALL_ARGS()] <rparen> FUNCTION2()
@@ -972,10 +948,10 @@ void COMMAND() :
 //	| <keyword_class> IDENTIFIER() [<less> IDENTIFIER()] COMPSTMT() <keyword_end> PRIMARY2() <colon2> OPERATION() <lparen> [CALL_ARGS()] <rparen> FUNCTION2()
 //	| <keyword_module> IDENTIFIER() COMPSTMT() <keyword_end> PRIMARY2() <colon2> OPERATION() <lparen> [CALL_ARGS()] <rparen> FUNCTION2()
 //	| <keyword_def> FNAME() ARGDECL() COMPSTMT() <keyword_end> PRIMARY2() <colon2> OPERATION() <lparen> [CALL_ARGS()] <rparen> FUNCTION2()
-//	| [<eps17>]<keyword_def> SINGLETON() (<dot> | <colon2>) FNAME() ARGDECL() COMPSTMT() <keyword_end> PRIMARY2() <colon2> OPERATION() <lparen> [CALL_ARGS()] <rparen> FUNCTION2() // hook [<eps>]
+//	| <keyword_def> SINGLETON() (<dot> | <colon2>) FNAME() ARGDECL() COMPSTMT() <keyword_end> PRIMARY2() <colon2> OPERATION() <lparen> [CALL_ARGS()] <rparen> FUNCTION2()
 ////3
-//	| [<eps36>]<lparen> COMPSTMT() <rparen> PRIMARY2() <dot> OPERATION() FUNCTION2()
-//	| [<eps41>]LITERAL() PRIMARY2() <dot> OPERATION() FUNCTION2()
+//	| <lparen> COMPSTMT() <rparen> PRIMARY2() <dot> OPERATION() FUNCTION2()
+//	| LITERAL() PRIMARY2() <dot> OPERATION() FUNCTION2()
 //	| VARIABLE() PRIMARY2() <dot> OPERATION() FUNCTION2()
 //	| <colon2> IDENTIFIER() PRIMARY2() <dot> OPERATION() FUNCTION2()
 //	| <lsqbracket> [ARGS()[<comma>]] <rsqbracket> PRIMARY2() <dot> OPERATION() FUNCTION2()
@@ -993,10 +969,10 @@ void COMMAND() :
 //	| <keyword_class> IDENTIFIER() [<less> IDENTIFIER()] COMPSTMT() <keyword_end> PRIMARY2() <dot> OPERATION() FUNCTION2()
 //	| <keyword_module> IDENTIFIER() COMPSTMT() <keyword_end> PRIMARY2() <dot> OPERATION() FUNCTION2()
 //	| <keyword_def> FNAME() ARGDECL() COMPSTMT() <keyword_end> PRIMARY2() <dot> OPERATION() FUNCTION2()
-//	| [<eps17>]<keyword_def> SINGLETON() (<dot> | <colon2>) FNAME() ARGDECL() COMPSTMT() <keyword_end> PRIMARY2() <dot> OPERATION() FUNCTION2() // hook [<eps>]
+//	| <keyword_def> SINGLETON() (<dot> | <colon2>) FNAME() ARGDECL() COMPSTMT() <keyword_end> PRIMARY2() <dot> OPERATION() FUNCTION2()
 ////4
-//	| [<eps37>]<lparen> COMPSTMT() <rparen> PRIMARY2() <colon2> OPERATION() FUNCTION2()
-//	| [<eps42>]LITERAL() PRIMARY2() <colon2> OPERATION() FUNCTION2()
+//	| <lparen> COMPSTMT() <rparen> PRIMARY2() <colon2> OPERATION() FUNCTION2()
+//	| LITERAL() PRIMARY2() <colon2> OPERATION() FUNCTION2()
 //	| VARIABLE() PRIMARY2() <colon2> OPERATION() FUNCTION2()
 //	| <colon2> IDENTIFIER() PRIMARY2() <colon2> OPERATION() FUNCTION2()
 //	| <lsqbracket> [ARGS()[<comma>]] <rsqbracket> PRIMARY2() <colon2> OPERATION() FUNCTION2()
@@ -1004,7 +980,7 @@ void COMMAND() :
 //	| <keyword_return> [<lparen> [CALL_ARGS()] <rparen>] PRIMARY2() <colon2> OPERATION() FUNCTION2()
 //	| <keyword_yield> [<lparen> [CALL_ARGS()] <rparen>] PRIMARY2() <colon2> OPERATION() FUNCTION2()
 //	| <keyword_defined> <lparen> ARG() <rparen> PRIMARY2() <colon2> OPERATION() FUNCTION2()
-//	| [<eps43>]<keyword_if> EXPR() THEN() COMPSTMT() (<keyword_elsif> EXPR() THEN() COMPSTMT())* [<keyword_else> COMPSTMT()] <keyword_end> PRIMARY2() <colon2> OPERATION() FUNCTION2()
+//	| <keyword_if> EXPR() THEN() COMPSTMT() (<keyword_elsif> EXPR() THEN() COMPSTMT())* [<keyword_else> COMPSTMT()] <keyword_end> PRIMARY2() <colon2> OPERATION() FUNCTION2()
 //	| <keyword_unless> EXPR() THEN() COMPSTMT() [<keyword_else> COMPSTMT()] <keyword_end> PRIMARY2() <colon2> OPERATION() FUNCTION2()
 //	| <keyword_while> EXPR() DO() COMPSTMT() <keyword_end> PRIMARY2() <colon2> OPERATION() FUNCTION2()
 //	| <keyword_until> EXPR() DO() COMPSTMT() <keyword_end> PRIMARY2() <colon2> OPERATION() FUNCTION2()
@@ -1014,7 +990,7 @@ void COMMAND() :
 //	| <keyword_class> IDENTIFIER() [<less> IDENTIFIER()] COMPSTMT() <keyword_end> PRIMARY2() <colon2> OPERATION() FUNCTION2()
 //	| <keyword_module> IDENTIFIER() COMPSTMT() <keyword_end> PRIMARY2() <colon2> OPERATION() FUNCTION2()
 //	| <keyword_def> FNAME() ARGDECL() COMPSTMT() <keyword_end> PRIMARY2() <colon2> OPERATION() FUNCTION2()
-//	| [<eps17>]<keyword_def> SINGLETON() (<dot> | <colon2>) FNAME() ARGDECL() COMPSTMT() <keyword_end> PRIMARY2() <colon2> OPERATION() FUNCTION2() // hook [<eps>]
+//	| <keyword_def> SINGLETON() (<dot> | <colon2>) FNAME() ARGDECL() COMPSTMT() <keyword_end> PRIMARY2() <colon2> OPERATION() FUNCTION2()
 ////Other
 //	| <keyword_super> <lparen> [CALL_ARGS()] <rparen> FUNCTION2()
 //	| <keyword_super> FUNCTION2()
@@ -1041,17 +1017,17 @@ void FUNCTION2() :
 {}
 {
 //1
-	[<eps27>]FUNCTION() PRIMARY2() <dot> OPERATION() <lparen> [CALL_ARGS()] <rparen> FUNCTION2()
-	| [<eps28>]FUNCTION() <lbrace> [<pipe> [BLOCK_VAR()] <pipe>] COMPSTMT() <rbrace> PRIMARY2() <dot> OPERATION() <lparen> [CALL_ARGS()] <rparen> FUNCTION2() // hook [<eps>]
+	FUNCTION() PRIMARY2() <dot> OPERATION() <lparen> [CALL_ARGS()] <rparen> FUNCTION2()
+	| FUNCTION() <lbrace> [<pipe> [BLOCK_VAR()] <pipe>] COMPSTMT() <rbrace> PRIMARY2() <dot> OPERATION() <lparen> [CALL_ARGS()] <rparen> FUNCTION2()
 //2
-	| [<eps29>]FUNCTION() PRIMARY2() <colon2> OPERATION() <lparen> [CALL_ARGS()] <rparen> FUNCTION2()
-	| [<eps30>]FUNCTION() <lbrace> [<pipe> [BLOCK_VAR()] <pipe>] COMPSTMT() <rbrace> PRIMARY2() <colon2> OPERATION() <lparen> [CALL_ARGS()] <rparen> FUNCTION2() // hook [<eps>]
+	| FUNCTION() PRIMARY2() <colon2> OPERATION() <lparen> [CALL_ARGS()] <rparen> FUNCTION2()
+	| FUNCTION() <lbrace> [<pipe> [BLOCK_VAR()] <pipe>] COMPSTMT() <rbrace> PRIMARY2() <colon2> OPERATION() <lparen> [CALL_ARGS()] <rparen> FUNCTION2()
 //3
-	| [<eps31>]FUNCTION() PRIMARY2() <dot> OPERATION() FUNCTION2()
-	| [<eps32>]FUNCTION() <lbrace> [<pipe> [BLOCK_VAR()] <pipe>] COMPSTMT() <rbrace> PRIMARY2() <dot> OPERATION() FUNCTION2() // hook [<eps>]
+	| FUNCTION() PRIMARY2() <dot> OPERATION() FUNCTION2()
+	| FUNCTION() <lbrace> [<pipe> [BLOCK_VAR()] <pipe>] COMPSTMT() <rbrace> PRIMARY2() <dot> OPERATION() FUNCTION2()
 //4
-	| [<eps33>]FUNCTION() PRIMARY2() <colon2> OPERATION() FUNCTION2()
-	| [<eps34>]FUNCTION() <lbrace> [<pipe> [BLOCK_VAR()] <pipe>] COMPSTMT() <rbrace> PRIMARY2() <colon2> OPERATION() FUNCTION2() // hook [<eps>]
+	| FUNCTION() PRIMARY2() <colon2> OPERATION() FUNCTION2()
+	| FUNCTION() <lbrace> [<pipe> [BLOCK_VAR()] <pipe>] COMPSTMT() <rbrace> PRIMARY2() <colon2> OPERATION() FUNCTION2()
 //Other
 	| <eps> 
 }
@@ -1161,13 +1137,13 @@ void ARG() :
 {}
 {
 	LHS() <equal> ARG() ARG2()
-	| [<eps13>]LHS() OP_ASGN() ARG() ARG2() // hook [<eps>]
+	| LHS() OP_ASGN() ARG() ARG2()
 	| <plus> ARG() ARG2()
 	| <minus> ARG() ARG2()
 	| <exclamation> ARG() ARG2()
 	| <tilde> ARG() ARG2()
-	| [<eps14>]<keyword_defined> ARG() ARG2() // hook [<eps>]
-	| [<eps15>]PRIMARY() ARG2() // hook [<eps>]
+	| <keyword_defined> ARG() ARG2()
+	| PRIMARY() ARG2()
 }
 
 void ARG2() : 
@@ -1273,7 +1249,7 @@ void PRIMARY() :
 	| <keyword_yield> [<lparen> [CALL_ARGS()] <rparen>] PRIMARY2()
 	| <keyword_defined> <lparen> ARG() <rparen> PRIMARY2()
 	| FUNCTION() PRIMARY2()
-	| [<eps16>]FUNCTION() <lbrace> [<pipe> [BLOCK_VAR()] <pipe>] COMPSTMT() <rbrace> PRIMARY2() // hook [<eps>]
+	| FUNCTION() <lbrace> [<pipe> [BLOCK_VAR()] <pipe>] COMPSTMT() <rbrace> PRIMARY2()
 	| <keyword_if> EXPR() THEN() COMPSTMT() (<keyword_elsif> EXPR() THEN() COMPSTMT())* [<keyword_else> COMPSTMT()] <keyword_end> PRIMARY2()
 	| <keyword_unless> EXPR() THEN() COMPSTMT() [<keyword_else> COMPSTMT()] <keyword_end> PRIMARY2()
 	| <keyword_while> EXPR() DO() COMPSTMT() <keyword_end> PRIMARY2()
@@ -1284,14 +1260,14 @@ void PRIMARY() :
 	| <keyword_class> IDENTIFIER() [<less> IDENTIFIER()] COMPSTMT() <keyword_end> PRIMARY2()
 	| <keyword_module> IDENTIFIER() COMPSTMT() <keyword_end> PRIMARY2()
 	| <keyword_def> FNAME() ARGDECL() COMPSTMT() <keyword_end> PRIMARY2()
-	| [<eps17>]<keyword_def> SINGLETON() (<dot> | <colon2>) FNAME() ARGDECL() COMPSTMT() <keyword_end> PRIMARY2() // hook [<eps>]
+	| <keyword_def> SINGLETON() (<dot> | <colon2>) FNAME() ARGDECL() COMPSTMT() <keyword_end> PRIMARY2()
 }
 
 void PRIMARY3() :
 {}
 {
 	ARGS()
-	| [<eps18>]ASSOCS() // hook [<eps>]
+	| ASSOCS()
 }
 
 void PRIMARY2() : 
@@ -1321,7 +1297,7 @@ void THEN() :
 {
 	<T>
 	| <keyword_then>
-	| [<eps18>]<T> <keyword_then> //"then" and "do" can go on next line // hook [<eps>]
+	| <T> <keyword_then> //"then" and "do" can go on next line
 }
 
 /*
@@ -1333,7 +1309,7 @@ void DO() :
 {
 	<T>
 	| <keyword_do>
-	| [<eps19>]<T> <keyword_do> // hook [<eps>] 
+	| <T> <keyword_do> 
 }
 
 /*
@@ -1366,7 +1342,7 @@ void MLHS_ITEM() :
 {}
 {
 	LHS()
-	| [<eps20>]<lparen> MLHS() <rparen> // hook [<eps>]
+	| <lparen> MLHS() <rparen>
 }
 
 /*
@@ -1380,7 +1356,7 @@ void LHS() :
 {
 	 	VARIABLE()
 		| PRIMARY() <lsqbracket> [ARGS()] <rsqbracket>
-		| [<eps21>]PRIMARY() <dot> IDENTIFIER() // hook [<eps>]
+		| PRIMARY() <dot> IDENTIFIER()
 }
 
 /*
@@ -1406,8 +1382,8 @@ void CALL_ARGS() :
 {}
 {
 	ARGS()
-	| [<eps22>]ARGS() [<comma> ASSOCS()] [<comma> <star> ARG()] [<comma> <amper> ARG()] // hook [<eps>]
-	| [<eps23>]ASSOCS() [<comma> <star> ARG()] [<comma> <amper> ARG()] // hook [<eps>]
+	| ARGS() [<comma> ASSOCS()] [<comma> <star> ARG()] [<comma> <amper> ARG()]
+	| ASSOCS() [<comma> <star> ARG()] [<comma> <amper> ARG()]
 	| <star> ARG() [<comma> <amper> ARG()]
 	| <amper> ARG()
 	| COMMAND()
@@ -1535,7 +1511,7 @@ void SYMBOL() :
 {}
 {
 	 <colon>FNAME()
-	 | [<eps24>]<colon>VARNAME() // hook [<eps>]
+	 | <colon>VARNAME()
 }
 
 /*
@@ -1603,8 +1579,8 @@ void GLOBAL() :
 {}
 {
 	<dollar>IDENTIFIER()
-	| [<eps25>]<dollar><any_char> // hook [<eps>]
-	| [<eps26>]<dollar><minus><any_char> // hook [<eps>]
+	| <dollar><any_char>
+	| <dollar><minus><any_char>
 }
 
 /*
