@@ -1,15 +1,16 @@
 PARSER_BEGIN(RubyParser14)
 
 import java.io.StringReader;
+import java.io.InputStream;
 import java.io.Reader;
 
 public class RubyParser14 {
 
-	InputStream input;
+	private static InputStream input;
 
-	boolean inputFromFile = true;
+	private static boolean inputFromFile = false;
 
-	String file = "code.rb"; 
+	private static String file = "code.rb"; 
 	
 	private class Metrics {
 		private final static int AMOUNT_OF_METRICS = 23;
@@ -24,31 +25,32 @@ public class RubyParser14 {
 	}
    
 	public static void main(String args[]) {
-		try {
-			//String inputProgram = args[0];
-			//String inputProgram = "def bubble_sort(array) n = array.length loop do swapped = false (n-1).times do |i| if array[i] > array[i+1] array[i], array[i+1] = array[i+1], array[i] swapped = true end end break if not swapped end array end";
-			//String inputProgram = "a = [4,6,7,5]";
+                try {
+                        //String inputProgram = args[0];
+                        //String inputProgram = "def bubble_sort(array) n = array.length loop do swapped = false (n-1).times do |i| if array[i] > array[i+1] array[i], array[i+1] = array[i+1], array[i] swapped = true end end break if not swapped end array end";
+                        String inputProgram = "puts\n";
 
-			if (inputFromFile) {
-				System.out.println("Reading from file " + file + " ...");
-				try {
-					input = new java.io.FileInputStream(file);
-				} catch (java.io.FileNotFoundException e) {
-					System.out.println("File " + file + " not found.");
-					return;
-				}
-			} else {
-				System.out.println("Reading from standard input ...");
-				input = System.in;
-			}
-              
-			RubyParser14 parser = new RubyParser14(input);
-			parser.PROGRAM();
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
+                        /*if (inputFromFile) {
+                                System.out.println("Reading from file " + file + " ...");
+                                try {
+                                        input = new java.io.FileInputStream(file);
+                                } catch (java.io.FileNotFoundException e) {
+                                        System.out.println("File " + file + " not found.");
+                                        return;
+                                }
+                        } else {
+                                System.out.println("Reading from standard input ...");
+                                input = System.in;
+                        }
+                        */
+                        RubyParser14 parser = new RubyParser14(inputProgram);
+                        parser.CALL();
+                        System.out.println("Done!");
+                }
+                catch(Exception e) {
+                        e.printStackTrace();
+        }
+    }
 }
 
 PARSER_END(RubyParser14)
@@ -58,74 +60,7 @@ PARSER_END(RubyParser14)
  * case ' ': case '\t': case '\f': case '\r':
  * case '\13': // '\v'
  */
-SKIP : {" " | "\t" }
-
-/*
- * @Token
- * Any char
- */
-TOKEN : { <any_char : 	(["A"-"Z"])+ | (["a"-"z"])+ | "_" | (["0"-"9"])+ | "`" | "~"
-						| "!" | "@" | "#" | "$" | "%" | "^" | "&" | "*"
-						| "(" | ")" | "_" | "-" | "+" | "=" | "|" | "\\"
-						| " " | "{" | "}" | "[" | "]" | ":" | ";" | "'"
-						| "?" | "/" | "." | "," | "<" | ">" | "\"" > }
-//TOKEN : { <any_char : 	"!!!!!!!!!!" > }
-
-/*
- * @Token
- * Char
- */
-//TOKEN : { <ch :  (["A"-"Z"])+ | (["a"-"z"])+ |"_"> }
-
-TOKEN : { <ch :  	(["A"-"Z"])+ | (["a"-"z"])+ | "_"> }
-
-/*
- * @Token
- * Numbers
- */
-TOKEN : { <num : (["0"-"9"])+> }
-
-/*
- * @Token
- * "Q"
- */
-TOKEN : { <Q : "Q"> }
-
-/*
- * @Token
- * "q"
- */
-TOKEN : { <q : "q"> }
-
-/*
- * @Token
- * "x"
- */
-TOKEN : { <x : "x"> }
-
-/*
- * @Token
- * "r"
- */
-TOKEN : { <r : "r"> }
-
-/*
- * @Token
- * "i"
- */
-TOKEN : { <i : "i"> }
-
-/*
- * @Token
- * "o"
- */
-TOKEN : { <o : "o"> }
-
-/*
- * @Token
- * "p"
- */
-TOKEN : { <p : "p"> }
+SKIP : {" " | "\t" | "\n" }
 
 /*
  * @Token
@@ -168,6 +103,12 @@ TOKEN : { <colon : ":"> }
  * "="
  */
 TOKEN : { <equal : "="> }
+
+/*
+ * @Token
+ * "="
+ */
+TOKEN : { <underline : "_"> }
 
 /*
  * @Token
@@ -704,6 +645,81 @@ TOKEN : { <keyword_not : "not"> }
 TOKEN : { <eps : ""> }
 
 /*
+ * @Token
+ * Any char
+ */
+//TOKEN : { <any_char : 	(["A"-"Z"])+ | (["a"-"z"])+ | "_" | (["0"-"9"])+ | "`" | "~"
+//						| "!" | "@" | "#" | "$" | "%" | "^" | "&" | "*"
+//						| "(" | ")" | "-" | "+" | "=" | "|" | "\\"
+//						| " " | "{" | "}" | "[" | "]" | ":" | ";" | "'"
+//						| "?" | "/" | "." | "," | "<" | ">" | "\"" > }
+
+/*
+ * @Token
+ * Letter
+ */
+TOKEN : { <letter 	: "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M"
+					| "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z"
+					| "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m"
+					| "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z"> }
+
+/*
+ * @Token
+ * Digit, TODO add float
+ */
+TOKEN : { <digit	: "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"> }
+
+/*
+ * @Token
+ * Symbol, TODO add ' and " and `
+ */
+TOKEN : { <symbol 	: "|" | " " | "-" | "!" | "#" | "$" | "%" | "&" | "(" | ")" | "*" | "+" | ","
+					| "-" | "." | "/" | ":" | ";" | "<" | "=" | ">" | "?" | "@" | "[" | "\\" | "]"
+					| "^" | "_" | "`" | "{" | "|" | "}" | "~"> }
+
+/*
+ * @Token
+ * "Q"
+ */
+TOKEN : { <Q : "Q"> }
+
+/*
+ * @Token
+ * "q"
+ */
+TOKEN : { <q : "q"> }
+
+/*
+ * @Token
+ * "x"
+ */
+TOKEN : { <x : "x"> }
+
+/*
+ * @Token
+ * "r"
+ */
+TOKEN : { <r : "r"> }
+
+/*
+ * @Token
+ * "i"
+ */
+TOKEN : { <i : "i"> }
+
+/*
+ * @Token
+ * "o"
+ */
+TOKEN : { <o : "o"> }
+
+/*
+ * @Token
+ * "p"
+ */
+TOKEN : { <p : "p"> }
+
+/*
  * @Production
  * PROGRAM : COMPSTMT
  */
@@ -782,6 +798,26 @@ void STMT2() :
 	| <keyword_unless> EXPR() STMT2()
 	| <keyword_until> EXPR() STMT2()
 	| <eps>
+}
+
+/*
+ * @Production
+ * Any char
+ */
+void any_character() :
+{}
+{
+	<letter> | <digit> | <symbol>
+}
+
+/*
+ * @Production
+ * Char
+ */
+void character() :
+{}
+{
+	<letter>
 }
 
 /*
@@ -1579,8 +1615,8 @@ void GLOBAL() :
 {}
 {
 	<dollar>IDENTIFIER()
-	| <dollar><any_char>
-	| <dollar><minus><any_char>
+	| <dollar>any_character()
+	| <dollar><minus>any_character()
 }
 
 /*
@@ -1592,9 +1628,9 @@ void GLOBAL() :
 void STRING() : 
 {}
 {
-	<quote> (<any_char>)* <quote>
-	| <apostr> (<any_char>)* <apostr>
-	| <backapostr> (<any_char>)* <backapostr>
+	<quote> (any_character())* <quote>
+	| <apostr> (any_character())* <apostr>
+	| <backapostr> (any_character())* <backapostr>
 }
 
 /*
@@ -1604,7 +1640,7 @@ void STRING() :
 void STRING2() : 
 {}
 {
-	<percent>(<Q>|<q>|<x>)<ch> (<any_char>)* <ch>
+	<percent>(<Q>|<q>|<x>)character() (any_character())* character()
 }
 
 /*
@@ -1614,7 +1650,7 @@ void STRING2() :
 void HERE_DOC() : 
 {}
 {
-	<lshift>(IDENTIFIER() | STRING()) (<any_char>)* IDENTIFIER()
+	<lshift>(IDENTIFIER() | STRING()) (any_character())* IDENTIFIER()
 }
 
 /*
@@ -1625,8 +1661,8 @@ void HERE_DOC() :
 void REGEXP() : 
 {}
 {
-	<slash> (<any_char>)* <slash> [<i>|<o>|<p>]
-	| <percent><r> <ch> (<any_char>)* <ch>
+	<slash> (any_character())* <slash> [<i>|<o>|<p>]
+	| <percent><r> character() (any_character())* character()
 }
 
 /*
@@ -1636,5 +1672,5 @@ void REGEXP() :
 void IDENTIFIER() : 
 {}
 {
-	<ch>(<ch> | <num>)*
+	(<letter> | <underline>)+ (<letter> | <underline> | <digit>)*
 }
