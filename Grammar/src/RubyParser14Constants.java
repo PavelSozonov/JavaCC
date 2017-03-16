@@ -9,221 +9,227 @@ public interface RubyParser14Constants {
   /** End of File. */
   int EOF = 0;
   /** RegularExpression Id. */
-  int T = 4;
+  int keyword_super = 1;
   /** RegularExpression Id. */
-  int pipe = 5;
+  int T = 2;
   /** RegularExpression Id. */
-  int quote = 6;
+  int pipe = 6;
   /** RegularExpression Id. */
-  int apostr = 7;
+  int quote = 7;
   /** RegularExpression Id. */
-  int backapostr = 8;
+  int apostr = 8;
   /** RegularExpression Id. */
-  int colon = 9;
+  int backapostr = 9;
   /** RegularExpression Id. */
-  int equal = 10;
+  int colon = 10;
   /** RegularExpression Id. */
-  int underline = 11;
+  int equal = 11;
   /** RegularExpression Id. */
-  int plusequal = 12;
+  int underline = 12;
   /** RegularExpression Id. */
-  int starequal = 13;
+  int plusequal = 13;
   /** RegularExpression Id. */
-  int slashequal = 14;
+  int starequal = 14;
   /** RegularExpression Id. */
-  int percentequal = 15;
+  int slashequal = 15;
   /** RegularExpression Id. */
-  int powerequal = 16;
+  int percentequal = 16;
   /** RegularExpression Id. */
-  int minusequal = 17;
+  int powerequal = 17;
   /** RegularExpression Id. */
-  int amperequal = 18;
+  int minusequal = 18;
   /** RegularExpression Id. */
-  int andequal = 19;
+  int amperequal = 19;
   /** RegularExpression Id. */
-  int pipeequal = 20;
+  int andequal = 20;
   /** RegularExpression Id. */
-  int orequal = 21;
+  int pipeequal = 21;
   /** RegularExpression Id. */
-  int lshiftequal = 22;
+  int orequal = 22;
   /** RegularExpression Id. */
-  int caretequal = 23;
+  int lshiftequal = 23;
   /** RegularExpression Id. */
-  int equal2 = 24;
+  int caretequal = 24;
   /** RegularExpression Id. */
-  int equal3 = 25;
+  int equal2 = 25;
   /** RegularExpression Id. */
-  int lbrace = 26;
+  int equal3 = 26;
   /** RegularExpression Id. */
-  int rbrace = 27;
+  int lbrace = 27;
   /** RegularExpression Id. */
-  int at = 28;
+  int rbrace = 28;
   /** RegularExpression Id. */
-  int dollar = 29;
+  int at = 29;
   /** RegularExpression Id. */
-  int plusat = 30;
+  int dollar = 30;
   /** RegularExpression Id. */
-  int minusat = 31;
+  int plusat = 31;
   /** RegularExpression Id. */
-  int lsqbracket = 32;
+  int minusat = 32;
   /** RegularExpression Id. */
-  int sqbrackets = 33;
+  int lsqbracket = 33;
   /** RegularExpression Id. */
-  int sqbracketsequal = 34;
+  int sqbrackets = 34;
   /** RegularExpression Id. */
-  int rsqbracket = 35;
+  int sqbracketsequal = 35;
   /** RegularExpression Id. */
-  int lparen = 36;
+  int rsqbracket = 36;
   /** RegularExpression Id. */
-  int rparen = 37;
+  int lparen = 37;
   /** RegularExpression Id. */
-  int comma = 38;
+  int rparen = 38;
   /** RegularExpression Id. */
-  int exclamation = 39;
+  int comma = 39;
   /** RegularExpression Id. */
-  int question = 40;
+  int exclamation = 40;
   /** RegularExpression Id. */
-  int exclamationequal = 41;
+  int question = 41;
   /** RegularExpression Id. */
-  int exclamationtilde = 42;
+  int exclamationequal = 42;
   /** RegularExpression Id. */
-  int equaltilde = 43;
+  int exclamationtilde = 43;
   /** RegularExpression Id. */
-  int tilde = 44;
+  int equaltilde = 44;
   /** RegularExpression Id. */
-  int less = 45;
+  int tilde = 45;
   /** RegularExpression Id. */
-  int lshift = 46;
+  int less = 46;
   /** RegularExpression Id. */
-  int more = 47;
+  int lshift = 47;
   /** RegularExpression Id. */
-  int rshift = 48;
+  int more = 48;
   /** RegularExpression Id. */
-  int lessorequal = 49;
+  int rshift = 49;
   /** RegularExpression Id. */
-  int moreorequal = 50;
+  int lessorequal = 50;
   /** RegularExpression Id. */
-  int rshiftequal = 51;
+  int moreorequal = 51;
   /** RegularExpression Id. */
-  int lessequalmore = 52;
+  int rshiftequal = 52;
   /** RegularExpression Id. */
-  int equalmore = 53;
+  int lessequalmore = 53;
   /** RegularExpression Id. */
-  int caret = 54;
+  int equalmore = 54;
   /** RegularExpression Id. */
-  int dot = 55;
+  int caret = 55;
   /** RegularExpression Id. */
-  int dot2 = 56;
+  int dot = 56;
   /** RegularExpression Id. */
-  int dot3 = 57;
+  int dot2 = 57;
   /** RegularExpression Id. */
-  int plus = 58;
+  int dot3 = 58;
   /** RegularExpression Id. */
-  int minus = 59;
+  int plus = 59;
   /** RegularExpression Id. */
-  int star = 60;
+  int minus = 60;
   /** RegularExpression Id. */
-  int power = 61;
+  int star = 61;
   /** RegularExpression Id. */
-  int slash = 62;
+  int power = 62;
   /** RegularExpression Id. */
-  int percent = 63;
+  int slash = 63;
   /** RegularExpression Id. */
-  int amper = 64;
+  int percent = 64;
   /** RegularExpression Id. */
-  int and = 65;
+  int amper = 65;
   /** RegularExpression Id. */
-  int or = 66;
+  int and = 66;
   /** RegularExpression Id. */
-  int colon2 = 67;
+  int or = 67;
   /** RegularExpression Id. */
-  int keyword_do = 68;
+  int colon2 = 68;
   /** RegularExpression Id. */
-  int keyword_self = 69;
+  int keyword_do = 69;
   /** RegularExpression Id. */
-  int keyword_then = 70;
+  int keyword_self = 70;
   /** RegularExpression Id. */
-  int keyword_ensure = 71;
+  int keyword_then = 71;
   /** RegularExpression Id. */
-  int keyword_defined = 72;
+  int keyword_ensure = 72;
   /** RegularExpression Id. */
-  int keyword_begin = 73;
+  int keyword_defined = 73;
   /** RegularExpression Id. */
-  int keyword_case = 74;
+  int keyword_begin = 74;
   /** RegularExpression Id. */
-  int keyword_for = 75;
+  int keyword_case = 75;
   /** RegularExpression Id. */
-  int keyword_class = 76;
+  int keyword_for = 76;
   /** RegularExpression Id. */
-  int keyword_end = 77;
+  int keyword_class = 77;
   /** RegularExpression Id. */
-  int keyword_numeric = 78;
+  int keyword_end = 78;
   /** RegularExpression Id. */
-  int keyword_BEGIN = 79;
+  int keyword_numeric = 79;
   /** RegularExpression Id. */
-  int keyword_END = 80;
+  int keyword_BEGIN = 80;
   /** RegularExpression Id. */
-  int keyword_undef = 81;
+  int keyword_END = 81;
   /** RegularExpression Id. */
-  int keyword_rescue = 82;
+  int keyword_undef = 82;
   /** RegularExpression Id. */
-  int keyword_alias = 83;
+  int keyword_rescue = 83;
   /** RegularExpression Id. */
-  int keyword_else = 84;
+  int keyword_alias = 84;
   /** RegularExpression Id. */
-  int keyword_if = 85;
+  int keyword_else = 85;
   /** RegularExpression Id. */
-  int keyword_in = 86;
+  int keyword_if = 86;
   /** RegularExpression Id. */
-  int keyword_elsif = 87;
+  int keyword_in = 87;
   /** RegularExpression Id. */
-  int keyword_while = 88;
+  int keyword_elsif = 88;
   /** RegularExpression Id. */
-  int keyword_module = 89;
+  int keyword_while = 89;
   /** RegularExpression Id. */
-  int keyword_def = 90;
+  int keyword_module = 90;
   /** RegularExpression Id. */
-  int keyword_when = 91;
+  int keyword_def = 91;
   /** RegularExpression Id. */
-  int keyword_unless = 92;
+  int keyword_when = 92;
   /** RegularExpression Id. */
-  int keyword_until = 93;
+  int keyword_unless = 93;
   /** RegularExpression Id. */
-  int keyword_yield = 94;
+  int keyword_until = 94;
   /** RegularExpression Id. */
-  int keyword_nil = 95;
+  int keyword_yield = 95;
   /** RegularExpression Id. */
-  int keyword_and = 96;
+  int keyword_nil = 96;
   /** RegularExpression Id. */
-  int keyword_or = 97;
+  int keyword_and = 97;
   /** RegularExpression Id. */
-  int keyword_return = 98;
+  int keyword_or = 98;
   /** RegularExpression Id. */
-  int keyword_not = 99;
+  int keyword_return = 99;
   /** RegularExpression Id. */
-  int eps = 100;
+  int keyword_not = 100;
   /** RegularExpression Id. */
-  int letter = 101;
+  int eps = 101;
   /** RegularExpression Id. */
-  int digit = 102;
+  int letter = 102;
   /** RegularExpression Id. */
-  int symbol = 103;
+  int digit = 103;
   /** RegularExpression Id. */
-  int Q = 104;
+  int symbol = 104;
   /** RegularExpression Id. */
-  int q = 105;
+  int Q = 105;
   /** RegularExpression Id. */
-  int x = 106;
+  int q = 106;
   /** RegularExpression Id. */
-  int r = 107;
+  int x = 107;
   /** RegularExpression Id. */
-  int i = 108;
+  int r = 108;
   /** RegularExpression Id. */
-  int o = 109;
+  int i = 109;
   /** RegularExpression Id. */
-  int p = 110;
+  int o = 110;
   /** RegularExpression Id. */
-  int keyword_super = 111;
+  int p = 111;
+  /** RegularExpression Id. */
+  int NUMBER = 112;
+  /** RegularExpression Id. */
+  int DIGITS = 113;
+  /** RegularExpression Id. */
+  int EOL = 114;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -231,10 +237,11 @@ public interface RubyParser14Constants {
   /** Literal token values. */
   String[] tokenImage = {
     "<EOF>",
+    "\"super\"",
+    "<T>",
     "\" \"",
     "\"\\t\"",
     "\"\\n\"",
-    "<T>",
     "\"|\"",
     "\"\\\"\"",
     "\"\\\'\"",
@@ -341,7 +348,9 @@ public interface RubyParser14Constants {
     "\"i\"",
     "\"o\"",
     "\"p\"",
-    "\"super\"",
+    "<NUMBER>",
+    "<DIGITS>",
+    "<EOL>",
   };
 
 }

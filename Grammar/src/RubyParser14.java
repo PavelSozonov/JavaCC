@@ -23,13 +23,13 @@ public class RubyParser14 implements RubyParser14Constants {
                 this((Reader)(new StringReader(s)));
         }
 
-        public static void main(String args[]) {
+        public static void main(String args[]) throws ParseException, TokenMgrError {
                 try {
                         //String inputProgram = args[0];
                         //String inputProgram = "def bubble_sort(array) n = array.length loop do swapped = false (n-1).times do |i| if array[i] > array[i+1] array[i], array[i+1] = array[i+1], array[i] swapped = true end end break if not swapped end array end";
-                        String inputProgram = "puts\n";
+                        String inputProgram = "puts\u005cn";
 
-                        /*if (inputFromFile) {
+                        if (inputFromFile) {
                                 System.out.println("Reading from file " + file + " ...");
                                 try {
                                         input = new java.io.FileInputStream(file);
@@ -41,12 +41,15 @@ public class RubyParser14 implements RubyParser14Constants {
                                 System.out.println("Reading from standard input ...");
                                 input = System.in;
                         }
-                        */
-                        RubyParser14 parser = new RubyParser14(inputProgram);
-                        parser.CALL();
+
+                        RubyParser14 parser = new RubyParser14(input);
+                        parser.PROGRAM();
                         System.out.println("Done!");
                 }
-                catch(Exception e) {
+                catch(ParseException e) {
+                        e.printStackTrace();
+                                        }
+                catch(TokenMgrError e) {
                         e.printStackTrace();
         }
     }
@@ -57,6 +60,7 @@ public class RubyParser14 implements RubyParser14Constants {
  */
   static final public void PROGRAM() throws ParseException {
     COMPSTMT();
+    jj_consume_token(0);
   }
 
 /*
@@ -122,6 +126,7 @@ public class RubyParser14 implements RubyParser14Constants {
 //}
   static final public void STMT() throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case keyword_super:
     case quote:
     case apostr:
     case backapostr:
@@ -153,13 +158,13 @@ public class RubyParser14 implements RubyParser14Constants {
     case keyword_nil:
     case keyword_return:
     case letter:
-    case keyword_super:
       CALL();
       jj_consume_token(keyword_do);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case pipe:
         jj_consume_token(pipe);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case keyword_super:
         case quote:
         case apostr:
         case backapostr:
@@ -192,7 +197,6 @@ public class RubyParser14 implements RubyParser14Constants {
         case keyword_nil:
         case keyword_return:
         case letter:
-        case keyword_super:
           BLOCK_VAR();
           break;
         default:
@@ -341,6 +345,7 @@ public class RubyParser14 implements RubyParser14Constants {
 //}
   static final public void EXPR() throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case keyword_super:
     case quote:
     case apostr:
     case backapostr:
@@ -373,7 +378,6 @@ public class RubyParser14 implements RubyParser14Constants {
     case keyword_nil:
     case keyword_return:
     case letter:
-    case keyword_super:
       MLHS();
       jj_consume_token(equal);
       MRHS();
@@ -426,6 +430,7 @@ public class RubyParser14 implements RubyParser14Constants {
  */
   static final public void CALL() throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case keyword_super:
     case quote:
     case apostr:
     case backapostr:
@@ -457,7 +462,6 @@ public class RubyParser14 implements RubyParser14Constants {
     case keyword_nil:
     case keyword_return:
     case letter:
-    case keyword_super:
       FUNCTION();
       break;
       default:
@@ -481,6 +485,7 @@ public class RubyParser14 implements RubyParser14Constants {
       OPERATION();
       CALL_ARGS();
       break;
+    case keyword_super:
     case quote:
     case apostr:
     case backapostr:
@@ -510,7 +515,6 @@ public class RubyParser14 implements RubyParser14Constants {
     case keyword_yield:
     case keyword_nil:
     case keyword_return:
-    case keyword_super:
       PRIMARY();
       jj_consume_token(dot);
       OPERATION();
@@ -666,6 +670,7 @@ public class RubyParser14 implements RubyParser14Constants {
       case lparen:
         jj_consume_token(lparen);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case keyword_super:
         case quote:
         case apostr:
         case backapostr:
@@ -703,7 +708,6 @@ public class RubyParser14 implements RubyParser14Constants {
         case keyword_nil:
         case keyword_return:
         case letter:
-        case keyword_super:
           CALL_ARGS();
           break;
         default:
@@ -752,6 +756,7 @@ public class RubyParser14 implements RubyParser14Constants {
       OPERATION();
       jj_consume_token(lparen);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case keyword_super:
       case quote:
       case apostr:
       case backapostr:
@@ -789,7 +794,6 @@ public class RubyParser14 implements RubyParser14Constants {
       case keyword_nil:
       case keyword_return:
       case letter:
-      case keyword_super:
         CALL_ARGS();
         break;
       default:
@@ -803,6 +807,7 @@ public class RubyParser14 implements RubyParser14Constants {
       jj_consume_token(keyword_super);
       jj_consume_token(lparen);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case keyword_super:
       case quote:
       case apostr:
       case backapostr:
@@ -840,7 +845,6 @@ public class RubyParser14 implements RubyParser14Constants {
       case keyword_nil:
       case keyword_return:
       case letter:
-      case keyword_super:
         CALL_ARGS();
         break;
       default:
@@ -859,6 +863,7 @@ public class RubyParser14 implements RubyParser14Constants {
 
   static final public void FUNCTION2() throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case keyword_super:
     case quote:
     case apostr:
     case backapostr:
@@ -890,13 +895,13 @@ public class RubyParser14 implements RubyParser14Constants {
     case keyword_nil:
     case keyword_return:
     case letter:
-    case keyword_super:
       FUNCTION();
       PRIMARY2();
       jj_consume_token(dot);
       OPERATION();
       jj_consume_token(lparen);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case keyword_super:
       case quote:
       case apostr:
       case backapostr:
@@ -934,7 +939,6 @@ public class RubyParser14 implements RubyParser14Constants {
       case keyword_nil:
       case keyword_return:
       case letter:
-      case keyword_super:
         CALL_ARGS();
         break;
       default:
@@ -985,6 +989,7 @@ public class RubyParser14 implements RubyParser14Constants {
       OPERATION();
       jj_consume_token(lparen);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case keyword_super:
       case quote:
       case apostr:
       case backapostr:
@@ -1022,7 +1027,6 @@ public class RubyParser14 implements RubyParser14Constants {
       case keyword_nil:
       case keyword_return:
       case letter:
-      case keyword_super:
         CALL_ARGS();
         break;
       default:
@@ -1040,6 +1044,7 @@ public class RubyParser14 implements RubyParser14Constants {
     case lsqbracket:
       jj_consume_token(lsqbracket);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case keyword_super:
       case quote:
       case apostr:
       case backapostr:
@@ -1075,7 +1080,6 @@ public class RubyParser14 implements RubyParser14Constants {
       case keyword_nil:
       case keyword_return:
       case letter:
-      case keyword_super:
         ARGS();
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case comma:
@@ -1096,6 +1100,7 @@ public class RubyParser14 implements RubyParser14Constants {
     case lbrace:
       jj_consume_token(lbrace);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case keyword_super:
       case quote:
       case apostr:
       case backapostr:
@@ -1131,7 +1136,6 @@ public class RubyParser14 implements RubyParser14Constants {
       case keyword_nil:
       case keyword_return:
       case letter:
-      case keyword_super:
         PRIMARY3();
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case comma:
@@ -1155,6 +1159,7 @@ public class RubyParser14 implements RubyParser14Constants {
       case lparen:
         jj_consume_token(lparen);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case keyword_super:
         case quote:
         case apostr:
         case backapostr:
@@ -1192,7 +1197,6 @@ public class RubyParser14 implements RubyParser14Constants {
         case keyword_nil:
         case keyword_return:
         case letter:
-        case keyword_super:
           CALL_ARGS();
           break;
         default:
@@ -1213,6 +1217,7 @@ public class RubyParser14 implements RubyParser14Constants {
       case lparen:
         jj_consume_token(lparen);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case keyword_super:
         case quote:
         case apostr:
         case backapostr:
@@ -1250,7 +1255,6 @@ public class RubyParser14 implements RubyParser14Constants {
         case keyword_nil:
         case keyword_return:
         case letter:
-        case keyword_super:
           CALL_ARGS();
           break;
         default:
@@ -1396,6 +1400,7 @@ public class RubyParser14 implements RubyParser14Constants {
         }
         jj_consume_token(keyword_rescue);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case keyword_super:
         case quote:
         case apostr:
         case backapostr:
@@ -1431,7 +1436,6 @@ public class RubyParser14 implements RubyParser14Constants {
         case keyword_nil:
         case keyword_return:
         case letter:
-        case keyword_super:
           ARGS();
           break;
         default:
@@ -1577,6 +1581,7 @@ public class RubyParser14 implements RubyParser14Constants {
 //}
   static final public void ARG() throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case keyword_super:
     case quote:
     case apostr:
     case backapostr:
@@ -1608,7 +1613,6 @@ public class RubyParser14 implements RubyParser14Constants {
     case keyword_nil:
     case keyword_return:
     case letter:
-    case keyword_super:
       LHS();
       jj_consume_token(equal);
       ARG();
@@ -1872,6 +1876,7 @@ public class RubyParser14 implements RubyParser14Constants {
     case lsqbracket:
       jj_consume_token(lsqbracket);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case keyword_super:
       case quote:
       case apostr:
       case backapostr:
@@ -1907,7 +1912,6 @@ public class RubyParser14 implements RubyParser14Constants {
       case keyword_nil:
       case keyword_return:
       case letter:
-      case keyword_super:
         ARGS();
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case comma:
@@ -1928,6 +1932,7 @@ public class RubyParser14 implements RubyParser14Constants {
     case lbrace:
       jj_consume_token(lbrace);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case keyword_super:
       case quote:
       case apostr:
       case backapostr:
@@ -1963,7 +1968,6 @@ public class RubyParser14 implements RubyParser14Constants {
       case keyword_nil:
       case keyword_return:
       case letter:
-      case keyword_super:
         PRIMARY3();
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case comma:
@@ -1987,6 +1991,7 @@ public class RubyParser14 implements RubyParser14Constants {
       case lparen:
         jj_consume_token(lparen);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case keyword_super:
         case quote:
         case apostr:
         case backapostr:
@@ -2024,7 +2029,6 @@ public class RubyParser14 implements RubyParser14Constants {
         case keyword_nil:
         case keyword_return:
         case letter:
-        case keyword_super:
           CALL_ARGS();
           break;
         default:
@@ -2045,6 +2049,7 @@ public class RubyParser14 implements RubyParser14Constants {
       case lparen:
         jj_consume_token(lparen);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case keyword_super:
         case quote:
         case apostr:
         case backapostr:
@@ -2082,7 +2087,6 @@ public class RubyParser14 implements RubyParser14Constants {
         case keyword_nil:
         case keyword_return:
         case letter:
-        case keyword_super:
           CALL_ARGS();
           break;
         default:
@@ -2104,6 +2108,7 @@ public class RubyParser14 implements RubyParser14Constants {
       jj_consume_token(rparen);
       PRIMARY2();
       break;
+    case keyword_super:
     case keyword_begin:
     case keyword_case:
     case keyword_for:
@@ -2114,7 +2119,6 @@ public class RubyParser14 implements RubyParser14Constants {
     case keyword_def:
     case keyword_unless:
     case keyword_until:
-    case keyword_super:
       FUNCTION();
       PRIMARY2();
       break;
@@ -2127,6 +2131,7 @@ public class RubyParser14 implements RubyParser14Constants {
 
   static final public void PRIMARY3() throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case keyword_super:
     case quote:
     case apostr:
     case backapostr:
@@ -2162,7 +2167,6 @@ public class RubyParser14 implements RubyParser14Constants {
     case keyword_nil:
     case keyword_return:
     case letter:
-    case keyword_super:
       ARGS();
       break;
       default:
@@ -2181,6 +2185,7 @@ public class RubyParser14 implements RubyParser14Constants {
     case lsqbracket:
       jj_consume_token(lsqbracket);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case keyword_super:
       case quote:
       case apostr:
       case backapostr:
@@ -2216,7 +2221,6 @@ public class RubyParser14 implements RubyParser14Constants {
       case keyword_nil:
       case keyword_return:
       case letter:
-      case keyword_super:
         ARGS();
         break;
       default:
@@ -2241,6 +2245,7 @@ public class RubyParser14 implements RubyParser14Constants {
  */
   static final public void WHEN_ARGS() throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case keyword_super:
     case quote:
     case apostr:
     case backapostr:
@@ -2276,7 +2281,6 @@ public class RubyParser14 implements RubyParser14Constants {
     case keyword_nil:
     case keyword_return:
     case letter:
-    case keyword_super:
       ARGS();
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case comma:
@@ -2344,6 +2348,7 @@ public class RubyParser14 implements RubyParser14Constants {
  */
   static final public void BLOCK_VAR() throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case keyword_super:
     case quote:
     case apostr:
     case backapostr:
@@ -2375,7 +2380,6 @@ public class RubyParser14 implements RubyParser14Constants {
     case keyword_nil:
     case keyword_return:
     case letter:
-    case keyword_super:
       LHS();
       break;
     case star:
@@ -2395,6 +2399,7 @@ public class RubyParser14 implements RubyParser14Constants {
  */
   static final public void MLHS() throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case keyword_super:
     case quote:
     case apostr:
     case backapostr:
@@ -2426,10 +2431,10 @@ public class RubyParser14 implements RubyParser14Constants {
     case keyword_nil:
     case keyword_return:
     case letter:
-    case keyword_super:
       MLHS_ITEM();
       jj_consume_token(comma);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case keyword_super:
       case quote:
       case apostr:
       case backapostr:
@@ -2461,7 +2466,6 @@ public class RubyParser14 implements RubyParser14Constants {
       case keyword_nil:
       case keyword_return:
       case letter:
-      case keyword_super:
         MLHS_ITEM();
         label_8:
         while (true) {
@@ -2485,6 +2489,7 @@ public class RubyParser14 implements RubyParser14Constants {
       case star:
         jj_consume_token(star);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case keyword_super:
         case quote:
         case apostr:
         case backapostr:
@@ -2516,7 +2521,6 @@ public class RubyParser14 implements RubyParser14Constants {
         case keyword_nil:
         case keyword_return:
         case letter:
-        case keyword_super:
           LHS();
           break;
         default:
@@ -2546,6 +2550,7 @@ public class RubyParser14 implements RubyParser14Constants {
  */
   static final public void MLHS_ITEM() throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case keyword_super:
     case quote:
     case apostr:
     case backapostr:
@@ -2577,7 +2582,6 @@ public class RubyParser14 implements RubyParser14Constants {
     case keyword_nil:
     case keyword_return:
     case letter:
-    case keyword_super:
       LHS();
       break;
       default:
@@ -2603,6 +2607,7 @@ public class RubyParser14 implements RubyParser14Constants {
     case letter:
       VARIABLE();
       break;
+    case keyword_super:
     case quote:
     case apostr:
     case backapostr:
@@ -2628,10 +2633,10 @@ public class RubyParser14 implements RubyParser14Constants {
     case keyword_until:
     case keyword_yield:
     case keyword_return:
-    case keyword_super:
       PRIMARY();
       jj_consume_token(lsqbracket);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case keyword_super:
       case quote:
       case apostr:
       case backapostr:
@@ -2667,7 +2672,6 @@ public class RubyParser14 implements RubyParser14Constants {
       case keyword_nil:
       case keyword_return:
       case letter:
-      case keyword_super:
         ARGS();
         break;
       default:
@@ -2689,6 +2693,7 @@ public class RubyParser14 implements RubyParser14Constants {
  */
   static final public void MRHS() throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case keyword_super:
     case quote:
     case apostr:
     case backapostr:
@@ -2724,7 +2729,6 @@ public class RubyParser14 implements RubyParser14Constants {
     case keyword_nil:
     case keyword_return:
     case letter:
-    case keyword_super:
       ARGS();
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case comma:
@@ -2759,6 +2763,7 @@ public class RubyParser14 implements RubyParser14Constants {
  */
   static final public void CALL_ARGS() throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case keyword_super:
     case quote:
     case apostr:
     case backapostr:
@@ -2794,7 +2799,6 @@ public class RubyParser14 implements RubyParser14Constants {
     case keyword_nil:
     case keyword_return:
     case letter:
-    case keyword_super:
       ARGS();
       break;
       case star:
@@ -3144,7 +3148,7 @@ public class RubyParser14 implements RubyParser14Constants {
  * @Production
  * FNAME	: IDENTIFIER | .. | "|" | ^ | & | <=> | == | === | =~
  * 		| > | >= | < | <= | + | - | * | / | % | **
- * 		| << | >> |  ̃ | +@ | -@ | [] | []=
+ * 		| << | >> |  Мѓ | +@ | -@ | [] | []=
  */
   static final public void FNAME() throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -3306,8 +3310,8 @@ public class RubyParser14 implements RubyParser14Constants {
 /*
  * @Production
  * STRING 	: " {any_char} "
-		| ’ {any_char} ’
-		| ‘ {any_char} ‘
+		| вЂ™ {any_char} вЂ™
+		| вЂ� {any_char} вЂ�
  */
   static final public void STRING() throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -3606,16 +3610,16 @@ public class RubyParser14 implements RubyParser14Constants {
       jj_la1_init_3();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x10,0x10,0x34000bc0,0x20,0x34000bc0,0x20,0x0,0x34000bc0,0x0,0x0,0x34000bc0,0x0,0x34000bc0,0x34000bc0,0x34000bc0,0x0,0x34000bc0,0x34000bc0,0x34000bc0,0x34000bc0,0x34000bc0,0x34000bc0,0x20,0x34000bc0,0x34000bc0,0x34000bc0,0x20,0x34000bc0,0x34000bc0,0x20,0x34000bc0,0x20,0x34000bc0,0x34000bc0,0x0,0x34000bc0,0x0,0x34000bc0,0x34000bc0,0x0,0x34000bc0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x34000bc0,0x0,0x0,0x0,0x0,0x34000bc0,0x34000bc0,0x3000020,0x0,0x34000bc0,0x0,0x34000bc0,0x34000bc0,0x0,0x34000bc0,0x0,0x34000bc0,0x20,0x0,0x0,0x0,0x0,0x0,0x0,0x34000bc0,0x0,0x0,0x0,0x0,0x34000bc0,0x34000bc0,0x34000bc0,0x0,0x0,0x34000bc0,0x10,0x10,0x34000bc0,0x0,0x34000bc0,0x34000bc0,0x0,0x34000bc0,0x34000bc0,0x34000bc0,0x34000bc0,0x0,0x34000bc0,0x0,0x0,0x0,0x0,0x0,0x0,0x34000bc0,0x0,0x810,0x0,0x800,0x0,0x0,0x0,0x0,0x800,0x30000800,0x0,0x30000800,0x3c0,0xfff000,0x200,0xc3000820,0x0,0x0,0x30000800,0x20000000,0x0,0x0,0x0,0x1c0,0x0,0x0,0x9c0,0x0,0x0,0x0,0x0,0x0,0x0,0x800,0x800,0x800,0x800,};
+      jj_la1_0 = new int[] {0x4,0x4,0x68001782,0x40,0x68001782,0x40,0x0,0x68001782,0x0,0x0,0x68001782,0x0,0x68001782,0x68001782,0x68001782,0x0,0x68001782,0x68001782,0x68001782,0x68001782,0x68001782,0x68001782,0x40,0x68001782,0x68001782,0x68001782,0x40,0x68001782,0x68001782,0x40,0x68001782,0x40,0x68001782,0x68001782,0x0,0x68001782,0x0,0x68001782,0x68001782,0x0,0x68001782,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x68001782,0x0,0x0,0x0,0x0,0x68001780,0x68001782,0x6000040,0x0,0x68001782,0x0,0x68001782,0x68001782,0x0,0x68001782,0x0,0x68001782,0x40,0x0,0x0,0x0,0x0,0x0,0x0,0x68001782,0x0,0x0,0x0,0x0,0x68001782,0x68001782,0x68001782,0x0,0x0,0x68001782,0x4,0x4,0x68001782,0x0,0x68001782,0x68001782,0x0,0x68001782,0x68001782,0x68001782,0x68001782,0x0,0x68001782,0x0,0x0,0x0,0x0,0x0,0x0,0x68001782,0x0,0x1004,0x0,0x1000,0x0,0x0,0x0,0x0,0x1000,0x60001000,0x0,0x60001000,0x780,0x1ffe000,0x400,0x86001040,0x0,0x0,0x60001000,0x40000000,0x0,0x0,0x0,0x380,0x0,0x0,0x1380,0x0,0x0,0x0,0x0,0x0,0x0,0x1000,0x1000,0x1000,0x1000,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x0,0x0,0xd0004011,0x0,0xd0004011,0x0,0x0,0xdc005091,0x0,0x0,0xdc005091,0x0,0xc0004011,0xc0004011,0xdc005091,0x10,0xdc005091,0xdc005091,0xdc005091,0xc0004011,0xdc005091,0xd0004011,0x0,0xdc005091,0xdc005091,0xd0004011,0x0,0xdc005091,0xd0004011,0x0,0xd0004011,0x0,0xc0004011,0xdc005091,0x40,0xcc005091,0x40,0xcc005091,0xdc005091,0x10,0xdc005091,0x10,0x0,0x0,0x0,0x0,0x0,0x0,0xcc005091,0x0,0x0,0x2000,0x800000,0xc0004011,0xcc005091,0xff57ee00,0x40,0xcc005091,0x40,0xcc005091,0xdc005091,0x10,0xdc005091,0x10,0xd0004011,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xcc005091,0x0,0x0,0x2000,0x800000,0xc0004011,0xcc005091,0xcc005091,0x1,0x40,0xdc005091,0x0,0x0,0xd0004011,0x40,0xc0004011,0xc0004011,0x10000000,0xd0004011,0xc0004011,0xcc005091,0xc0004011,0x40,0xdc005091,0x40,0x40,0x40,0x40,0x40,0x40,0xdc005091,0x40,0x10000010,0x40,0x0,0x40,0x40,0x40,0x0,0x10000000,0x10,0x40,0x0,0xc0004000,0x80000,0x0,0xfd57f806,0x180,0x180,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xc0000000,0x0,0x0,0x0,0x0,};
+      jj_la1_1 = new int[] {0x0,0x0,0xa0008022,0x0,0xa0008022,0x0,0x0,0xb800a122,0x0,0x0,0xb800a122,0x0,0x80008022,0x80008022,0xb800a122,0x20,0xb800a122,0xb800a122,0xb800a122,0x80008022,0xb800a122,0xa0008022,0x0,0xb800a122,0xb800a122,0xa0008022,0x0,0xb800a122,0xa0008022,0x0,0xa0008022,0x0,0x80008022,0xb800a122,0x80,0x9800a122,0x80,0x9800a122,0xb800a122,0x20,0xb800a122,0x20,0x0,0x0,0x0,0x0,0x0,0x0,0x9800a122,0x0,0x0,0x4000,0x1000000,0x80008022,0x9800a122,0xfeafdc00,0x80,0x9800a122,0x80,0x9800a122,0xb800a122,0x20,0xb800a122,0x20,0xa0008022,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x9800a122,0x0,0x0,0x4000,0x1000000,0x80008022,0x9800a122,0x9800a122,0x2,0x80,0xb800a122,0x0,0x0,0xa0008022,0x80,0x80008022,0x80008022,0x20000000,0xa0008022,0x80008022,0x9800a122,0x80008022,0x80,0xb800a122,0x80,0x80,0x80,0x80,0x80,0x80,0xb800a122,0x80,0x20000020,0x80,0x0,0x80,0x80,0x80,0x0,0x20000000,0x20,0x80,0x0,0x80008000,0x100000,0x0,0xfaaff00d,0x300,0x300,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x80000000,0x0,0x0,0x0,0x0,};
    }
    private static void jj_la1_init_2() {
-      jj_la1_2 = new int[] {0x0,0x0,0xf7205f28,0x0,0xf7205f28,0x0,0x10,0xf72bdf28,0x31200000,0x0,0xf7205f28,0x0,0xf7205f28,0xf7205f28,0xf7205f29,0x0,0xf7205f29,0xf7205f29,0xf7205f29,0xf7205f28,0xf7205f29,0xf7205f28,0x0,0xf7205f29,0xf7205f29,0xf7205f28,0x0,0xf7205f29,0xf7205f28,0x0,0xf7205f28,0x0,0xf7205f28,0xf7205f29,0x0,0xf7205f28,0x0,0xf7205f28,0xf7205f29,0x0,0xf7205f29,0x0,0x800000,0x100000,0x100000,0x8000000,0x100000,0x40000,0xf7205f28,0x100000,0x80,0x0,0x8,0xf7205f28,0xf7205f28,0x7,0x0,0xf7205f28,0x0,0xf7205f28,0xf7205f29,0x0,0xf7205f29,0x0,0xf7205f28,0x0,0x800000,0x100000,0x100000,0x8000000,0x100000,0x40000,0xf7205f28,0x100000,0x80,0x0,0x8,0xf7205f28,0xf7205f28,0xf7205f28,0x8,0x0,0xf7205f28,0x40,0x10,0xf7205f28,0x0,0xf7205f28,0xf7205f28,0x0,0xf7205f28,0xf7205f28,0xf7205f28,0xf7205f28,0x0,0xf7205f28,0x0,0x0,0x0,0x0,0x0,0x0,0xf7205f29,0x0,0x1,0x0,0x0,0x0,0x0,0x0,0x1,0x0,0x80000020,0x0,0x80000020,0x4000,0x0,0x0,0x1,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
+      jj_la1_2 = new int[] {0x0,0x0,0xee40be51,0x0,0xee40be51,0x0,0x20,0xee57be51,0x62400000,0x0,0xee40be51,0x0,0xee40be51,0xee40be51,0xee40be53,0x0,0xee40be53,0xee40be53,0xee40be53,0xee40be51,0xee40be53,0xee40be51,0x0,0xee40be53,0xee40be53,0xee40be51,0x0,0xee40be53,0xee40be51,0x0,0xee40be51,0x0,0xee40be51,0xee40be53,0x0,0xee40be51,0x0,0xee40be51,0xee40be53,0x0,0xee40be53,0x0,0x1000000,0x200000,0x200000,0x10000000,0x200000,0x80000,0xee40be51,0x200000,0x100,0x0,0x10,0xee40be51,0xee40be51,0xf,0x0,0xee40be51,0x0,0xee40be51,0xee40be53,0x0,0xee40be53,0x0,0xee40be51,0x0,0x1000000,0x200000,0x200000,0x10000000,0x200000,0x80000,0xee40be51,0x200000,0x100,0x0,0x10,0xee40be51,0xee40be51,0xee40be51,0x10,0x0,0xee40be51,0x80,0x20,0xee40be51,0x0,0xee40be51,0xee40be51,0x0,0xee40be51,0xee40be51,0xee40be51,0xee40be51,0x0,0xee40be51,0x0,0x0,0x0,0x0,0x0,0x0,0xee40be53,0x0,0x2,0x0,0x0,0x0,0x0,0x0,0x2,0x0,0x40,0x0,0x40,0x8001,0x0,0x0,0x3,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1,0x0,0x0,0x0,0x0,};
    }
    private static void jj_la1_init_3() {
-      jj_la1_3 = new int[] {0x0,0x0,0x8024,0x0,0x8024,0x0,0x0,0x802c,0x10,0xe0,0x802c,0x12,0x8024,0x8024,0x8024,0x0,0x8024,0x8024,0x8024,0x8024,0x8024,0x8024,0x0,0x8024,0x8024,0x8024,0x0,0x8024,0x8024,0x0,0x8024,0x0,0x8034,0x8024,0x0,0x8024,0x0,0x8024,0x8024,0x0,0x8024,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x8024,0x0,0x0,0x0,0x0,0x24,0x8024,0x10,0x0,0x8024,0x0,0x8024,0x8024,0x0,0x8024,0x0,0x8024,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x8024,0x0,0x0,0x0,0x0,0x8024,0x8024,0x8024,0x10,0x0,0x8024,0x0,0x0,0x8024,0x0,0x8024,0x8024,0x0,0x8024,0x8024,0x8024,0x8024,0x0,0x8024,0x0,0x0,0x0,0x0,0x0,0x0,0x8024,0x0,0x20,0x0,0x20,0x0,0x0,0x0,0x0,0x20,0x20,0x0,0x20,0x0,0x0,0x0,0x20,0x0,0x0,0x20,0x0,0xe0,0xe0,0xe0,0x0,0x700,0xe0,0x20,0xe0,0xe0,0x7000,0x7000,0xe0,0x0,0x20,0x20,0x60,0x60,};
+      jj_la1_3 = new int[] {0x0,0x0,0x49,0x0,0x49,0x0,0x0,0x59,0x20,0x1c0,0x59,0x24,0x49,0x49,0x49,0x0,0x49,0x49,0x49,0x49,0x49,0x49,0x0,0x49,0x49,0x49,0x0,0x49,0x49,0x0,0x49,0x0,0x69,0x49,0x0,0x49,0x0,0x49,0x49,0x0,0x49,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x49,0x0,0x0,0x0,0x0,0x49,0x49,0x20,0x0,0x49,0x0,0x49,0x49,0x0,0x49,0x0,0x49,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x49,0x0,0x0,0x0,0x0,0x49,0x49,0x49,0x20,0x0,0x49,0x0,0x0,0x49,0x0,0x49,0x49,0x0,0x49,0x49,0x49,0x49,0x0,0x49,0x0,0x0,0x0,0x0,0x0,0x0,0x49,0x0,0x40,0x0,0x40,0x0,0x0,0x0,0x0,0x40,0x41,0x0,0x41,0x0,0x0,0x0,0x40,0x0,0x0,0x40,0x0,0x1c0,0x1c0,0x1c0,0x0,0xe00,0x1c0,0x40,0x1c0,0x1c0,0xe000,0xe000,0x1c0,0x0,0x40,0x40,0xc0,0xc0,};
    }
 
   /** Constructor with InputStream. */
@@ -3753,7 +3757,7 @@ public class RubyParser14 implements RubyParser14Constants {
   /** Generate ParseException. */
   static public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[112];
+    boolean[] la1tokens = new boolean[115];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -3776,7 +3780,7 @@ public class RubyParser14 implements RubyParser14Constants {
         }
       }
     }
-    for (int i = 0; i < 112; i++) {
+    for (int i = 0; i < 115; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;
