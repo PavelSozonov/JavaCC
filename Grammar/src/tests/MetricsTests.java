@@ -8,8 +8,11 @@ import metrics.MetricsCounter;
 
 public class MetricsTests {
 	// two metrics counters for two files
-	MetricsCounter mc1 = new MetricsCounter("/code1.rb");
-	MetricsCounter mc2 = new MetricsCounter("/code2.rb");
+//	MetricsCounter mc1 = new MetricsCounter("/code1.rb");
+//	MetricsCounter mc2 = new MetricsCounter("/code2.rb");
+
+	MetricsCounter mc1 = new MetricsCounter();
+	MetricsCounter mc2 = new MetricsCounter();
 
 	@Test
 	public void testNOM() {			

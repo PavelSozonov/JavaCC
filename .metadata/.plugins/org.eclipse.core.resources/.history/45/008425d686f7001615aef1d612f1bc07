@@ -1,0 +1,29 @@
+
+public class RubyParser {
+
+}
+
+public class RubyParser {
+
+	private static class Metrics {
+		public long metric 
+	}
+
+	/*  
+	 * A String based constructor for ease of use
+	 */
+    public RubyParser(String s) {
+        this((Reader)(new StringReader(s))); 
+    }
+       
+    public static void main(String args[]) {
+        try {
+              String inputProgram = args[0];
+              RubyParser parser = new RubyParser(inputProgram);
+              parser.program();
+        }
+        catch(Exception e) {
+              e.printStackTrace();
+        }
+    }
+}

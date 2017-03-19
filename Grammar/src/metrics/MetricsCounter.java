@@ -2,10 +2,20 @@ package metrics;
 
 public class MetricsCounter {
 
-	public MetricsCounter(String pathToCode) {
-		// TODO Auto-generated constructor stub
+	private final static int AMOUNT_OF_METRICS = 23;
+
+	private static String[] metrics = new String[AMOUNT_OF_METRICS];
+	
+	public MetricsCounter() {
+		for (int i = 0; i < AMOUNT_OF_METRICS; i++) {
+			metrics[i] = "0";
+		}
 	}
 
+	public String[] getMetrics() {
+		return metrics;
+	}
+	
 	public int countNOM() {
 		// TODO Auto-generated method stub
 		return -1;

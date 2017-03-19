@@ -1,0 +1,1291 @@
+PARSER_BEGIN(RubyParser)
+
+package java.cc;
+
+import java.io.StringReader;
+import java.io.Reader;
+
+public class RubyParser {
+
+	private class Metrics {
+		private final static int AMOUNT_OF_METRICS = 23;
+		public long metrics[] = new long[AMOUNT_OF_METRICS];
+	}
+
+	/*  
+	 * A String based constructor for ease of use
+	 */
+    public RubyParser(String s) {
+        this((Reader)(new StringReader(s))); 
+    }
+       
+    public static void main(String args[]) {
+        try {
+              String inputProgram = args[0];
+              RubyParser parser = new RubyParser(inputProgram);
+              parser.program();
+        }
+        catch(Exception e) {
+              e.printStackTrace();
+        }
+    }
+}
+
+PARSER_END(RubyParser)
+
+/* 
+ * White spaces: 
+ * case ' ': case '\t': case '\f': case '\r':
+ * case '\13': // '\v'
+ */
+SKIP : {" " | "\t" }
+
+/*
+ * @Token
+ * Any char
+ */
+TOKEN : { <any_char : 	"A"-"Z" | "a"-"z" | "_" | "0"-"9" | "`" | "~"
+						| "!" | "@" | "#" | "$" | "%" | "^" | "&" | "*"
+						| "(" | ")" | "_" | "-" | "+" | "=" | "|" | "\"
+						| " " | "{" | "}" | "[" | "]" | ":" | ";" | "'"
+						| "?" | "/" | "." | "," | "<" | ">" | "\""  }
+
+/*
+ * @Token
+ * Char
+ */
+TOKEN : { <char : "A"-"Z" | "a"-"z" | "_"> }
+
+/*
+ * @Token
+ * Numbers
+ */
+TOKEN : { <num : "0"-"9"> }
+
+/*
+ * @Token
+ * "Q"
+ */
+TOKEN : { <Q : "Q"> }
+
+/*
+ * @Token
+ * "q"
+ */
+TOKEN : { <q : "q"> }
+
+/*
+ * @Token
+ * "x"
+ */
+TOKEN : { <x : "x"> }
+
+/*
+ * @Token
+ * "r"
+ */
+TOKEN : { <r : "r"> }
+
+/*
+ * @Token
+ * "i"
+ */
+TOKEN : { <i : "i"> }
+
+/*
+ * @Token
+ * "o"
+ */
+TOKEN : { <o : "o"> }
+
+/*
+ * @Token
+ * "p"
+ */
+TOKEN : { <p : "p"> }
+
+/*
+ * @Token
+ * T : ";" | "\n" //a newline can terminate a statement
+ */
+TOKEN : { <T : ";" | "\n"> }
+
+/*
+ * @Token
+ * "|"
+ */
+TOKEN : { <pipe : "|"> }
+
+/*
+ * @Token
+ * "\""
+ */
+TOKEN : { <quote : "\""> }
+
+/*
+ * @Token
+ * "\'"
+ */
+TOKEN : { <apostr : "'"> }
+
+/*
+ * @Token
+ * "\`"
+ */
+TOKEN : { <backapostr : "`"> }
+
+/*
+ * @Token
+ * ":"
+ */
+TOKEN : { <colon : ":"> }
+
+/*
+ * @Token
+ * "="
+ */
+TOKEN : { <equal : "="> }
+
+/*
+ * @Token
+ * "+="
+ */
+TOKEN : { <plusequal : "+="> }
+
+/*
+ * @Token
+ * "*="
+ */
+TOKEN : { <starequal : "*="> }
+
+/*
+ * @Token
+ * "/="
+ */
+TOKEN : { <slashequal : "/="> }
+
+/*
+ * @Token
+ * "%="
+ */
+TOKEN : { <percentequal : "%="> }
+
+/*
+ * @Token
+ * "**="
+ */
+TOKEN : { <powerequal : "**="> }
+
+/*
+ * @Token
+ * "-="
+ */
+TOKEN : { <minusequal : "-="> }
+
+/*
+ * @Token
+ * "&="
+ */
+TOKEN : { <amperequal : "&="> }
+
+/*
+ * @Token
+ * "&&="
+ */
+TOKEN : { <andequal : "&&="> }
+
+/*
+ * @Token
+ * "|="
+ */
+TOKEN : { <pipeequal : "|="> }
+
+/*
+ * @Token
+ * "||="
+ */
+TOKEN : { <orequal : "||="> }
+
+/*
+ * @Token
+ * "<<="
+ */
+TOKEN : { <lshiftequal : "<<="> }
+
+/*
+ * @Token
+ * "^="
+ */
+TOKEN : { <caretequal : "^="> }
+
+/*
+ * @Token
+ * "=="
+ */
+TOKEN : { <equal2 : "=="> }
+
+/*
+ * @Token
+ * "==="
+ */
+TOKEN : { <equal3 : "==="> }
+
+/*
+ * @Token
+ * "{"
+ */
+TOKEN : { <lbrace : "{"> }
+
+/*
+ * @Token
+ * "}"
+ */
+TOKEN : { <rbrace : "}"> }
+
+/*
+ * @Token
+ * "@"
+ */
+TOKEN : { <at : "@"> }
+
+/*
+ * @Token
+ * "$"
+ */
+TOKEN : { <dollar : "$"> }
+
+/*
+ * @Token
+ * "+@"
+ */
+TOKEN : { <plusat : "+@"> }
+
+/*
+ * @Token
+ * "-@"
+ */
+TOKEN : { <minusat : "-@"> }
+
+/*
+ * @Token
+ * "["
+ */
+TOKEN : { <lsqbracket : "["> }
+
+/*
+ * @Token
+ * "[]"
+ */
+TOKEN : { <sqbrackets : "[]"> }
+
+/*
+ * @Token
+ * "[]="
+ */
+TOKEN : { <sqbracketsequal : "[]="> }
+
+/*
+ * @Token
+ * "]"
+ */
+TOKEN : { <rsqbracket : "]"> }
+
+/*
+ * @Token
+ * "("
+ */
+TOKEN : { <lparen : "("> }
+
+/*
+ * @Token
+ * ")"
+ */
+TOKEN : { <rparen : ")"> }
+
+/*
+ * @Token
+ * ","
+ */
+TOKEN : { <comma : ","> }
+
+/*
+ * @Token
+ * "!"
+ */
+TOKEN : { <exclamation : "!"> }
+
+/*
+ * @Token
+ * "?"
+ */
+TOKEN : { <question : "?"> }
+
+/*
+ * @Token
+ * "!="
+ */
+TOKEN : { <exclamationequal : "!="> }
+
+/*
+ * @Token
+ * "!~"
+ */
+TOKEN : { <exclamationtilde : "!~"> }
+
+/*
+ * @Token
+ * "!~"
+ */
+TOKEN : { <equaltilde : "=~"> }
+
+/*
+ * @Token
+ * "~"
+ */
+TOKEN : { <tilde : "~"> }
+
+/*
+ * @Token
+ * "<"
+ */
+TOKEN : { <less : "<"> }
+
+/*
+ * @Token
+ * "<<"
+ */
+TOKEN : { <lshift : "<<"> }
+
+/*
+ * @Token
+ * ">"
+ */
+TOKEN : { <more : ">"> }
+
+/*
+ * @Token
+ * ">>"
+ */
+TOKEN : { <rshift : ">>"> }
+
+/*
+ * @Token
+ * "<="
+ */
+TOKEN : { <lessorequal : "<="> }
+
+/*
+ * @Token
+ * ">="
+ */
+TOKEN : { <moreorequal : ">="> }
+
+/*
+ * @Token
+ * " >>="
+ */
+TOKEN : { <rshiftequal : " >>="> }
+
+/*
+ * @Token
+ * "<=>"
+ */
+TOKEN : { <lessequalmore : "<=>"> }
+
+/*
+ * @Token
+ * "=>"
+ */
+TOKEN : { <equalmore : "=>"> }
+
+/*
+ * @Token
+ * "^"
+ */
+TOKEN : { <caret : "^"> }
+
+/*
+ * @Token
+ * "."
+ */
+TOKEN : { <dot : "."> }
+
+/*
+ * @Token
+ * ".."
+ */
+TOKEN : { <dot2 : ".."> }
+
+/*
+ * @Token
+ * "..."
+ */
+TOKEN : { <dot3 : "..."> }
+
+/*
+ * @Token
+ * "+"
+ */
+TOKEN : { <plus : "+"> }
+
+/*
+ * @Token
+ * "-"
+ */
+TOKEN : { <minus : "-"> }
+
+/*
+ * @Token
+ * "*"
+ */
+TOKEN : { <star : "*"> }
+
+/*
+ * @Token
+ * "**"
+ */
+TOKEN : { <power : "**"> }
+
+/*
+ * @Token
+ * "/"
+ */
+TOKEN : { <slash : "/"> }
+
+/*
+ * @Token
+ * "%"
+ */
+TOKEN : { <percent : "%"> }
+
+/*
+ * @Token
+ * "&"
+ */
+TOKEN : { <amper : "&"> }
+
+/*
+ * @Token
+ * "&&"
+ */
+TOKEN : { <and : "&&"> }
+
+/*
+ * @Token
+ * "||"
+ */
+TOKEN : { <or : "||"> }
+
+/*
+ * @Token
+ * "::"
+ */
+TOKEN : { <colon2 : "::"> }
+
+/*
+ * @Token
+ * Keyword "do"
+ */
+TOKEN : { <keyword_do : "do"> }
+
+/*
+ * @Token
+ * Keyword "self"
+ */
+TOKEN : { <keyword_self : "self"> }
+
+/*
+ * @Token
+ * Keyword "then"
+ */
+TOKEN : { <keyword_then : "then"> }
+
+/*
+ * @Token
+ * Keyword "ensure"
+ */
+TOKEN : { <keyword_ensure : "ensure"> }
+
+/*
+ * @Token
+ * Keyword "defined?"
+ */
+TOKEN : { <keyword_defined : "defined?"> }
+
+/*
+ * @Token
+ * Keyword "begin"
+ */
+TOKEN : { <keyword_begin : "begin"> }
+
+/*
+ * @Token
+ * Keyword "case"
+ */
+TOKEN : { <keyword_case : "case"> }
+
+/*
+ * @Token
+ * Keyword "for"
+ */
+TOKEN : { <keyword_for : "for"> }
+
+/*
+ * @Token
+ * Keyword "class"
+ */
+TOKEN : { <keyword_class : "class"> }
+
+/*
+ * @Token
+ * Keyword "end"
+ */
+TOKEN : { <keyword_end : "end"> }
+
+/*
+ * @Token
+ * Keyword "numeric"
+ */
+TOKEN : { <keyword_numeric : "numeric"> }
+
+/*
+ * @Token
+ * Keyword "BEGIN"
+ */
+TOKEN : { <keyword_BEGIN : "BEGIN"> }
+
+/*
+ * @Token
+ * Keyword "END"
+ */
+TOKEN : { <keyword_END : "END"> }
+
+/*
+ * @Token
+ * Keyword "undef"
+ */
+TOKEN : { <keyword_undef : "undef"> }
+
+/*
+ * @Token
+ * Keyword "rescue"
+ */
+TOKEN : { <keyword_rescue : "rescue"> }
+
+/*
+ * @Token
+ * Keyword "alias"
+ */
+TOKEN : { <keyword_alias : "alias"> }
+
+/*
+ * @Token
+ * Keyword "else"
+ */
+TOKEN : { <keyword_else : "else"> }
+
+/*
+ * @Token
+ * Keyword "if"
+ */
+TOKEN : { <keyword_if : "if"> }
+
+/*
+ * @Token
+ * Keyword "in"
+ */
+TOKEN : { <keyword_in : "in"> }
+
+/*
+ * @Token
+ * Keyword "elsif"
+ */
+TOKEN : { <keyword_elsif : "elsif"> }
+
+/*
+ * @Token
+ * Keyword "while"
+ */
+TOKEN : { <keyword_while : "while"> }
+
+/*
+ * @Token
+ * Keyword "module"
+ */
+TOKEN : { <keyword_module : "module"> }
+
+/*
+ * @Token
+ * Keyword "def"
+ */
+TOKEN : { <keyword_def : "def"> }
+
+/*
+ * @Token
+ * Keyword "when"
+ */
+TOKEN : { <keyword_when : "when"> }
+
+/*
+ * @Token
+ * Keyword "unless"
+ */
+TOKEN : { <keyword_unless : "unless"> }
+
+/*
+ * @Token
+ * Keyword "until"
+ */
+TOKEN : { <keyword_until : "until"> }
+
+/*
+ * @Token
+ * Keyword "yield"
+ */
+TOKEN : { <keyword_yield : "yield"> }
+
+/*
+ * @Token
+ * Keyword "nil"
+ */
+TOKEN : { <keyword_nil : "nil"> }
+
+/*
+ * @Token
+ * Keyword "and"
+ */
+TOKEN : { <keyword_and : "and"> }
+
+/*
+ * @Token
+ * Keyword "or"
+ */
+TOKEN : { <keyword_or : "or"> }
+
+/*
+ * @Token
+ * Keyword "return"
+ */
+TOKEN : { <keyword_return : "return"> }
+
+/*
+ * @Token
+ * Keyword "not"
+ */
+TOKEN : { <keyword_not : "not"> }
+
+/*
+ * @Production
+ * PROGRAM : COMPSTMT
+ */
+void PROGRAM() : 
+{}
+{
+	COMPSTMT()
+}
+
+/*
+ * @Token
+ * Keyword "super"
+ */
+TOKEN : { <keyword_super : "super"> }
+
+/*
+ * @Production
+ * COMPSTMT : STMT {T EXPR} [T]
+ */
+void COMPSTMT() : 
+{}
+{
+	STMT() (<T> EXPR())* [<T>]
+}
+
+/*
+ * @Production
+ * STMT 	: CALL do ["|" [BLOCK_VAR] "|"] COMPSTMT end
+ *	 		| undef FNAME
+ * 			| alias FNAME FNAME
+ * 			| STMT if EXPR
+ * 			| STMT while EXPR
+ * 			| STMT unless EXPR
+ * 			| STMT until EXPR
+ * 			| "BEGIN" "{" COMPSTMT "}" //object initializer
+ * 			| "END" "{" COMPSTMT "}" //object finalizer
+ * 			| LHS = COMMAND [do ["|" [BLOCK_VAR] "|"] COMPSTMT end]
+ * 			| EXPR
+ */
+void STMT() : 
+{}
+{
+	CALL() <keyword_do> [<pipe> [BLOCK_VAR()] <pipe>] COMPSTMT() <keyword_end>
+	| <keyword_undef> FNAME()
+	| <keyword_alias> FNAME() FNAME()
+	| STMT() <keyword_if> EXPR()
+	| STMT() <keyword_while> EXPR()
+	| STMT() <keyword_unless> EXPR()
+	| STMT() <keyword_until> EXPR()
+	| <keyword_BEGIN> <lbrace> COMPSTMT() <rbrace> //object initializer
+	| <keyword_END> <lbrace> COMPSTMT() <rbrace> //object finalizer
+	| LHS() <equal> COMMAND() [<keyword_do> [<pipe> [BLOCK_VAR()] <pipe>] COMPSTMT() <keyword_end>]
+	| EXPR()
+}
+
+/*
+ * @Production
+ * EXPR		: MLHS = MRHS
+ * 			| return CALL_ARGS
+ * 			| yield CALL_ARGS
+ * 			| EXPR and EXPR
+ * 			| EXPR or EXPR
+ * 			| not EXPR
+ * 			| COMMAND
+ * 			| ! COMMAND
+ * 			| ARG
+ */
+void EXPR() : 
+{}
+{
+	MLHS() <equal> MRHS()
+	| <keyword_return> CALL_ARGS()
+	| <keyword_yield> CALL_ARGS()
+	| EXPR() <keyword_or> EXPR()
+	| EXPR() <keyword_or> EXPR()
+	| <keyword_not> EXPR()
+	| COMMAND()
+	| <exclamation> COMMAND()
+	| ARG()
+}
+
+/*
+ * @Production
+ * CALL : FUNCTION
+ * 		| COMMAN
+ */
+void CALL() : 
+{}
+{
+	FUNCTION()
+ 	| COMMAN()
+}
+
+/*
+ * @Production
+ * COMMAND 	: OPERATION CALL_ARGS
+ * 			| PRIMARY . OPERATION CALL_ARGS
+ * 			| PRIMARY :: OPERATION CALL_ARGS
+ * 			| super CALL_ARGS
+ */
+void COMMAND() : 
+{}
+{
+	OPERATION() CALL_ARGS()
+	| PRIMARY() <dot> OPERATION() CALL_ARGS()
+	| PRIMARY() <colon2> OPERATION() CALL_ARGS()
+	| <keyword_super> CALL_ARGS()
+}
+
+/*
+ * @Production
+ * FUNCTION 	: OPERATION ["(" [CALL_ARGS] ")"]
+ * 				| PRIMARY . OPERATION "(" [CALL_ARGS] ")"
+ * 				| PRIMARY :: OPERATION "(" [CALL_ARGS] ")"
+ * 				| PRIMARY . OPERATION
+ * 				| PRIMARY :: OPERATION
+ * 				| super "(" [CALL_ARGS] ")"
+ * 				| super
+ */
+void FUNCTION() : 
+{}
+{
+	OPERATION() [<lparen> [CALL_ARGS] <rparen>]
+	| PRIMARY() <dot> OPERATION() <lparen> [CALL_ARGS()] <rparen>
+	| PRIMARY() <colon2> OPERATION() <lparen> [CALL_ARGS()] <rparen>
+	| PRIMARY() <dot> OPERATION()
+	| PRIMARY() <colon2> OPERATION()
+	| <keyword_super> <lparen> [CALL_ARGS()] <rparen>
+	| <keyword_super>
+}
+
+/*
+ * @Production
+ * ARG 	: LHS = ARG
+ * 		| LHS OP_ASGN ARG
+ * 		| ARG .. ARG
+ * 		| ARG ... ARG
+ * 		| ARG + ARG
+ * 		| ARG - ARG
+ * 		| ARG * ARG
+ * 		| ARG / ARG
+ * 		| ARG % ARG
+ * 		| ARG ** ARG
+ * 		| + ARG
+ * 		| - ARG
+ * 		| ARG "|" ARG
+ * 		| ARG ^ ARG
+ * 		| ARG & ARG
+ * 		| ARG <=> ARG
+ * 		| ARG > ARG
+ * 		| ARG >= ARG
+ * 		| ARG < ARG
+ * 		| ARG <= ARG
+ * 		| ARG == ARG
+ * 		| ARG === ARG
+ * 		| ARG != ARG
+ * 		| ARG =~ ARG
+ * 		| ARG !~ ARG
+ * 		| ! ARG
+ * 		| ~ ARG
+ * 		| ARG << ARG
+ * 		| ARG >> ARG
+ * 		| ARG && ARG
+ * 		| ARG || ARG
+ * 		| defined? ARG
+ * 		| PRIMARY
+ */
+void ARG() : 
+{}
+{
+	LHS() <equal> ARG()
+	| LHS() OP_ASGN() ARG()
+	| ARG() <dot2> ARG()
+	| ARG() <dot3> ARG()
+	| ARG() <plus> ARG()
+	| ARG() <minus> ARG()
+	| ARG() <star> ARG()
+	| ARG() <slash> ARG()
+	| ARG() <percent> ARG()
+	| ARG() <power> ARG()
+	| <plus> ARG()
+	| <minus> ARG()
+	| ARG() <pipe> ARG()
+	| ARG() <caret> ARG()
+	| ARG() <amper> ARG()
+	| ARG() <lessequalmore> ARG()
+	| ARG() <more> ARG()
+	| ARG() <moreorequal> ARG()
+	| ARG() <less> ARG()
+	| ARG() <lessorequal> ARG()
+	| ARG() <equal2> ARG()
+	| ARG() <equal3> ARG()
+	| ARG() <exclamationequal> ARG()
+	| ARG() <equaltilde> ARG()
+	| ARG() <exclamationtilde> ARG()
+	| <exclamation> ARG()
+	| <tilde> ARG()
+	| ARG() <lshift> ARG()
+	| ARG() <rshift> ARG()
+	| ARG() <and> ARG()
+	| ARG() <or> ARG()
+	| <keyword_defined> ARG()
+	| PRIMARY()
+}
+
+/*
+ * @Production
+ * PRIMARY	: "(" COMPSTMT ")"
+ * 			| LITERAL
+ * 			| VARIABLE
+ * 			| PRIMARY :: IDENTIFIER
+ * 			| :: IDENTIFIER
+ * 			| PRIMARY "[" [ARGS] "]"
+ * 			| "[" [ARGS[,]] "]"
+ * 			| "{" [ARGS
+ * 			| ASSOCS [,]] "}"
+ * 			| return ["(" [CALL_ARGS] ")"]
+ * 			| yield ["(" [CALL_ARGS] ")"]
+ * 			| defined? "(" ARG ")"
+ * 			| FUNCTION
+ * 			| FUNCTION "{" ["|" [BLOCK_VAR] "|"] COMPSTMT "}"
+ * 			| if EXPR THEN COMPSTMT {elsif EXPR THEN COMPSTMT} [else COMPSTMT] end
+ * 			| unless EXPR THEN COMPSTMT [else COMPSTMT] end
+ * 			| while EXPR DO COMPSTMT end
+ * 			| until EXPR DO COMPSTMT end
+ * 			| case COMPSTMT when WHEN_ARGS THEN COMPSTMT {when WHEN_ARGS THEN COMPSTMT} [else COMPSTMT] end
+ * 			| for BLOCK_VAR in EXPR DO COMPSTMT end
+ * 			| begin COMPSTMT {rescue [ARGS] DO COMPSTMT} [else COMPSTMT] [ensure COMPSTMT] end
+ * 			| class IDENTIFIER [< IDENTIFIER] COMPSTMT end
+ * 			| module IDENTIFIER COMPSTMT end
+ * 			| def FNAME ARGDECL COMPSTMT end
+ * 			| def SINGLETON (. | ::) FNAME ARGDECL COMPSTMT end
+ */
+void PRIMARY() : 
+{}
+{
+	<lparen> COMPSTMT() <rparen>
+	| LITERAL()
+	| VARIABLE()
+	| PRIMARY() <colon2> IDENTIFIER()
+	| <colon2> IDENTIFIER()
+	| PRIMARY() <lsqbracket> [ARGS()] <rsqbracket>
+	| <lsqbracket> [ARGS()[<comma>]] <rsqbracket>
+	| <lbrace> [ARGS() | ASSOCS() [<comma>]] <rbrace>
+	| <keyword_return> [<lparen> [CALL_ARGS()] <rparen>]
+	| <keyword_yield> [<lparen> [CALL_ARGS()] <rparen>]
+	| <keyword_defined> <lparen> ARG() <rparen>
+	| FUNCTION()
+	| FUNCTION() <lbrace> [<pipe> [BLOCK_VAR()] <pipe>] COMPSTMT() <rbrace>
+	| <keyword_if> EXPR() THEN() COMPSTMT() (<keyword_elsif> EXPR() THEN() COMPSTMT())* [<keyword_else> COMPSTMT()] <keyword_end>
+	| <keyword_unless> EXPR() THEN() COMPSTMT() [<keyword_else> COMPSTMT()] <keyword_end>
+	| <keyword_while> EXPR() DO() COMPSTMT() <keyword_end>
+	| <keyword_until> EXPR() DO() COMPSTMT() <keyword_end>
+	| <keyword_case> COMPSTMT() <keyword_when> WHEN_ARGS() THEN() COMPSTMT() (<keyword_when> WHEN_ARGS() THEN() COMPSTMT())* [<keyword_else> COMPSTMT()] <keyword_end>
+	| <keyword_for> BLOCK_VAR() <keyword_in> EXPR() DO() COMPSTMT() <keyword_end>
+	| <keyword_begin> COMPSTMT() (<keyword_rescue> [ARGS()] DO() COMPSTMT())* [<keyword_else> COMPSTMT()] [<keyword_ensure> COMPSTMT()] <keyword_end>
+	| <keyword_class> IDENTIFIER() [<less> IDENTIFIER()] COMPSTMT() <keyword_end>
+	| <keyword_module> IDENTIFIER() COMPSTMT() <keyword_end>
+	| <keyword_def> FNAME() ARGDECL() COMPSTMT() <keyword_end>
+	| <keyword_def> SINGLETON() (<dot> | <colon2>) FNAME() ARGDECL() COMPSTMT() <keyword_end>
+}
+
+/*
+ * @Production
+ * WHEN_ARGS : ARGS [, * ARG] |  * ARG
+ */
+void WHEN_ARGS() : 
+{}
+{
+	ARGS() [<comma> <star> ARG()] | <star> ARG()
+}
+
+/*
+ * @Production
+ * THEN 	: T | then | T then //"then" and "do" can go on next line
+ */
+void THEN() : 
+{}
+{
+	T() | <keyword_then> | T() <keyword_then> //"then" and "do" can go on next line
+}
+
+/*
+ * @Production
+ * DO 	: T | do | T do
+ */
+void DO() : 
+{}
+{
+	T() | <keyword_do> | T() <keyword_do>
+}
+
+/*
+ * @Production
+ * BLOCK_VAR : LHS | MLHS
+ */
+void BLOCK_VAR() : 
+{}
+{
+	 LHS() | MLHS()
+}
+
+/*
+ * @Production
+ * MLHS 	: MLHS_ITEM , [MLHS_ITEM (, MLHS_ITEM)*] [* [LHS]]
+ * 			| * LHS
+ */
+void MLHS() : 
+{}
+{
+	MLHS_ITEM() <comma> [MLHS_ITEM() (<comma> MLHS_ITEM())*] [<star> [LHS()]]
+	| <star> LHS()
+}
+
+/*
+ * @Production
+ * MLHS_ITEM : LHS | "(" MLHS ")"
+ */
+void MLHS_ITEM() : 
+{}
+{
+	LHS() | <lparen> MLHS() <rparen>
+}
+
+/*
+ * @Production
+ * LHS 	: VARIABLE
+ * 		| PRIMARY "[" [ARGS] "]"
+ * 		| PRIMARY.IDENTIFIE
+ */
+void LHS() : 
+{}
+{
+	 	VARIABLE()
+		| PRIMARY() <lsqbracket> [ARGS()] <rsqbracket>
+		| PRIMARY() <dot> IDENTIFIE()
+}
+
+/*
+ * @Production
+ * MRHS 	: ARGS [, * ARG] |  * ARG
+ */
+void MRHS() : 
+{}
+{
+	ARGS() [<comma> <star> ARG()] | <star> ARG()
+}
+
+/*
+ * @Production
+ * CALL_ARGS 	: ARGS
+ * 				| ARGS [, ASSOCS] [, * ARG] [, & ARG]
+ * 				| ASSOCS [, * ARG] [, & ARG]
+ * 				| * ARG [, & ARG]
+ * 				|  & ARG
+ * 				| COMMAND
+ */
+void CALL_ARGS() : 
+{}
+{
+	ARGS()
+	| ARGS() [<comma> ASSOCS()] [<comma> <star> ARG()] [<comma> <amper> ARG()]
+	| ASSOCS() [<comma> <star> ARG()] [<comma> <amper> ARG()]
+	| <star> ARG() [<comma> <amper> ARG()]
+	| <amper> ARG()
+	| COMMAND()
+}
+
+/*
+ * @Production
+ * ARGS 	: ARG (, ARG)*
+ */
+void ARGS() : 
+{}
+{
+	ARG() (<comma> ARG())*
+}
+
+/*
+ * @Production
+ * ARGDECL	: "(" ARGLIST ")"
+ * 		| ARGLIST T
+ */
+void ARGDECL() : 
+{}
+{
+	<lparen> ARGLIST() <rparen>
+ 	| ARGLIST() T()
+}
+
+/*
+ * @Production
+ * ARGLIST	: IDENTIFIER(,IDENTIFIER)*[, *[IDENTIFIER]][,&IDENTIFIER]
+ * 			| *IDENTIFIER[, &IDENTIFIER]
+ * 			| [&IDENTIFIER]
+ */
+void ARGLIST() : 
+{}
+{
+	IDENTIFIER() (<comma> IDENTIFIER())* [<comma> <star> [IDENTIFIER()]][<comma><amper>IDENTIFIER()]
+	| <starIDENTIFIER()[<comma> <amper>IDENTIFIER()]
+	| [<amper>IDENTIFIER()]
+}
+
+/*
+ * @Production
+ * SINGLETON 	: VARIABLE
+ * 				| "(" EXPR ")"
+ */
+void SINGLETON() : 
+{}
+{
+	VARIABLE()
+	| <lparen> EXPR() <rparen>
+}
+
+/*
+ * @Production
+ * ASSOCS : ASSOC {, ASSOC}
+ */
+void ASSOCS() : 
+{}
+{
+	ASSOC() (<comma> ASSOC())*
+}
+
+/*
+ * @Production
+ * ASSOC	: ARG => ARG
+ */
+void ASSOC() : 
+{}
+{
+	ARG() <equalmore> ARG()
+}
+
+/*
+ * @Production
+ * VARIABLE	: VARNAME | nil | self
+ */
+void VARIABLE() : 
+{}
+{
+	VARNAME() | <keyword_nil> | <keyword_self>
+}
+
+/*
+ * @Production
+ * LITERAL	: numeric | SYMBOL | STRING | STRING2 | HERE_DOC | REGEXP
+ */
+void LITERAL() : 
+{}
+{
+	<keyword_numeric> | SYMBOL() | STRING() | STRING2() | HERE_DOC() | REGEXP()
+}
+
+// The following are recognized by the lexical analyzer.
+
+/*
+ * @Production
+ * OP_ASGN	: += | -= | *= | /= | %= | **=
+ * 		| &= | |= | ^= | <<= | >>=
+ * 		| &&= | ||=
+ */
+void OP_ASGN() : 
+{}
+{
+	<plusequal>
+	| <minusequal>
+	| <starequal>
+	| <slashequal>
+	| <percentequal>
+	| <powerequal>
+	| <amperequal>
+	| <pipeequal>
+	| <caretequal>
+	| <lshiftequal>
+	| <rshiftequal>
+	| <andequal>
+	| <orequal>
+}
+
+/*
+ * @Production
+ * SYMBOL	: :FNAME | :VARNAME
+ */
+void SYMBOL() : 
+{}
+{
+	 <colon>FNAME() | <colon>VARNAME()
+}
+
+/*
+ * @Production
+ * FNAME	: IDENTIFIER | .. | "|" | ^ | & | <=> | == | === | =~
+ * 		| > | >= | < | <= | + | - | * | / | % | **
+ * 		| << | >> |  ̃ | +@ | -@ | [] | []=
+ */
+void FNAME() : 
+{}
+{
+	IDENTIFIER()
+	| <dot2>
+	| <pipe>
+	| <caret>
+	| <amper>
+	| <lessequalmore>
+	| <equal2>
+	| <equal3>
+	| <equaltilde>
+	| <more>
+	| <moreorequal>
+	| <less>
+	| <lessorequal>
+	| <plus>
+	| <minus>
+	| <star>
+	| <slash>
+	| <percent>
+	| <power>
+	| <lshift>
+	| <rshift>
+	| <tilde>
+	| <plusat>
+	| <minusat>
+	| <sqbrackets>
+	| <sqbracketsequal>
+}
+
+/*
+ * @Production
+ * OPERATION : IDENTIFIER [! | ?]
+ */
+void OPERATION() : 
+{}
+{
+	IDENTIFIER() [<exclamation> | <question >]
+}
+
+/*
+ * @Production
+ * VARNAME : GLOBAL | @IDENTIFIER | IDENTIFIE
+ */
+void VARNAME() : 
+{}
+{
+	GLOBAL() | <at>IDENTIFIER() | IDENTIFIER()
+}
+
+/*
+ * @Production
+ * GLOBAL	: $IDENTIFIER | $any_char | $-any_char
+ */
+void GLOBAL() : 
+{}
+{
+	<dollar>IDENTIFIER() | <dollar><any_char> | <dollar><minus><any_char>
+}
+
+/*
+ * @Production
+ * STRING 	: " {any_char} "
+		| ’ {any_char} ’
+		| ‘ {any_char} ‘
+ */
+void STRING() : 
+{}
+{
+	<quote> (<any_char>)* <quote>
+	| <apostr> (<any_char>)* <apostr>
+	| <backapostr> (<any_char>)* <backapostr>
+}
+
+/*
+ * @Production
+ * STRING2	: %(Q|q|x)char {any_char} char
+ */
+void STRING2() : 
+{}
+{
+	<percent>(<Q>|<q>|<x>)<char> (<any_char>)* <char>
+}
+
+/*
+ * @Production
+ * HERE_DOC : <<(IDENTIFIER | STRING) {any_char} IDENTIFIER
+ */
+void HERE_DOC() : 
+{}
+{
+	<lshift>(IDENTIFIER() | STRING()) (<any_char>)* IDENTIFIER()
+}
+
+/*
+ * @Production
+ * REGEXP	: / {any_char} / [i|o|p]
+ * 			| %r char {any_char} char
+ */
+void REGEXP() : 
+{}
+{
+	<slash> (<any_char>)* <slash> [<i>|<o>|<p>]
+	| <percent><r> <char> (<any_char>)* <char>
+}
+
+/*
+ * @Production
+ * IDENTIFIER	: sequence in /[a-zA-Z_]{a-zA-Z0-9_}/.
+ */
+void IDENTIFIER() : 
+{}
+{
+	<char>(<char> | <num>)*
+}
