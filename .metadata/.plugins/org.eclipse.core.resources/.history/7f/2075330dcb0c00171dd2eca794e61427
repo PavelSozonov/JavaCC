@@ -29,6 +29,9 @@ public class CLI {
 			case "t":
 				testFile(scanner);
 				break;
+			case "a":
+				testAllFiles();
+				break;
 			case "e": // exit
 				scanner.close();
 				return;
@@ -39,7 +42,7 @@ public class CLI {
 	}
 	
 	/*
-	 * Print names of all files from the sample folder
+	 * Print names of all files from sample folder
 	 */
 	private void showFiles() {
 		System.out.println("Sample files:");
@@ -54,6 +57,7 @@ public class CLI {
 				+ " h - show help\n"
 				+ " f - show sample files\n"
 				+ " t - test a file\n"
+				+ " a - test all files\n"
 				+ " e - exit");
 	}
 	
@@ -64,15 +68,12 @@ public class CLI {
 		String fileName = scanner.nextLine();
 		
 		if (checkFileName(fileName)) {
-			testFileAndWriteReport(fileName); // Old file will be overwritten
+			testFileAndWriteReport(fileName);
 		} else {
 			System.out.println("File name is incorrect!");
 		}
 	}
 	
-	/*
-	 * Check if file with such name there is in sample folder
-	 */
 	private boolean checkFileName(String fileName) {
 
 		File folder = new File(samples);
@@ -87,7 +88,6 @@ public class CLI {
 	}
 	
 	/*
-	 * Extract metrics and write it in the report file
 	 * Precondition: fileName is always correct
 	 */
 	private void testFileAndWriteReport(String fileName) {
@@ -97,7 +97,7 @@ public class CLI {
 			fileContent = new FileInputStream(samples + "/" + fileName);
 			RbParser parser = new RbParser(fileContent); 
 			
-			MetricsCounter metricsCounter = parser.getMetrics();
+			MetricsCounter metricsCounter = parser.countMetrics();
 			writeReport(metricsCounter);
 			
 		} catch (FileNotFoundException e) {
@@ -105,6 +105,10 @@ public class CLI {
 		}
 	}
 
+	private void testAllFiles() {
+		
+	}
+	
 	private void fileProcessor(Consumer<File> consumer) {
 		File folder = new File(samples);
 		File[] listOfFiles = folder.listFiles();

@@ -17,15 +17,15 @@ class Fred
   end
 
   def more(y)
-    @val += y
+    @val = @val + y
   end
 
   def less(y)
-    @val -= y
+    @val = @val - y
   end
 
   def to_s
-    return "Fred(val=" + @val.to_s + ")"
+    return "Fred(val=" + @val.to_s()  +  ")"
   end
 end
 
@@ -45,7 +45,7 @@ class Barney < Fred
   end
 
   def to_s
-    return "(Backed-up) " + super + " [backup value: " + @save.to_s + "]"
+    return "(Backed-up) " + super  + " [backup value: " + @save.to_s()  + "]"
   end
 
 end
@@ -57,20 +57,20 @@ b = Barney.new(112)
 a.more(34)
 b.more(817)
 
-print "A: a = ", a, "\n   b = ", b, "\n";
+print ("A: a = ", a, "\n   b = ", b, "\n")
 
 a.more(34)
 b.more(817)
 
-print "B: a = ", a, "\n   b = ", b, "\n";
+print ("B: a = ", a, "\n   b = ", b, "\n")
 
-b.chk
+b.chk()
 
 a.more(34)
 b.more(817)
 
-print "C: a = ", a, "\n   b = ", b, "\n";
+print ("C: a = ", a, "\n   b = ", b, "\n")
 
-b.restore
+b.restore()
 
-print "D: a = ", a, "\n   b = ", b, "\n";
+print ("D: a = ", a, "\n   b = ", b, "\n")

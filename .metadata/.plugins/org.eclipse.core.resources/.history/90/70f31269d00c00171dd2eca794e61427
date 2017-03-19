@@ -105,6 +105,10 @@ public class CLI {
 		}
 	}
 
+	private void testAllFiles() {
+		
+	}
+	
 	private void fileProcessor(Consumer<File> consumer) {
 		File folder = new File(samples);
 		File[] listOfFiles = folder.listFiles();

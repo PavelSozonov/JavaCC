@@ -21,32 +21,32 @@ end
 a = Fred.new(10)
 b = Fred.new(22)
 
-print "A: ", a.get, " ", b.get,"\n";
+print ("A: ", a.get(), " ", b.get(),"\n")
 b.set(34)
-print "B: ", a.get, " ", b.get,"\n";
+print ("B: ", a.get(), " ", b.get(),"\n")
 
 # Ruby classes are always unfinished works.  This does not
 # re-define Fred, it adds more stuff to it.
 class Fred 
   def inc
-    @val += 1
+    @val = @val + 1
   end
 end
 
-a.inc
-b.inc
-print "C: ", a.get, " ", b.get,"\n";
+a.inc()
+b.inc()
+print ("C: ", a.get(), " ", b.get(),"\n")
 
 # Objects may have methods all to themselves.
 def b.dec
-  @val -= 1
+  @val = @val - 1
 end
 
 begin
-  b.dec
-  a.dec
+  b.dec()
+  a.dec()
 rescue StandardError => msg
-  print "Error: ", msg, "\n"
+  print ("Error: ", msg, "\n")
 end
 
-print "D: ", a.get, " ", b.get,"\n";
+print ("D: ", a.get(), " ", b.get(),"\n")
