@@ -203,33 +203,29 @@ public interface RubyParser14Constants {
   /** RegularExpression Id. */
   int keyword_not = 100;
   /** RegularExpression Id. */
-  int eps = 101;
+  int Q = 101;
   /** RegularExpression Id. */
-  int letter = 102;
+  int q = 102;
   /** RegularExpression Id. */
-  int digit = 103;
+  int x = 103;
   /** RegularExpression Id. */
-  int symbol = 104;
+  int r = 104;
   /** RegularExpression Id. */
-  int Q = 105;
+  int i = 105;
   /** RegularExpression Id. */
-  int q = 106;
+  int o = 106;
   /** RegularExpression Id. */
-  int x = 107;
+  int p = 107;
   /** RegularExpression Id. */
-  int r = 108;
+  int letter = 108;
   /** RegularExpression Id. */
-  int i = 109;
+  int digit = 109;
   /** RegularExpression Id. */
-  int o = 110;
+  int symbol = 110;
   /** RegularExpression Id. */
-  int p = 111;
+  int NUMBER = 111;
   /** RegularExpression Id. */
-  int NUMBER = 112;
-  /** RegularExpression Id. */
-  int DIGITS = 113;
-  /** RegularExpression Id. */
-  int EOL = 114;
+  int DIGITS = 112;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -337,10 +333,6 @@ public interface RubyParser14Constants {
     "\"or\"",
     "\"return\"",
     "\"not\"",
-    "\"\"",
-    "<letter>",
-    "<digit>",
-    "<symbol>",
     "\"Q\"",
     "\"q\"",
     "\"x\"",
@@ -348,9 +340,11 @@ public interface RubyParser14Constants {
     "\"i\"",
     "\"o\"",
     "\"p\"",
+    "<letter>",
+    "<digit>",
+    "<symbol>",
     "<NUMBER>",
     "<DIGITS>",
-    "<EOL>",
   };
 
 }

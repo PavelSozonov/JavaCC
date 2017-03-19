@@ -247,7 +247,7 @@ public class RubyParser14 implements RubyParser14Constants {
       EXPR();
       STMT2();
       break;
-    default:
+      default:
       jj_la1[7] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
@@ -276,44 +276,14 @@ public class RubyParser14 implements RubyParser14Constants {
       EXPR();
       STMT2();
       break;
-    case eps:
-      jj_consume_token(eps);
+    case T:
+      jj_consume_token(T);
       break;
     default:
       jj_la1[8] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
-  }
-
-/*
- * @Production
- * Any char
- */
-  static final public void any_character() throws ParseException {
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case letter:
-      jj_consume_token(letter);
-      break;
-    case digit:
-      jj_consume_token(digit);
-      break;
-    case symbol:
-      jj_consume_token(symbol);
-      break;
-    default:
-      jj_la1[9] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
-    }
-  }
-
-/*
- * @Production
- * Char
- */
-  static final public void character() throws ParseException {
-    jj_consume_token(letter);
   }
 
 /*
@@ -400,7 +370,7 @@ public class RubyParser14 implements RubyParser14Constants {
       EXPR2();
       break;
     default:
-      jj_la1[10] = jj_gen;
+      jj_la1[9] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -413,11 +383,11 @@ public class RubyParser14 implements RubyParser14Constants {
       EXPR();
       EXPR2();
       break;
-      case eps:
-      jj_consume_token(eps);
+      case T:
+      jj_consume_token(T);
       break;
     default:
-      jj_la1[11] = jj_gen;
+      jj_la1[10] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -465,7 +435,7 @@ public class RubyParser14 implements RubyParser14Constants {
       FUNCTION();
       break;
       default:
-      jj_la1[12] = jj_gen;
+      jj_la1[11] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -521,7 +491,7 @@ public class RubyParser14 implements RubyParser14Constants {
       CALL_ARGS();
       break;
       default:
-      jj_la1[13] = jj_gen;
+      jj_la1[12] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -566,7 +536,7 @@ public class RubyParser14 implements RubyParser14Constants {
 //	| <colon2> OPERATION() <lparen> [CALL_ARGS()] <rparen> FUNCTION2()
 //	| <dot> OPERATION() FUNCTION2()
 //	| <colon2> OPERATION() FUNCTION2()
-//	| <eps>
+//	| <T>
 //}
 
 //void FUNCTION() : 
@@ -711,13 +681,13 @@ public class RubyParser14 implements RubyParser14Constants {
           CALL_ARGS();
           break;
         default:
-          jj_la1[14] = jj_gen;
+          jj_la1[13] = jj_gen;
           ;
         }
         jj_consume_token(rparen);
         break;
       default:
-        jj_la1[15] = jj_gen;
+        jj_la1[14] = jj_gen;
         ;
       }
       FUNCTION2();
@@ -797,7 +767,7 @@ public class RubyParser14 implements RubyParser14Constants {
         CALL_ARGS();
         break;
       default:
-        jj_la1[16] = jj_gen;
+        jj_la1[15] = jj_gen;
         ;
       }
       jj_consume_token(rparen);
@@ -848,14 +818,14 @@ public class RubyParser14 implements RubyParser14Constants {
         CALL_ARGS();
         break;
       default:
-        jj_la1[18] = jj_gen;
+        jj_la1[17] = jj_gen;
         ;
       }
       jj_consume_token(rparen);
       FUNCTION2();
       break;
       default:
-      jj_la1[19] = jj_gen;
+      jj_la1[18] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -942,17 +912,17 @@ public class RubyParser14 implements RubyParser14Constants {
         CALL_ARGS();
         break;
       default:
-        jj_la1[20] = jj_gen;
+        jj_la1[19] = jj_gen;
         ;
       }
       jj_consume_token(rparen);
       FUNCTION2();
       break;
-      case eps:
-      jj_consume_token(eps);
+      case T:
+      jj_consume_token(T);
       break;
     default:
-      jj_la1[32] = jj_gen;
+      jj_la1[31] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1030,7 +1000,7 @@ public class RubyParser14 implements RubyParser14Constants {
         CALL_ARGS();
         break;
       default:
-        jj_la1[33] = jj_gen;
+        jj_la1[32] = jj_gen;
         ;
       }
       jj_consume_token(rparen);
@@ -1086,12 +1056,12 @@ public class RubyParser14 implements RubyParser14Constants {
           jj_consume_token(comma);
           break;
         default:
-          jj_la1[34] = jj_gen;
+          jj_la1[33] = jj_gen;
           ;
         }
         break;
       default:
-        jj_la1[35] = jj_gen;
+        jj_la1[34] = jj_gen;
         ;
       }
       jj_consume_token(rsqbracket);
@@ -1142,12 +1112,12 @@ public class RubyParser14 implements RubyParser14Constants {
           jj_consume_token(comma);
           break;
         default:
-          jj_la1[36] = jj_gen;
+          jj_la1[35] = jj_gen;
           ;
         }
         break;
       default:
-        jj_la1[37] = jj_gen;
+        jj_la1[36] = jj_gen;
         ;
       }
       jj_consume_token(rbrace);
@@ -1200,13 +1170,13 @@ public class RubyParser14 implements RubyParser14Constants {
           CALL_ARGS();
           break;
         default:
-          jj_la1[38] = jj_gen;
+          jj_la1[37] = jj_gen;
           ;
         }
         jj_consume_token(rparen);
         break;
       default:
-        jj_la1[39] = jj_gen;
+        jj_la1[38] = jj_gen;
         ;
       }
       PRIMARY2();
@@ -1258,13 +1228,13 @@ public class RubyParser14 implements RubyParser14Constants {
           CALL_ARGS();
           break;
         default:
-          jj_la1[40] = jj_gen;
+          jj_la1[39] = jj_gen;
           ;
         }
         jj_consume_token(rparen);
         break;
       default:
-        jj_la1[41] = jj_gen;
+        jj_la1[40] = jj_gen;
         ;
       }
       PRIMARY2();
@@ -1288,7 +1258,7 @@ public class RubyParser14 implements RubyParser14Constants {
           ;
           break;
         default:
-          jj_la1[42] = jj_gen;
+          jj_la1[41] = jj_gen;
           break label_2;
         }
         jj_consume_token(keyword_elsif);
@@ -1302,7 +1272,7 @@ public class RubyParser14 implements RubyParser14Constants {
         COMPSTMT();
         break;
       default:
-        jj_la1[43] = jj_gen;
+        jj_la1[42] = jj_gen;
         ;
       }
       jj_consume_token(keyword_end);
@@ -1319,7 +1289,7 @@ public class RubyParser14 implements RubyParser14Constants {
         COMPSTMT();
         break;
       default:
-        jj_la1[44] = jj_gen;
+        jj_la1[43] = jj_gen;
         ;
       }
       jj_consume_token(keyword_end);
@@ -1355,7 +1325,7 @@ public class RubyParser14 implements RubyParser14Constants {
           ;
           break;
         default:
-          jj_la1[45] = jj_gen;
+          jj_la1[44] = jj_gen;
           break label_3;
         }
         jj_consume_token(keyword_when);
@@ -1369,7 +1339,7 @@ public class RubyParser14 implements RubyParser14Constants {
         COMPSTMT();
         break;
       default:
-        jj_la1[46] = jj_gen;
+        jj_la1[45] = jj_gen;
         ;
       }
       jj_consume_token(keyword_end);
@@ -1395,7 +1365,7 @@ public class RubyParser14 implements RubyParser14Constants {
           ;
           break;
         default:
-          jj_la1[47] = jj_gen;
+          jj_la1[46] = jj_gen;
           break label_4;
         }
         jj_consume_token(keyword_rescue);
@@ -1439,7 +1409,7 @@ public class RubyParser14 implements RubyParser14Constants {
           ARGS();
           break;
         default:
-          jj_la1[48] = jj_gen;
+          jj_la1[47] = jj_gen;
           ;
         }
         DO();
@@ -1451,7 +1421,7 @@ public class RubyParser14 implements RubyParser14Constants {
         COMPSTMT();
         break;
       default:
-        jj_la1[49] = jj_gen;
+        jj_la1[48] = jj_gen;
         ;
       }
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -1460,7 +1430,7 @@ public class RubyParser14 implements RubyParser14Constants {
         COMPSTMT();
         break;
       default:
-        jj_la1[50] = jj_gen;
+        jj_la1[49] = jj_gen;
         ;
       }
       jj_consume_token(keyword_end);
@@ -1475,7 +1445,7 @@ public class RubyParser14 implements RubyParser14Constants {
         IDENTIFIER();
         break;
       default:
-        jj_la1[51] = jj_gen;
+        jj_la1[50] = jj_gen;
         ;
       }
       COMPSTMT();
@@ -1498,7 +1468,7 @@ public class RubyParser14 implements RubyParser14Constants {
       PRIMARY2();
       break;
       default:
-      jj_la1[53] = jj_gen;
+      jj_la1[52] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1639,7 +1609,7 @@ public class RubyParser14 implements RubyParser14Constants {
       ARG2();
       break;
       default:
-      jj_la1[54] = jj_gen;
+      jj_la1[53] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1772,11 +1742,11 @@ public class RubyParser14 implements RubyParser14Constants {
       ARG();
       ARG2();
       break;
-    case eps:
-      jj_consume_token(eps);
+    case T:
+      jj_consume_token(T);
       break;
     default:
-      jj_la1[55] = jj_gen;
+      jj_la1[54] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1918,12 +1888,12 @@ public class RubyParser14 implements RubyParser14Constants {
           jj_consume_token(comma);
           break;
         default:
-          jj_la1[56] = jj_gen;
+          jj_la1[55] = jj_gen;
           ;
         }
         break;
       default:
-        jj_la1[57] = jj_gen;
+        jj_la1[56] = jj_gen;
         ;
       }
       jj_consume_token(rsqbracket);
@@ -1974,12 +1944,12 @@ public class RubyParser14 implements RubyParser14Constants {
           jj_consume_token(comma);
           break;
         default:
-          jj_la1[58] = jj_gen;
+          jj_la1[57] = jj_gen;
           ;
         }
         break;
       default:
-        jj_la1[59] = jj_gen;
+        jj_la1[58] = jj_gen;
         ;
       }
       jj_consume_token(rbrace);
@@ -2032,13 +2002,13 @@ public class RubyParser14 implements RubyParser14Constants {
           CALL_ARGS();
           break;
         default:
-          jj_la1[60] = jj_gen;
+          jj_la1[59] = jj_gen;
           ;
         }
         jj_consume_token(rparen);
         break;
       default:
-        jj_la1[61] = jj_gen;
+        jj_la1[60] = jj_gen;
         ;
       }
       PRIMARY2();
@@ -2090,13 +2060,13 @@ public class RubyParser14 implements RubyParser14Constants {
           CALL_ARGS();
           break;
         default:
-          jj_la1[62] = jj_gen;
+          jj_la1[61] = jj_gen;
           ;
         }
         jj_consume_token(rparen);
         break;
       default:
-        jj_la1[63] = jj_gen;
+        jj_la1[62] = jj_gen;
         ;
       }
       PRIMARY2();
@@ -2123,7 +2093,7 @@ public class RubyParser14 implements RubyParser14Constants {
       PRIMARY2();
       break;
       default:
-      jj_la1[77] = jj_gen;
+      jj_la1[76] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -2170,7 +2140,7 @@ public class RubyParser14 implements RubyParser14Constants {
       ARGS();
       break;
       default:
-      jj_la1[78] = jj_gen;
+      jj_la1[77] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -2224,16 +2194,16 @@ public class RubyParser14 implements RubyParser14Constants {
         ARGS();
         break;
       default:
-        jj_la1[79] = jj_gen;
+        jj_la1[78] = jj_gen;
         ;
       }
       jj_consume_token(rsqbracket);
       break;
-    case eps:
-      jj_consume_token(eps);
+    case T:
+      jj_consume_token(T);
       break;
     default:
-      jj_la1[80] = jj_gen;
+      jj_la1[79] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -2289,7 +2259,7 @@ public class RubyParser14 implements RubyParser14Constants {
         ARG();
         break;
       default:
-        jj_la1[81] = jj_gen;
+        jj_la1[80] = jj_gen;
         ;
       }
       break;
@@ -2298,7 +2268,7 @@ public class RubyParser14 implements RubyParser14Constants {
       ARG();
       break;
     default:
-      jj_la1[82] = jj_gen;
+      jj_la1[81] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -2317,7 +2287,7 @@ public class RubyParser14 implements RubyParser14Constants {
       jj_consume_token(keyword_then);
       break;
       default:
-      jj_la1[83] = jj_gen;
+      jj_la1[82] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -2336,7 +2306,7 @@ public class RubyParser14 implements RubyParser14Constants {
       jj_consume_token(keyword_do);
       break;
       default:
-      jj_la1[84] = jj_gen;
+      jj_la1[83] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -2386,7 +2356,7 @@ public class RubyParser14 implements RubyParser14Constants {
       MLHS();
       break;
     default:
-      jj_la1[85] = jj_gen;
+      jj_la1[84] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -2474,7 +2444,7 @@ public class RubyParser14 implements RubyParser14Constants {
             ;
             break;
           default:
-            jj_la1[86] = jj_gen;
+            jj_la1[85] = jj_gen;
             break label_8;
           }
           jj_consume_token(comma);
@@ -2482,7 +2452,7 @@ public class RubyParser14 implements RubyParser14Constants {
         }
         break;
       default:
-        jj_la1[87] = jj_gen;
+        jj_la1[86] = jj_gen;
         ;
       }
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -2524,12 +2494,12 @@ public class RubyParser14 implements RubyParser14Constants {
           LHS();
           break;
         default:
-          jj_la1[88] = jj_gen;
+          jj_la1[87] = jj_gen;
           ;
         }
         break;
       default:
-        jj_la1[89] = jj_gen;
+        jj_la1[88] = jj_gen;
         ;
       }
       break;
@@ -2538,7 +2508,7 @@ public class RubyParser14 implements RubyParser14Constants {
       LHS();
       break;
     default:
-      jj_la1[90] = jj_gen;
+      jj_la1[89] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -2585,7 +2555,7 @@ public class RubyParser14 implements RubyParser14Constants {
       LHS();
       break;
       default:
-      jj_la1[91] = jj_gen;
+      jj_la1[90] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -2675,13 +2645,13 @@ public class RubyParser14 implements RubyParser14Constants {
         ARGS();
         break;
       default:
-        jj_la1[92] = jj_gen;
+        jj_la1[91] = jj_gen;
         ;
       }
       jj_consume_token(rsqbracket);
       break;
       default:
-      jj_la1[93] = jj_gen;
+      jj_la1[92] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -2737,7 +2707,7 @@ public class RubyParser14 implements RubyParser14Constants {
         ARG();
         break;
       default:
-        jj_la1[94] = jj_gen;
+        jj_la1[93] = jj_gen;
         ;
       }
       break;
@@ -2746,7 +2716,7 @@ public class RubyParser14 implements RubyParser14Constants {
       ARG();
       break;
     default:
-      jj_la1[95] = jj_gen;
+      jj_la1[94] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -2811,7 +2781,7 @@ public class RubyParser14 implements RubyParser14Constants {
         ARG();
         break;
       default:
-        jj_la1[101] = jj_gen;
+        jj_la1[100] = jj_gen;
         ;
       }
       break;
@@ -2820,7 +2790,7 @@ public class RubyParser14 implements RubyParser14Constants {
       ARG();
       break;
       default:
-      jj_la1[102] = jj_gen;
+      jj_la1[101] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -2839,7 +2809,7 @@ public class RubyParser14 implements RubyParser14Constants {
         ;
         break;
       default:
-        jj_la1[103] = jj_gen;
+        jj_la1[102] = jj_gen;
         break label_9;
       }
       jj_consume_token(comma);
@@ -2868,7 +2838,7 @@ public class RubyParser14 implements RubyParser14Constants {
       jj_consume_token(T);
       break;
     default:
-      jj_la1[104] = jj_gen;
+      jj_la1[103] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -2892,7 +2862,7 @@ public class RubyParser14 implements RubyParser14Constants {
           ;
           break;
         default:
-          jj_la1[105] = jj_gen;
+          jj_la1[104] = jj_gen;
           break label_10;
         }
         jj_consume_token(comma);
@@ -2908,12 +2878,12 @@ public class RubyParser14 implements RubyParser14Constants {
           IDENTIFIER();
           break;
         default:
-          jj_la1[106] = jj_gen;
+          jj_la1[105] = jj_gen;
           ;
         }
         break;
       default:
-        jj_la1[107] = jj_gen;
+        jj_la1[106] = jj_gen;
         ;
       }
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -2923,7 +2893,7 @@ public class RubyParser14 implements RubyParser14Constants {
         IDENTIFIER();
         break;
       default:
-        jj_la1[108] = jj_gen;
+        jj_la1[107] = jj_gen;
         ;
       }
       break;
@@ -2937,19 +2907,19 @@ public class RubyParser14 implements RubyParser14Constants {
         IDENTIFIER();
         break;
       default:
-        jj_la1[109] = jj_gen;
+        jj_la1[108] = jj_gen;
         ;
       }
       break;
     default:
-      jj_la1[111] = jj_gen;
+      jj_la1[110] = jj_gen;
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case amper:
         jj_consume_token(amper);
         IDENTIFIER();
         break;
       default:
-        jj_la1[110] = jj_gen;
+        jj_la1[109] = jj_gen;
         ;
       }
     }
@@ -2976,7 +2946,7 @@ public class RubyParser14 implements RubyParser14Constants {
       jj_consume_token(rparen);
       break;
     default:
-      jj_la1[112] = jj_gen;
+      jj_la1[111] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -2995,7 +2965,7 @@ public class RubyParser14 implements RubyParser14Constants {
         ;
         break;
       default:
-        jj_la1[113] = jj_gen;
+        jj_la1[112] = jj_gen;
         break label_11;
       }
       jj_consume_token(comma);
@@ -3032,7 +3002,7 @@ public class RubyParser14 implements RubyParser14Constants {
       jj_consume_token(keyword_self);
       break;
     default:
-      jj_la1[114] = jj_gen;
+      jj_la1[113] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -3065,7 +3035,7 @@ public class RubyParser14 implements RubyParser14Constants {
       REGEXP();
       break;
     default:
-      jj_la1[115] = jj_gen;
+      jj_la1[114] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -3121,7 +3091,7 @@ public class RubyParser14 implements RubyParser14Constants {
       jj_consume_token(orequal);
       break;
     default:
-      jj_la1[116] = jj_gen;
+      jj_la1[115] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -3138,7 +3108,7 @@ public class RubyParser14 implements RubyParser14Constants {
       FNAME();
       break;
       default:
-      jj_la1[117] = jj_gen;
+      jj_la1[116] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -3232,7 +3202,7 @@ public class RubyParser14 implements RubyParser14Constants {
       jj_consume_token(sqbracketsequal);
       break;
     default:
-      jj_la1[118] = jj_gen;
+      jj_la1[117] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -3255,13 +3225,13 @@ public class RubyParser14 implements RubyParser14Constants {
         jj_consume_token(question);
         break;
       default:
-        jj_la1[119] = jj_gen;
+        jj_la1[118] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
       break;
     default:
-      jj_la1[120] = jj_gen;
+      jj_la1[119] = jj_gen;
       ;
     }
   }
@@ -3284,7 +3254,7 @@ public class RubyParser14 implements RubyParser14Constants {
       IDENTIFIER();
       break;
     default:
-      jj_la1[121] = jj_gen;
+      jj_la1[120] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -3301,7 +3271,7 @@ public class RubyParser14 implements RubyParser14Constants {
       IDENTIFIER();
       break;
       default:
-      jj_la1[122] = jj_gen;
+      jj_la1[121] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -3326,7 +3296,7 @@ public class RubyParser14 implements RubyParser14Constants {
           ;
           break;
         default:
-          jj_la1[123] = jj_gen;
+          jj_la1[122] = jj_gen;
           break label_12;
         }
         any_character();
@@ -3344,7 +3314,7 @@ public class RubyParser14 implements RubyParser14Constants {
           ;
           break;
         default:
-          jj_la1[124] = jj_gen;
+          jj_la1[123] = jj_gen;
           break label_13;
         }
         any_character();
@@ -3362,7 +3332,7 @@ public class RubyParser14 implements RubyParser14Constants {
           ;
           break;
         default:
-          jj_la1[125] = jj_gen;
+          jj_la1[124] = jj_gen;
           break label_14;
         }
         any_character();
@@ -3370,7 +3340,7 @@ public class RubyParser14 implements RubyParser14Constants {
       jj_consume_token(backapostr);
       break;
     default:
-      jj_la1[126] = jj_gen;
+      jj_la1[125] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -3393,7 +3363,7 @@ public class RubyParser14 implements RubyParser14Constants {
       jj_consume_token(x);
       break;
     default:
-      jj_la1[127] = jj_gen;
+      jj_la1[126] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -3407,7 +3377,7 @@ public class RubyParser14 implements RubyParser14Constants {
         ;
         break;
       default:
-        jj_la1[128] = jj_gen;
+        jj_la1[127] = jj_gen;
         break label_15;
       }
       any_character();
@@ -3432,7 +3402,7 @@ public class RubyParser14 implements RubyParser14Constants {
       STRING();
       break;
     default:
-      jj_la1[129] = jj_gen;
+      jj_la1[128] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -3445,7 +3415,7 @@ public class RubyParser14 implements RubyParser14Constants {
         ;
         break;
       default:
-        jj_la1[130] = jj_gen;
+        jj_la1[129] = jj_gen;
         break label_16;
       }
       any_character();
@@ -3471,7 +3441,7 @@ public class RubyParser14 implements RubyParser14Constants {
           ;
           break;
         default:
-          jj_la1[131] = jj_gen;
+          jj_la1[130] = jj_gen;
           break label_17;
         }
         any_character();
@@ -3492,13 +3462,13 @@ public class RubyParser14 implements RubyParser14Constants {
           jj_consume_token(p);
           break;
         default:
-          jj_la1[132] = jj_gen;
+          jj_la1[131] = jj_gen;
           jj_consume_token(-1);
           throw new ParseException();
         }
         break;
       default:
-        jj_la1[133] = jj_gen;
+        jj_la1[132] = jj_gen;
         ;
       }
       break;
@@ -3515,7 +3485,7 @@ public class RubyParser14 implements RubyParser14Constants {
           ;
           break;
         default:
-          jj_la1[134] = jj_gen;
+          jj_la1[133] = jj_gen;
           break label_18;
         }
         any_character();
@@ -3523,7 +3493,7 @@ public class RubyParser14 implements RubyParser14Constants {
       character();
       break;
     default:
-      jj_la1[135] = jj_gen;
+      jj_la1[134] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -3544,7 +3514,7 @@ public class RubyParser14 implements RubyParser14Constants {
         jj_consume_token(underline);
         break;
       default:
-        jj_la1[136] = jj_gen;
+        jj_la1[135] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -3554,7 +3524,7 @@ public class RubyParser14 implements RubyParser14Constants {
         ;
         break;
       default:
-        jj_la1[137] = jj_gen;
+        jj_la1[136] = jj_gen;
         break label_19;
       }
     }
@@ -3567,7 +3537,7 @@ public class RubyParser14 implements RubyParser14Constants {
         ;
         break;
       default:
-        jj_la1[138] = jj_gen;
+        jj_la1[137] = jj_gen;
         break label_20;
       }
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -3581,11 +3551,41 @@ public class RubyParser14 implements RubyParser14Constants {
         jj_consume_token(digit);
         break;
       default:
-        jj_la1[139] = jj_gen;
+        jj_la1[138] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
     }
+  }
+
+/*
+ * @Production
+ * Any char
+ */
+  static final public void any_character() throws ParseException {
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case letter:
+      jj_consume_token(letter);
+      break;
+    case digit:
+      jj_consume_token(digit);
+      break;
+    case symbol:
+      jj_consume_token(symbol);
+      break;
+    default:
+      jj_la1[139] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+  }
+
+/*
+ * @Production
+ * Char
+ */
+  static final public void character() throws ParseException {
+    jj_consume_token(letter);
   }
 
   static private boolean jj_initialized_once = false;
@@ -3610,16 +3610,16 @@ public class RubyParser14 implements RubyParser14Constants {
       jj_la1_init_3();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x4,0x4,0x68001782,0x40,0x68001782,0x40,0x0,0x68001782,0x0,0x0,0x68001782,0x0,0x68001782,0x68001782,0x68001782,0x0,0x68001782,0x68001782,0x68001782,0x68001782,0x68001782,0x68001782,0x40,0x68001782,0x68001782,0x68001782,0x40,0x68001782,0x68001782,0x40,0x68001782,0x40,0x68001782,0x68001782,0x0,0x68001782,0x0,0x68001782,0x68001782,0x0,0x68001782,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x68001782,0x0,0x0,0x0,0x0,0x68001780,0x68001782,0x6000040,0x0,0x68001782,0x0,0x68001782,0x68001782,0x0,0x68001782,0x0,0x68001782,0x40,0x0,0x0,0x0,0x0,0x0,0x0,0x68001782,0x0,0x0,0x0,0x0,0x68001782,0x68001782,0x68001782,0x0,0x0,0x68001782,0x4,0x4,0x68001782,0x0,0x68001782,0x68001782,0x0,0x68001782,0x68001782,0x68001782,0x68001782,0x0,0x68001782,0x0,0x0,0x0,0x0,0x0,0x0,0x68001782,0x0,0x1004,0x0,0x1000,0x0,0x0,0x0,0x0,0x1000,0x60001000,0x0,0x60001000,0x780,0x1ffe000,0x400,0x86001040,0x0,0x0,0x60001000,0x40000000,0x0,0x0,0x0,0x380,0x0,0x0,0x1380,0x0,0x0,0x0,0x0,0x0,0x0,0x1000,0x1000,0x1000,0x1000,};
+      jj_la1_0 = new int[] {0x4,0x4,0x68001782,0x40,0x68001782,0x40,0x0,0x68001782,0x4,0x68001782,0x4,0x68001782,0x68001782,0x68001782,0x0,0x68001782,0x68001782,0x68001782,0x68001782,0x68001782,0x68001782,0x40,0x68001782,0x68001782,0x68001782,0x40,0x68001782,0x68001782,0x40,0x68001782,0x40,0x68001786,0x68001782,0x0,0x68001782,0x0,0x68001782,0x68001782,0x0,0x68001782,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x68001782,0x0,0x0,0x0,0x0,0x68001780,0x68001782,0x6000044,0x0,0x68001782,0x0,0x68001782,0x68001782,0x0,0x68001782,0x0,0x68001782,0x40,0x0,0x0,0x0,0x0,0x0,0x0,0x68001782,0x0,0x0,0x0,0x0,0x68001782,0x68001782,0x68001782,0x4,0x0,0x68001782,0x4,0x4,0x68001782,0x0,0x68001782,0x68001782,0x0,0x68001782,0x68001782,0x68001782,0x68001782,0x0,0x68001782,0x0,0x0,0x0,0x0,0x0,0x0,0x68001782,0x0,0x1004,0x0,0x1000,0x0,0x0,0x0,0x0,0x1000,0x60001000,0x0,0x60001000,0x780,0x1ffe000,0x400,0x86001040,0x0,0x0,0x60001000,0x40000000,0x0,0x0,0x0,0x380,0x0,0x0,0x1380,0x0,0x0,0x0,0x0,0x0,0x0,0x1000,0x1000,0x1000,0x1000,0x0,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x0,0x0,0xa0008022,0x0,0xa0008022,0x0,0x0,0xb800a122,0x0,0x0,0xb800a122,0x0,0x80008022,0x80008022,0xb800a122,0x20,0xb800a122,0xb800a122,0xb800a122,0x80008022,0xb800a122,0xa0008022,0x0,0xb800a122,0xb800a122,0xa0008022,0x0,0xb800a122,0xa0008022,0x0,0xa0008022,0x0,0x80008022,0xb800a122,0x80,0x9800a122,0x80,0x9800a122,0xb800a122,0x20,0xb800a122,0x20,0x0,0x0,0x0,0x0,0x0,0x0,0x9800a122,0x0,0x0,0x4000,0x1000000,0x80008022,0x9800a122,0xfeafdc00,0x80,0x9800a122,0x80,0x9800a122,0xb800a122,0x20,0xb800a122,0x20,0xa0008022,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x9800a122,0x0,0x0,0x4000,0x1000000,0x80008022,0x9800a122,0x9800a122,0x2,0x80,0xb800a122,0x0,0x0,0xa0008022,0x80,0x80008022,0x80008022,0x20000000,0xa0008022,0x80008022,0x9800a122,0x80008022,0x80,0xb800a122,0x80,0x80,0x80,0x80,0x80,0x80,0xb800a122,0x80,0x20000020,0x80,0x0,0x80,0x80,0x80,0x0,0x20000000,0x20,0x80,0x0,0x80008000,0x100000,0x0,0xfaaff00d,0x300,0x300,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x80000000,0x0,0x0,0x0,0x0,};
+      jj_la1_1 = new int[] {0x0,0x0,0xa0008022,0x0,0xa0008022,0x0,0x0,0xb800a122,0x0,0xb800a122,0x0,0x80008022,0x80008022,0xb800a122,0x20,0xb800a122,0xb800a122,0xb800a122,0x80008022,0xb800a122,0xa0008022,0x0,0xb800a122,0xb800a122,0xa0008022,0x0,0xb800a122,0xa0008022,0x0,0xa0008022,0x0,0x80008022,0xb800a122,0x80,0x9800a122,0x80,0x9800a122,0xb800a122,0x20,0xb800a122,0x20,0x0,0x0,0x0,0x0,0x0,0x0,0x9800a122,0x0,0x0,0x4000,0x1000000,0x80008022,0x9800a122,0xfeafdc00,0x80,0x9800a122,0x80,0x9800a122,0xb800a122,0x20,0xb800a122,0x20,0xa0008022,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x9800a122,0x0,0x0,0x4000,0x1000000,0x80008022,0x9800a122,0x9800a122,0x2,0x80,0xb800a122,0x0,0x0,0xa0008022,0x80,0x80008022,0x80008022,0x20000000,0xa0008022,0x80008022,0x9800a122,0x80008022,0x80,0xb800a122,0x80,0x80,0x80,0x80,0x80,0x80,0xb800a122,0x80,0x20000020,0x80,0x0,0x80,0x80,0x80,0x0,0x20000000,0x20,0x80,0x0,0x80008000,0x100000,0x0,0xfaaff00d,0x300,0x300,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x80000000,0x0,0x0,0x0,0x0,0x0,};
    }
    private static void jj_la1_init_2() {
-      jj_la1_2 = new int[] {0x0,0x0,0xee40be51,0x0,0xee40be51,0x0,0x20,0xee57be51,0x62400000,0x0,0xee40be51,0x0,0xee40be51,0xee40be51,0xee40be53,0x0,0xee40be53,0xee40be53,0xee40be53,0xee40be51,0xee40be53,0xee40be51,0x0,0xee40be53,0xee40be53,0xee40be51,0x0,0xee40be53,0xee40be51,0x0,0xee40be51,0x0,0xee40be51,0xee40be53,0x0,0xee40be51,0x0,0xee40be51,0xee40be53,0x0,0xee40be53,0x0,0x1000000,0x200000,0x200000,0x10000000,0x200000,0x80000,0xee40be51,0x200000,0x100,0x0,0x10,0xee40be51,0xee40be51,0xf,0x0,0xee40be51,0x0,0xee40be51,0xee40be53,0x0,0xee40be53,0x0,0xee40be51,0x0,0x1000000,0x200000,0x200000,0x10000000,0x200000,0x80000,0xee40be51,0x200000,0x100,0x0,0x10,0xee40be51,0xee40be51,0xee40be51,0x10,0x0,0xee40be51,0x80,0x20,0xee40be51,0x0,0xee40be51,0xee40be51,0x0,0xee40be51,0xee40be51,0xee40be51,0xee40be51,0x0,0xee40be51,0x0,0x0,0x0,0x0,0x0,0x0,0xee40be53,0x0,0x2,0x0,0x0,0x0,0x0,0x0,0x2,0x0,0x40,0x0,0x40,0x8001,0x0,0x0,0x3,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1,0x0,0x0,0x0,0x0,};
+      jj_la1_2 = new int[] {0x0,0x0,0xee40be51,0x0,0xee40be51,0x0,0x20,0xee57be51,0x62400000,0xee40be51,0x0,0xee40be51,0xee40be51,0xee40be53,0x0,0xee40be53,0xee40be53,0xee40be53,0xee40be51,0xee40be53,0xee40be51,0x0,0xee40be53,0xee40be53,0xee40be51,0x0,0xee40be53,0xee40be51,0x0,0xee40be51,0x0,0xee40be51,0xee40be53,0x0,0xee40be51,0x0,0xee40be51,0xee40be53,0x0,0xee40be53,0x0,0x1000000,0x200000,0x200000,0x10000000,0x200000,0x80000,0xee40be51,0x200000,0x100,0x0,0x10,0xee40be51,0xee40be51,0xf,0x0,0xee40be51,0x0,0xee40be51,0xee40be53,0x0,0xee40be53,0x0,0xee40be51,0x0,0x1000000,0x200000,0x200000,0x10000000,0x200000,0x80000,0xee40be51,0x200000,0x100,0x0,0x10,0xee40be51,0xee40be51,0xee40be51,0x10,0x0,0xee40be51,0x80,0x20,0xee40be51,0x0,0xee40be51,0xee40be51,0x0,0xee40be51,0xee40be51,0xee40be51,0xee40be51,0x0,0xee40be51,0x0,0x0,0x0,0x0,0x0,0x0,0xee40be53,0x0,0x2,0x0,0x0,0x0,0x0,0x0,0x2,0x0,0x40,0x0,0x40,0x8001,0x0,0x0,0x3,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1,0x0,0x0,0x0,0x0,0x0,};
    }
    private static void jj_la1_init_3() {
-      jj_la1_3 = new int[] {0x0,0x0,0x49,0x0,0x49,0x0,0x0,0x59,0x20,0x1c0,0x59,0x24,0x49,0x49,0x49,0x0,0x49,0x49,0x49,0x49,0x49,0x49,0x0,0x49,0x49,0x49,0x0,0x49,0x49,0x0,0x49,0x0,0x69,0x49,0x0,0x49,0x0,0x49,0x49,0x0,0x49,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x49,0x0,0x0,0x0,0x0,0x49,0x49,0x20,0x0,0x49,0x0,0x49,0x49,0x0,0x49,0x0,0x49,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x49,0x0,0x0,0x0,0x0,0x49,0x49,0x49,0x20,0x0,0x49,0x0,0x0,0x49,0x0,0x49,0x49,0x0,0x49,0x49,0x49,0x49,0x0,0x49,0x0,0x0,0x0,0x0,0x0,0x0,0x49,0x0,0x40,0x0,0x40,0x0,0x0,0x0,0x0,0x40,0x41,0x0,0x41,0x0,0x0,0x0,0x40,0x0,0x0,0x40,0x0,0x1c0,0x1c0,0x1c0,0x0,0xe00,0x1c0,0x40,0x1c0,0x1c0,0xe000,0xe000,0x1c0,0x0,0x40,0x40,0xc0,0xc0,};
+      jj_la1_3 = new int[] {0x0,0x0,0x1009,0x0,0x1009,0x0,0x0,0x1019,0x0,0x1019,0x4,0x1009,0x1009,0x1009,0x0,0x1009,0x1009,0x1009,0x1009,0x1009,0x1009,0x0,0x1009,0x1009,0x1009,0x0,0x1009,0x1009,0x0,0x1009,0x0,0x1009,0x1009,0x0,0x1009,0x0,0x1009,0x1009,0x0,0x1009,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1009,0x0,0x0,0x0,0x0,0x1009,0x1009,0x0,0x0,0x1009,0x0,0x1009,0x1009,0x0,0x1009,0x0,0x1009,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1009,0x0,0x0,0x0,0x0,0x1009,0x1009,0x1009,0x0,0x0,0x1009,0x0,0x0,0x1009,0x0,0x1009,0x1009,0x0,0x1009,0x1009,0x1009,0x1009,0x0,0x1009,0x0,0x0,0x0,0x0,0x0,0x0,0x1009,0x0,0x1000,0x0,0x1000,0x0,0x0,0x0,0x0,0x1000,0x1001,0x0,0x1001,0x0,0x0,0x0,0x1000,0x0,0x0,0x1000,0x0,0x7000,0x7000,0x7000,0x0,0xe0,0x7000,0x1000,0x7000,0x7000,0xe00,0xe00,0x7000,0x0,0x1000,0x1000,0x3000,0x3000,0x7000,};
    }
 
   /** Constructor with InputStream. */
@@ -3757,7 +3757,7 @@ public class RubyParser14 implements RubyParser14Constants {
   /** Generate ParseException. */
   static public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[115];
+    boolean[] la1tokens = new boolean[113];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -3780,7 +3780,7 @@ public class RubyParser14 implements RubyParser14Constants {
         }
       }
     }
-    for (int i = 0; i < 115; i++) {
+    for (int i = 0; i < 113; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;
