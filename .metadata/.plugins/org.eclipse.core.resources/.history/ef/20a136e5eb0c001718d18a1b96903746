@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class MetricsCounter {
 	
-	public static final int NUMBER_OF_METRICS = 9;
+	public static final int NUMBER_OF_METRICS = 8;
 	String[] metricsStrings = new String[NUMBER_OF_METRICS];
 	
 	RubyParser15 parser;
@@ -69,6 +69,7 @@ public class MetricsCounter {
 			numInterfacesString = numInterfacesString + c.name + ":" + classNumInterfaces + "; ";
 		}
 		metricsStrings[3] = numInterfacesString;
+//		System.out.println("!!!!!!!!!!!!!!!!!!!!" + numInterfacesString);
 		return numInterfaces;
 	}
 	
@@ -113,6 +114,9 @@ public class MetricsCounter {
 		}
 		if (numOfClasses == 0) {return 1;}
 		reuseRatio = numOfSuperClasses / (double) numOfClasses;
+//		while (true) {
+//			System.out.println(numOfSuperClasses + " / " + numOfClasses + " = " + reuseRatio);
+//		}
 		metricsStrings[7] = reuseRatio + "";
 		return reuseRatio;
 	}

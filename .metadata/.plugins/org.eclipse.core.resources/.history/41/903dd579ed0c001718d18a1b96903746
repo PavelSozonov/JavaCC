@@ -126,16 +126,15 @@ public class CLI {
 		if (!file.exists()) {
 			try {
 				FileWriter fw = new FileWriter(testReport, false);
-				fw.write("Date Time" + "\t");
-				fw.append("Methods" + "\t");
-				fw.append("Statements" + "\t");
-				fw.append("Classes" + "\t");
-				fw.append("Interfaces" + "\t");
-				fw.append("Attributes" + "\t");
-				fw.append("Loops" + "\t");
-				fw.append("Conditions" + "\t");
-				fw.append("Reuse Ratio" + "\t");
-				fw.append("Children" + "\t");
+				fw.write("NOM");
+				fw.append("Statements");
+				fw.append("Classes");
+				fw.append("Interfaces");
+				fw.append("NOA");
+				fw.append("Loops");
+				fw.append("Conditions");
+				fw.append("RR");
+				fw.append("NOC");
 				fw.append('\n');  
 	            fw.flush();
 	            fw.close();
@@ -143,6 +142,16 @@ public class CLI {
 				e.printStackTrace();
 			}
 		}
+		countNOM();
+		countStatements();
+		countClasses();
+		countInterfaces();
+		countNOA();
+		countLoops();
+		countConditions();
+		countRR();
+		countNOC();
+	
 	}
 	
 	private void writeTimeStamp(FileWriter fw) throws IOException {
@@ -155,7 +164,7 @@ public class CLI {
 			FileWriter fw = new FileWriter(testReport, true); // Append file
 			writeTimeStamp(fw);
 			for (String metric : metricsCounter.getMetricsStrings()) {
-				fw.append(metric.replace(";", " ") + "\t");
+				fw.append(metric + "\t");
 			}
             fw.append('\n');  
             fw.flush();

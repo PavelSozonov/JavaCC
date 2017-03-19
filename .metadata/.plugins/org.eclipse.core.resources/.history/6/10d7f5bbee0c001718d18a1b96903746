@@ -155,7 +155,7 @@ public class CLI {
 			FileWriter fw = new FileWriter(testReport, true); // Append file
 			writeTimeStamp(fw);
 			for (String metric : metricsCounter.getMetricsStrings()) {
-				fw.append(metric.replace(";", " ") + "\t");
+				fw.append(metric.replace(";", "_") + "\t");
 			}
             fw.append('\n');  
             fw.flush();

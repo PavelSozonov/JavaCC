@@ -15,6 +15,10 @@ class Fred
   def get
     return @val
   end
+  
+  def inc
+    @val = @val + 1
+  end
 end
 
 # Objects are created by the new method of the class object.
@@ -24,14 +28,6 @@ b = Fred.new(22)
 print ("A: ", a.get(), " ", b.get(),"\n")
 b.set(34)
 print ("B: ", a.get(), " ", b.get(),"\n")
-
-# Ruby classes are always unfinished works.  This does not
-# re-define Fred, it adds more stuff to it.
-class Fred 
-  def inc
-    @val = @val + 1
-  end
-end
 
 a.inc()
 b.inc()

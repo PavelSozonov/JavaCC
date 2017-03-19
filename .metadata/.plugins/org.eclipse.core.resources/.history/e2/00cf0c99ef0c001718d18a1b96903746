@@ -68,6 +68,7 @@ public class MetricsCounter {
 			numInterfaces = numInterfaces + classNumInterfaces;
 			numInterfacesString = numInterfacesString + c.name + ":" + classNumInterfaces + "; ";
 		}
+		System.out.println(numInterfacesString);
 		metricsStrings[3] = numInterfacesString;
 		return numInterfaces;
 	}

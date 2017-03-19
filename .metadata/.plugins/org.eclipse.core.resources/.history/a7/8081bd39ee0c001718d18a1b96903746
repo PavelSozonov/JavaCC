@@ -126,16 +126,16 @@ public class CLI {
 		if (!file.exists()) {
 			try {
 				FileWriter fw = new FileWriter(testReport, false);
-				fw.write("Date Time" + "\t");
-				fw.append("Methods" + "\t");
+				fw.write("DateTime" + "\t");
+				fw.append("NOM" + "\t");
 				fw.append("Statements" + "\t");
 				fw.append("Classes" + "\t");
 				fw.append("Interfaces" + "\t");
-				fw.append("Attributes" + "\t");
+				fw.append("NOA" + "\t");
 				fw.append("Loops" + "\t");
 				fw.append("Conditions" + "\t");
-				fw.append("Reuse Ratio" + "\t");
-				fw.append("Children" + "\t");
+				fw.append("RR" + "\t");
+				fw.append("NOC" + "\t");
 				fw.append('\n');  
 	            fw.flush();
 	            fw.close();
@@ -155,7 +155,7 @@ public class CLI {
 			FileWriter fw = new FileWriter(testReport, true); // Append file
 			writeTimeStamp(fw);
 			for (String metric : metricsCounter.getMetricsStrings()) {
-				fw.append(metric.replace(";", " ") + "\t");
+				fw.append(metric + "\t");
 			}
             fw.append('\n');  
             fw.flush();
