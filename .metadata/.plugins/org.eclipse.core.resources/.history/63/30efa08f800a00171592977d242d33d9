@@ -1,0 +1,6 @@
+puts (abd + 7)
+puts 7
+puts a
+puts abc
+puts "abc"
+puts (abd + 7)

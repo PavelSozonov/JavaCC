@@ -1,0 +1,156 @@
+PARSER_BEGIN(RbParser)
+
+import java.io.StringReader;
+import java.io.InputStream;
+import java.io.Reader;
+
+public class RbParser {
+
+	private int classCounter = 0;
+	
+	private static InputStream input;
+
+	private static int amountOfStatements = 0;
+
+	private static boolean inputFromFile = true;
+
+	private static String file = "src/tests/code1.rb"; 
+	
+	private void countMetrics(RbParser parser) {
+		MetricsCounter metricsCounter = new MetricsCounter();
+		parser.class();
+		metricsCounter.getMetrics()[0] = classCounter();
+	}
+
+	/*  
+	 * A String based constructor for ease of use
+	 */
+	public RbParser(String s) {
+		this((Reader)(new StringReader(s))); 
+	}
+
+	public static void startCLI(RbParser parser) {
+         CLI cli = new CLI(pareser);
+         cli.run();
+    }
+   
+	public static void main(String args[]) {
+         startCLI(this);
+    }
+}
+
+PARSER_END(RbParser)
+
+SKIP : {" " | "\t" }
+
+TOKEN : { <T : "\n" | ";"> }
+TOKEN : { <underscore : "_"> }
+TOKEN : { <quote : "\""> }
+TOKEN : { <lparen : "("> }
+TOKEN : { <rparen : ")"> }
+TOKEN : { <plus : "+"> }
+TOKEN : { <minus : "-"> }
+TOKEN : { <equal : "="> }
+TOKEN : { <dot : "."> }
+TOKEN : { <class : "class"> }
+
+TOKEN : { <symbol : "|" | " " | "!" | "#" | "$" | "%" | "&" | "*" | ","
+					| "-" | "/" | ":" | ";" | "<" | ">" | "?" | "@" | "[" | "\\" | "]"
+					| "^" | "`" | "{" | "|" | "}" | "~"> }
+					
+TOKEN : { <letter : ["A"-"Z"] | ["a"-"z"]> }
+TOKEN : { <digit : ["0"-"9"]> }
+TOKEN : { <op_asgn : "+=" |"-=" |"*=" |"/=" |"%=" |"**=" |"&=" |"|=" |"^=" |"<<=" |">>=" |"&&=" |"||="> }
+ 
+void program() :
+{
+	System.out.println("program()");
+}
+{
+	identifier() expr() ((<T>)+ (program() | <EOF>))* <EOF>
+}
+
+void string() :
+{
+	System.out.println("string()");
+}
+{
+	<quote> (letter() | digit() | symbol())* <quote>
+}
+
+void num() :
+{
+	System.out.println("num()");
+}
+{
+	(<digit>)+ [<dot> (<digit>)*]
+}
+
+void letter() :
+{
+	System.out.println("letter()");
+}
+{
+	<letter>
+}
+
+void op() :
+{
+	System.out.println("op()");
+}
+{
+	(<op_asgn> | <plus> | <minus> | <equal>) 
+}
+
+void digit() :
+{
+	System.out.println("digit()");
+}
+{
+	<digit>
+}
+
+void symbol() :
+{
+	System.out.println("symbol()");
+}
+{
+	(<symbol> | <lparen> | <rparen> | <underscore> | <dot> | <plus> | <minus> | <equal>)
+}
+
+void identifier() :
+{
+	System.out.println("identifier()");
+}
+{
+	(letter() | <underscore>) (letter() | <underscore> | digit())* }
+
+void expr() :
+{
+	System.out.println("expr()");
+}
+{
+	identifier() [expr2()]
+	| string() [expr2()]
+	| num() [expr2()]
+	| <lparen> expr() <rparen> [expr2()]
+}
+
+void expr2() :
+{
+	System.out.println("");
+}
+{
+	op() expr() [expr2()]
+}
+
+void class() :
+{
+	classCounter++;
+}
+{
+	<class>
+}
+
+
+

@@ -1,0 +1,569 @@
+ДPARSER_BEGIN(RubyParserReload)
+
+import java.io.StringReader;
+import java.io.InputStream;
+import java.io.Reader;
+
+public class RubyParserReload {
+
+	private static InputStream input;
+
+	private static int amountOfStatements = 0;
+
+	private static boolean inputFromFile = true;
+
+	private static String file = "src/tests/code3.rb"; 
+	
+	private class Metrics {
+		private final static int AMOUNT_OF_METRICS = 23;
+		public long metrics[] = new long[AMOUNT_OF_METRICS];
+	}
+
+	/*  
+	 * A String based constructor for ease of use
+	 */
+	public RubyParserReload(String s) {
+		this((Reader)(new StringReader(s))); 
+	}
+   
+	public static void main(String args[]) {
+                try {
+                        if (inputFromFile) {
+                                System.out.println("Reading from file " + file + " ...");
+                                try {
+                                        input = new java.io.FileInputStream(file);
+                                } catch (java.io.FileNotFoundException e) {
+                                        System.out.println("File " + file + " not found.");
+                                        return;
+                                }
+                        } else {
+                                System.out.println("Reading from standard input ...");
+                                input = System.in;
+                        }
+                        
+                        RubyParserReload parser = new RubyParserReload(input);
+                        parser.ARG();
+                        System.out.println("Done! Amount of statements = " + amountOfStatements);
+                }
+                catch(Exception e) {
+                        e.printStackTrace();
+        }
+    }
+}
+
+PARSER_END(RubyParserReload)
+
+SKIP : {" " | "\t" }
+
+TOKEN : { < T : ";" | "\n" >  }
+TOKEN : { < letter : ["A"-"Z"] | ["a"-"z"] >  }
+TOKEN : { < quote : "\"" >  }
+TOKEN : { < digit : ["0"-"9"] >  }
+
+TOKEN : { < pipe : "|" >  }
+TOKEN : { < backslash : "\\" >  }
+TOKEN : { < apostr : "'" >  }
+TOKEN : { < backapostr : "`" >  }
+TOKEN : { < colon : ":" >  }
+TOKEN : { < number : "#" >  }
+TOKEN : { < equal : "=" >  }
+TOKEN : { < underscore : "_" >  }
+TOKEN : { < plusequal : "+=" >  }
+TOKEN : { < starequal : "*=" >  }
+TOKEN : { < slashequal : "/=" >  }
+TOKEN : { < percentequal : "%=" >  }
+TOKEN : { < powerequal : "**=" >  }
+TOKEN : { < minusequal : "-=" >  }
+TOKEN : { < amperequal : "&=" >  }
+TOKEN : { < andequal : "&&=" >  }
+TOKEN : { < pipeequal : "|=" >  }
+TOKEN : { < orequal : "||=" >  }
+TOKEN : { < lshiftequal : "< < =" >  }
+TOKEN : { < caretequal : "^=" >  }
+TOKEN : { < equal2 : "==" >  }
+TOKEN : { < equal3 : "===" >  }
+TOKEN : { < lbrace : "{" >  }
+TOKEN : { < rbrace : "}" >  }
+TOKEN : { < at : "@" >  }
+TOKEN : { < dollar : "$" >  }
+TOKEN : { < plusat : "+@" >  }
+TOKEN : { < minusat : "-@" >  }
+TOKEN : { < lsqbracket : "[" >  }
+TOKEN : { < sqbrackets : "[]" >  }
+TOKEN : { < sqbracketsequal : "[]=" >  }
+TOKEN : { < rsqbracket : "]" >  }
+TOKEN : { < lparen : "(" >  }
+TOKEN : { < rparen : ")" >  }
+TOKEN : { < comma : "," >  }
+TOKEN : { < exclamation : "!" >  }
+TOKEN : { < question : "?" >  }
+TOKEN : { < exclamationequal : "!=" >  }
+TOKEN : { < exclamationtilde : "!~" >  }
+TOKEN : { < equaltilde : "=~" >  }
+TOKEN : { < tilde : "~" >  }
+TOKEN : { < less : "< " >  }
+TOKEN : { < lshift : "< < " >  }
+TOKEN : { < more : " > " >  }
+TOKEN : { < rshift : " >  > " >  }
+TOKEN : { < lessorequal : "< =" >  }
+TOKEN : { < moreorequal : " > =" >  }
+TOKEN : { < rshiftequal : "  >  > =" >  }
+TOKEN : { < lessequalmore : "< = > " >  }
+TOKEN : { < equalmore : "= > " >  }
+TOKEN : { < caret : "^" >  }
+TOKEN : { < dot : "." >  }
+TOKEN : { < dot2 : ".." >  }
+TOKEN : { < dot3 : "..." >  }
+TOKEN : { < plus : "+" >  }
+TOKEN : { < minus : "-" >  }
+TOKEN : { < star : "*" >  }
+TOKEN : { < power : "**" >  }
+TOKEN : { < slash : "/" >  }
+TOKEN : { < percent : "%" >  }
+TOKEN : { < amper : "&" >  }
+TOKEN : { < and : "&&" >  }
+TOKEN : { < or : "||" >  }
+TOKEN : { < colon2 : "::" >  }
+TOKEN : { < keyword_do : "do" >  }
+TOKEN : { < keyword_self : "self" >  }
+TOKEN : { < keyword_then : "then" >  }
+TOKEN : { < keyword_ensure : "ensure" >  }
+TOKEN : { < keyword_defined : "defined?" >  }
+TOKEN : { < keyword_begin : "begin" >  }
+TOKEN : { < keyword_case : "case" >  }
+TOKEN : { < keyword_for : "for" >  }
+TOKEN : { < keyword_class : "class" >  }
+TOKEN : { < keyword_end : "end" >  }
+TOKEN : { < keyword_numeric : "numeric" >  }
+TOKEN : { < keyword_BEGIN : "BEGIN" >  }
+TOKEN : { < keyword_END : "END" >  }
+TOKEN : { < keyword_undef : "undef" >  }
+TOKEN : { < keyword_rescue : "rescue" >  }
+TOKEN : { < keyword_alias : "alias" >  }
+TOKEN : { < keyword_else : "else" >  }
+TOKEN : { < keyword_if : "if" >  }
+TOKEN : { < keyword_in : "in" >  }
+TOKEN : { < keyword_elsif : "elsif" >  }
+TOKEN : { < keyword_while : "while" >  }
+TOKEN : { < keyword_module : "module" >  }
+TOKEN : { < keyword_def : "def" >  }
+TOKEN : { < keyword_when : "when" >  }
+TOKEN : { < keyword_unless : "unless" >  }
+TOKEN : { < keyword_until : "until" >  }
+TOKEN : { < keyword_yield : "yield" >  }
+TOKEN : { < keyword_nil : "nil" >  }
+TOKEN : { < keyword_and : "and" >  }
+TOKEN : { < keyword_or : "or" >  }
+TOKEN : { < keyword_return : "return" >  }
+TOKEN : { < keyword_not : "not" >  }
+TOKEN : { < keyword_super : "super" >  }
+
+// Add "Space"?
+void SYMBOLS() :
+{}
+{
+	< pipe >  | < minus >  | < exclamation >  | < colon >  | < dollar >  | < percent > 
+	| < amper >  | < lparen >  | < rparen >  | < star >  | < plus >  | < comma > 
+	| < dot >  | < slash >  | < number >  | < less > 
+	| < equal >  | < more >  | < question >  | < at >  | < lsqbracket >  | < backslash >  | < rsqbracket > 
+	| < caret >  | < underscore >  | < backapostr >  | < lbrace >  | < rbrace >  | < tilde > 
+}
+
+void PROGRAM() :
+{}
+{
+	COMPSTMT() < EOF > 
+}
+
+void COMPSTMT() : 
+{}
+{
+	STMT() (< T >  EXPR())* [< T > ]
+}
+
+void STMT() : 
+{}
+{
+	STMT2() ((< keyword_if >  | < keyword_while >  | < keyword_unless >  | < keyword_until > ) EXPR())*
+}
+
+void STMT2() : 
+{}
+{
+	CALL() < keyword_do >  [< pipe >  [BLOCK_VAR()] < pipe > ] COMPSTMT() < keyword_end > 
+	| < keyword_undef >  FNAME()
+	| < keyword_alias >  FNAME() FNAME()
+	| (< keyword_BEGIN >  | < keyword_END > ) < lbrace >  COMPSTMT() < rbrace >  //object initializer and object finalizer
+	| LHS() < equal >  COMMAND() [< keyword_do >  [< pipe >  [BLOCK_VAR()] < pipe > ] COMPSTMT() < keyword_end > ]
+	| EXPR()
+}
+
+void EXPR() : 
+{}
+{
+	MLHS() < equal >  MRHS() ((< keyword_and >  | < keyword_or > ) EXPR())*
+	| (< keyword_return >  | < keyword_yield > ) CALL_ARGS() ((< keyword_and >  | < keyword_or > ) EXPR())* 
+	| < keyword_not >  EXPR() ((< keyword_and >  | < keyword_or > ) EXPR())*
+	| [< exclamation > ] COMMAND() ((< keyword_and >  | < keyword_or > ) EXPR())*
+	| ARG() ((< keyword_and >  | < keyword_or > ) EXPR())*
+}
+
+void MLHS() : 
+{}
+{
+	MLHS_ITEM() < comma >  [MLHS_ITEM() (< comma >  MLHS_ITEM())*] [< star >  [LHS()]]
+	| < star >  LHS()
+}
+
+void ANYCHARACTER() :
+{}
+{
+	< letter > | < digit >  | SYMBOLS()
+}
+
+void character() :
+{}
+{
+	< letter >
+}
+
+void CALL() : 
+{}
+{
+	FUNCTION()
+ 	| COMMAND()
+}
+
+void COMMAND() : 
+{}
+{
+	OPERATION() CALL_ARGS()
+	| PRIMARY() (< dot >  | < colon2 > ) OPERATION() CALL_ARGS()
+	| < keyword_super >  CALL_ARGS()
+}
+
+void FUNCTION() : 
+{}
+{
+	OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()]
+	| < lparen >  COMPSTMT() < rparen >  (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()]
+	| LITERAL() (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()]
+	| VARIABLE() (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()]
+	| [PRIMARY()] < colon2 >  IDENTIFIER()(< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()]
+	| PRIMARY() < lsqbracket >  [ARGS()] < rsqbracket >  (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()]
+	| < lsqbracket >  [ARGS()[< comma > ]] < rsqbracket >  (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()]
+	| < lbrace >  [ARGS() | ASSOCS() [< comma > ]] < rbrace >  (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()]
+	| < keyword_return >  [< lparen >  [CALL_ARGS()] < rparen > ] (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()]
+	| < keyword_yield >  [< lparen >  [CALL_ARGS()] < rparen > ] (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()]
+	| < keyword_defined >  < lparen >  ARG() < rparen >  (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()]
+	| < keyword_if >  EXPR() THEN() COMPSTMT() (< keyword_elsif >  EXPR() THEN() COMPSTMT())* [< keyword_else >  COMPSTMT()] < keyword_end >  (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()]
+	| < keyword_unless >  EXPR() THEN() COMPSTMT() [< keyword_else >  COMPSTMT()] < keyword_end >  (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()]
+	| (< keyword_while >  | < keyword_until > ) EXPR() DO() COMPSTMT() < keyword_end >  (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()]
+	| < keyword_case >  COMPSTMT() < keyword_when >  WHEN_ARGS() THEN() COMPSTMT() (< keyword_when >  WHEN_ARGS() THEN() COMPSTMT())* [< keyword_else >  COMPSTMT()] < keyword_end >  (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()]
+	| < keyword_for >  BLOCK_VAR() < keyword_in >  EXPR() DO() COMPSTMT() < keyword_end >  (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()]
+	| < keyword_begin >  COMPSTMT() (< keyword_rescue >  [ARGS()] DO() COMPSTMT())* [< keyword_else >  COMPSTMT()] [< keyword_ensure >  COMPSTMT()] < keyword_end >  (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()]
+	| < keyword_class >  IDENTIFIER() [< less >  IDENTIFIER()] COMPSTMT() < keyword_end >  (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()]
+	| < keyword_module >  IDENTIFIER() COMPSTMT() < keyword_end >  (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()]
+	| < keyword_def >  FNAME() ARGDECL() COMPSTMT() < keyword_end >  (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()]
+	| < keyword_def >  SINGLETON() (< dot >  | < colon2 > ) FNAME() ARGDECL() COMPSTMT() < keyword_end >  (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()]
+	| < keyword_super >  [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()]
+}
+
+void FUNCTION2() :
+{}
+{
+	[< lbrace >  [< pipe >  [BLOCK_VAR()] < pipe > ] COMPSTMT() < rbrace > ] (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()]
+}
+
+void ARG() : 
+{}
+{
+	LHS() < equal >  ARG() [ARG2()]
+	| LHS() OP_ASGN() ARG() [ARG2()]
+	| (< plus >  | < minus > ) ARG() [ARG2()]
+	| (< exclamation >  | < tilde > ) ARG() [ARG2()]
+	| < keyword_defined >  ARG() [ARG2()]
+	| PRIMARY() [ARG2()]
+}
+
+void ARG2() :
+{}
+{
+	(< dot2 >  | < dot3 >  | < plus >  | < minus >  | < star >  | < slash >  | < percent >  | < power > ) ARG() [ARG2()]
+	| (< pipe >  | < caret >  | < amper >  | < lessequalmore >  | < more >  | < moreorequal >  [ARG2()]
+			| < less >  | < lessorequal >  | < equal2 >  | < equal3 >  | < exclamationequal >  | < equaltilde >  | < exclamationtilde > ) ARG() [ARG2()]
+	| ARG() (< lshift >  | < rshift >  | < and >  | < or > ) ARG() [ARG2()]
+}
+
+void PRIMARY() : 
+{}
+{
+	< lparen >  COMPSTMT() < rparen >  [PRIMARY2()]
+	| LITERAL() [PRIMARY2()]
+	| VARIABLE() [PRIMARY2()]
+	| < colon2 >  IDENTIFIER() [PRIMARY2()]
+	| < lsqbracket >  [ARGS()[< comma > ]] < rsqbracket >  [PRIMARY2()]
+	| < lbrace >  [ARGS() | ASSOCS() [< comma > ]] < rbrace >  [PRIMARY2()]
+	| (< keyword_return >  | < keyword_yield > ) [< lparen >  [CALL_ARGS()] < rparen > ] [PRIMARY2()]
+	| < keyword_defined >  < lparen >  ARG() < rparen >  [PRIMARY2()]
+	| OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()] [< lbrace >  [< pipe >  [BLOCK_VAR()] < pipe > ] COMPSTMT() < rbrace > ] [PRIMARY2()]
+	| < lparen >  COMPSTMT() < rparen >  (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()] [< lbrace >  [< pipe >  [BLOCK_VAR()] < pipe > ] COMPSTMT() < rbrace > ] [PRIMARY2()]
+	| LITERAL() (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()] [< lbrace >  [< pipe >  [BLOCK_VAR()] < pipe > ] COMPSTMT() < rbrace > ] [PRIMARY2()]
+	| VARIABLE() (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()] [< lbrace >  [< pipe >  [BLOCK_VAR()] < pipe > ] COMPSTMT() < rbrace > ] [PRIMARY2()]
+	| < colon2 >  IDENTIFIER()(< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()] [< lbrace >  [< pipe >  [BLOCK_VAR()] < pipe > ] COMPSTMT() < rbrace > ] [PRIMARY2()]
+	| < lsqbracket >  [ARGS()[< comma > ]] < rsqbracket >  (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()] [< lbrace >  [< pipe >  [BLOCK_VAR()] < pipe > ] COMPSTMT() < rbrace > ] [PRIMARY2()]
+	| < lbrace >  [ARGS() | ASSOCS() [< comma > ]] < rbrace >  (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()] [< lbrace >  [< pipe >  [BLOCK_VAR()] < pipe > ] COMPSTMT() < rbrace > ] [PRIMARY2()]
+	| < keyword_return >  [< lparen >  [CALL_ARGS()] < rparen > ] (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()] [< lbrace >  [< pipe >  [BLOCK_VAR()] < pipe > ] COMPSTMT() < rbrace > ] [PRIMARY2()]
+	| < keyword_yield >  [< lparen >  [CALL_ARGS()] < rparen > ] (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()] [< lbrace >  [< pipe >  [BLOCK_VAR()] < pipe > ] COMPSTMT() < rbrace > ] [PRIMARY2()]
+	| < keyword_defined >  < lparen >  ARG() < rparen >  (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()] [< lbrace >  [< pipe >  [BLOCK_VAR()] < pipe > ] COMPSTMT() < rbrace > ] [PRIMARY2()]
+	| < keyword_if >  EXPR() THEN() COMPSTMT() (< keyword_elsif >  EXPR() THEN() COMPSTMT())* [< keyword_else >  COMPSTMT()] < keyword_end >  (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()] [< lbrace >  [< pipe >  [BLOCK_VAR()] < pipe > ] COMPSTMT() < rbrace > ] [PRIMARY2()]
+	| < keyword_unless >  EXPR() THEN() COMPSTMT() [< keyword_else >  COMPSTMT()] < keyword_end >  (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()] [< lbrace >  [< pipe >  [BLOCK_VAR()] < pipe > ] COMPSTMT() < rbrace > ] [PRIMARY2()]
+	| (< keyword_while >  | < keyword_until > ) EXPR() DO() COMPSTMT() < keyword_end >  (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()] [< lbrace >  [< pipe >  [BLOCK_VAR()] < pipe > ] COMPSTMT() < rbrace > ] [PRIMARY2()]
+	| < keyword_case >  COMPSTMT() < keyword_when >  WHEN_ARGS() THEN() COMPSTMT() (< keyword_when >  WHEN_ARGS() THEN() COMPSTMT())* [< keyword_else >  COMPSTMT()] < keyword_end >  (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()] [< lbrace >  [< pipe >  [BLOCK_VAR()] < pipe > ] COMPSTMT() < rbrace > ] [PRIMARY2()]
+	| < keyword_for >  BLOCK_VAR() < keyword_in >  EXPR() DO() COMPSTMT() < keyword_end >  (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()] [< lbrace >  [< pipe >  [BLOCK_VAR()] < pipe > ] COMPSTMT() < rbrace > ] [PRIMARY2()]
+	| < keyword_begin >  COMPSTMT() (< keyword_rescue >  [ARGS()] DO() COMPSTMT())* [< keyword_else >  COMPSTMT()] [< keyword_ensure >  COMPSTMT()] < keyword_end >  (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()] [< lbrace >  [< pipe >  [BLOCK_VAR()] < pipe > ] COMPSTMT() < rbrace > ] [PRIMARY2()]
+	| < keyword_class >  IDENTIFIER() [< less >  IDENTIFIER()] COMPSTMT() < keyword_end >  (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()] [< lbrace >  [< pipe >  [BLOCK_VAR()] < pipe > ] COMPSTMT() < rbrace > ] [PRIMARY2()]
+	| < keyword_module >  IDENTIFIER() COMPSTMT() < keyword_end >  (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()] [< lbrace >  [< pipe >  [BLOCK_VAR()] < pipe > ] COMPSTMT() < rbrace > ] [PRIMARY2()]
+	| < keyword_def >  FNAME() ARGDECL() COMPSTMT() < keyword_end >  (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()] [< lbrace >  [< pipe >  [BLOCK_VAR()] < pipe > ] COMPSTMT() < rbrace > ] [PRIMARY2()]
+	| < keyword_def >  SINGLETON() (< dot >  | < colon2 > ) FNAME() ARGDECL() COMPSTMT() < keyword_end >  (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()] [< lbrace >  [< pipe >  [BLOCK_VAR()] < pipe > ] COMPSTMT() < rbrace > ] [PRIMARY2()]
+	| < keyword_super >  [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()] [< lbrace >  [< pipe >  [BLOCK_VAR()] < pipe > ] COMPSTMT() < rbrace > ] [PRIMARY2()]
+	| < keyword_if >  EXPR() THEN() COMPSTMT() (< keyword_elsif >  EXPR() THEN() COMPSTMT())* [< keyword_else >  COMPSTMT()] < keyword_end >  [PRIMARY2()]
+	| < keyword_unless >  EXPR() THEN() COMPSTMT() [< keyword_else >  COMPSTMT()] < keyword_end >  [PRIMARY2()]
+	| (< keyword_while >  | < keyword_until > ) EXPR() DO() COMPSTMT() < keyword_end >  [PRIMARY2()]
+	| < keyword_case >  COMPSTMT() < keyword_when >  WHEN_ARGS() THEN() COMPSTMT() (< keyword_when >  WHEN_ARGS() THEN() COMPSTMT())* [< keyword_else >  COMPSTMT()] < keyword_end >  [PRIMARY2()]
+	| < keyword_for >  BLOCK_VAR() < keyword_in >  EXPR() DO() COMPSTMT() < keyword_end >  [PRIMARY2()]
+	| < keyword_begin >  COMPSTMT() (< keyword_rescue >  [ARGS()] DO() COMPSTMT())* [< keyword_else >  COMPSTMT()] [< keyword_ensure >  COMPSTMT()] < keyword_end >  [PRIMARY2()]
+	| < keyword_class >  IDENTIFIER() [< less >  IDENTIFIER()] COMPSTMT() < keyword_end >  [PRIMARY2()]
+	| < keyword_module >  IDENTIFIER() COMPSTMT() < keyword_end >  [PRIMARY2()]
+	| < keyword_def >  FNAME() ARGDECL() COMPSTMT() < keyword_end >  [PRIMARY2()]
+	| < keyword_def >  SINGLETON() (< dot >  | < colon2 > ) FNAME() ARGDECL() COMPSTMT() < keyword_end >  [PRIMARY2()]
+}
+
+void PRIMARY2() :
+{}
+{
+	< colon2 >  IDENTIFIER() [PRIMARY2()]
+	| < lsqbracket >  [ARGS()] < rsqbracket >  [PRIMARY2()]
+	| < colon2 >  IDENTIFIER()(< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()] [< lbrace >  [< pipe >  [BLOCK_VAR()] < pipe > ] COMPSTMT() < rbrace > ] [PRIMARY2()]
+	| < lsqbracket >  [ARGS()] < rsqbracket >  (< dot >  | < colon2 > ) OPERATION() [< lparen >  [CALL_ARGS()] < rparen > ] [FUNCTION2()] [< lbrace >  [< pipe >  [BLOCK_VAR()] < pipe > ] COMPSTMT() < rbrace > ] [PRIMARY2()]
+}
+
+void WHEN_ARGS() : 
+{}
+{
+	ARGS() [< comma >  < star >  ARG()] | < star >  ARG()
+}
+
+void THEN() : 
+{}
+{
+	< T > 
+	| [< T > ] < keyword_then >  //"then" and "do" can go on next line
+}
+
+void DO() : 
+{}
+{
+	< T > 
+	| [< T > ] < keyword_do >  
+}
+
+void BLOCK_VAR() : 
+{}
+{
+	 LHS()
+	 | MLHS()
+}
+
+void MLHS_ITEM() : 
+{}
+{
+	LHS()
+	| < lparen >  MLHS() < rparen > 
+}
+
+void LHS() : 
+{}
+{
+	 	VARIABLE()
+		| PRIMARY() < lsqbracket >  [ARGS()] < rsqbracket > 
+		| PRIMARY() < dot >  IDENTIFIER()
+}
+
+void MRHS() : 
+{}
+{
+	ARGS() [< comma >  < star >  ARG()] | < star >  ARG()
+}
+
+void CALL_ARGS() :
+{}
+{
+	ARGS()
+	| ARGS() [< comma >  ASSOCS()] [< comma >  < star >  ARG()] [< comma >  < amper >  ARG()]
+	| ASSOCS() [< comma >  < star >  ARG()] [< comma >  < amper >  ARG()]
+	| < star >  ARG() [< comma >  < amper >  ARG()]
+	| < amper >  ARG()
+	| COMMAND()
+}
+
+void ARGS() : 
+{}
+{
+	ARG() (< comma >  ARG())*
+}
+
+void ARGDECL() : 
+{}
+{
+	< lparen >  ARGLIST() < rparen > 
+ 	| ARGLIST() < T > 
+}
+
+void ARGLIST() : 
+{}
+{
+	IDENTIFIER() (< comma >  IDENTIFIER())* [< comma >  < star >  [IDENTIFIER()]][< comma > < amper > IDENTIFIER()]
+	| < star > IDENTIFIER()[< comma >  < amper > IDENTIFIER()]
+	| [< amper > IDENTIFIER()]
+}
+
+void SINGLETON() : 
+{}
+{
+	VARIABLE()
+	| < lparen >  EXPR() < rparen > 
+}
+
+void ASSOCS() : 
+{}
+{
+	ASSOC() (< comma >  ASSOC())*
+}
+
+void ASSOC() : 
+{}
+{
+	ARG() < equalmore >  ARG()
+}
+
+void VARIABLE() : 
+{}
+{
+	VARNAME() | < keyword_nil >  | < keyword_self > 
+}
+
+void LITERAL() : 
+{}
+{
+	< keyword_numeric >  | SYMBOL() | STRING() | STRING2() | HERE_DOC() | REGEXP()
+}
+
+void OP_ASGN() : 
+{}
+{
+	< plusequal > 
+	| < minusequal > 
+	| < starequal > 
+	| < slashequal > 
+	| < percentequal > 
+	| < powerequal > 
+	| < amperequal > 
+	| < pipeequal > 
+	| < caretequal > 
+	| < lshiftequal > 
+	| < rshiftequal > 
+	| < andequal > 
+	| < orequal > 
+}
+
+void SYMBOL() : 
+{}
+{
+	 < colon >  (FNAME() | VARNAME())
+}
+
+void FNAME() : 
+{}
+{
+	IDENTIFIER()
+	| < dot2 > 
+	| < pipe > 
+	| < caret > 
+	| < amper > 
+	| < lessequalmore > 
+	| < equal2 > 
+	| < equal3 > 
+	| < equaltilde > 
+	| < more > 
+	| < moreorequal > 
+	| < less > 
+	| < lessorequal > 
+	| < plus > 
+	| < minus > 
+	| < star > 
+	| < slash > 
+	| < percent > 
+	| < power > 
+	| < lshift > 
+	| < rshift > 
+	| < tilde > 
+	| < plusat > 
+	| < minusat > 
+	| < sqbrackets > 
+	| < sqbracketsequal > 
+}
+
+void OPERATION() : 
+{}
+{
+	IDENTIFIER() [< exclamation >  | < question > ]
+}
+
+void VARNAME() : 
+{}
+{
+	GLOBAL()
+	| [< at > ] IDENTIFIER()
+}
+
+void GLOBAL() : 
+{}
+{
+	< dollar >  (IDENTIFIER() | < dollar >  [< minus > ] ANYCHARACTER())
+}
+
+void STRING() : 
+{}
+{
+	< quote >  (ANYCHARACTER())* < quote > 
+	| < apostr >  (ANYCHARACTER())* < apostr > 
+	| < backapostr >  (ANYCHARACTER())* < backapostr > 
+}
+
+void STRING2() : 
+{}
+{
+	//< percent > (< Q > |< q > |< x > )character() (ANYCHARACTER())* character()
+	< percent > < letter > character() (ANYCHARACTER())* character()
+}
+
+void HERE_DOC() : 
+{}
+{
+	< lshift > (IDENTIFIER() | STRING()) (ANYCHARACTER())* IDENTIFIER()
+}
+
+void REGEXP() : 
+{}
+{
+	< slash >  (ANYCHARACTER())* < slash >  //[< i > |< o > |< p > ]
+//	| < percent > < r >  character() (ANYCHARACTER())* character()
+	| < percent > < letter > character() (ANYCHARACTER())* character()
+}
+
+void IDENTIFIER() : 
+{}
+{
+	(< letter > | < underscore > )+ (< letter > | < underscore >  | < digit > )*
+}
