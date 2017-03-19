@@ -68,12 +68,12 @@ public class MetricsCounter {
 			numInterfaces = numInterfaces + classNumInterfaces;
 			numInterfacesString = numInterfacesString + c.name + ":" + classNumInterfaces + "; ";
 			System.out.println(classNumInterfaces);
-//			try {
-//				Thread.sleep(2000);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		metricsStrings[3] = numInterfacesString;
 		return numInterfaces;
