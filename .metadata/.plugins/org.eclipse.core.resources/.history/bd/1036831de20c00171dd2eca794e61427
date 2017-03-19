@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.function.Consumer;
 
+import metrics.MetricsCounter;
+
 public class CLI {
 
 	private static String samples = "src/tests";
@@ -93,8 +95,9 @@ public class CLI {
 		FileInputStream fileContent;
 		try {
 			fileContent = new FileInputStream(samples + "/" + fileName);
+			RubyParser15 parser = new RubyParser15(fileContent); 
 			
-			MetricsCounter metricsCounter = new MetricsCounter(samples + "/" + fileName);
+			MetricsCounter metricsCounter = parser.getMetrics();
 			writeReport(metricsCounter);
 			
 		} catch (FileNotFoundException e) {
@@ -137,9 +140,9 @@ public class CLI {
 
 		try {
 			FileWriter fw = new FileWriter(testReport, true); // Append file
-//			for (String metric : metricsCounter.getMetrics()) {
-//				fw.append(metric + "\t");
-//			}
+			for (String metric : metricsCounter.getMetrics()) {
+				fw.append(metric + "\t");
+			}
             fw.append('\n');  
             fw.flush();
             fw.close();
