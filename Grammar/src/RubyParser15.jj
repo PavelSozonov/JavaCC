@@ -801,7 +801,7 @@ void MyClass_BODY():
   	Token t_className = null;
   	Token t_classNameParent = null;
   	Token t_interfaceName = null;
-  	ArrayList<Token > t_interfacesNames = new ArrayList<Token >();
+  	ArrayList<String > t_interfacesNames = new ArrayList<String >();
   	classCounter++;
   	System.out.println("MyClass_BODY() " + classCounter);
 }
@@ -809,7 +809,7 @@ void MyClass_BODY():
 	// class keyword + class name
    < keyword_class > (t_className = < identifier > )
    [< less > (t_classNameParent = < identifier >)]
-   ( < include > (t_interfaceName =  < identifier >) {t_interfacesNames.add(t_interfaceName); } )*
+   ( < include > (t_interfaceName =  < identifier >) {if (t_interfaceName != null) {  t_interfacesNames.add(t_interfaceName.toString()); }; } )*
    COMPSTMT()
    < keyword_end >
 
@@ -817,7 +817,7 @@ void MyClass_BODY():
 	  MyClass c = new MyClass(t_className + "");
 	  MyClass parent = new MyClass(t_classNameParent + "");
 	  c.setParent(parent);
-	  c.getInterfaces().add(t_interfacesNames.toString());
+	  c.getInterfaces().addAll(t_interfacesNames);
 	  c.getMethods().addAll(methods);
 	  c.getAttributes().addAll(attributes);
 	  methods.clear();

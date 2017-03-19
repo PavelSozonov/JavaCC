@@ -7,6 +7,10 @@ public class MetricsCounter {
 	RubyParser15 parser;
 
 
+	public String[] getMetricsStrings() {
+		return metricsStrings;
+	}
+
 	public MetricsCounter(String fileName) {
 		try {
 			parser = new RubyParser15(new java.io.FileInputStream(fileName));
@@ -21,8 +25,8 @@ public class MetricsCounter {
 		MyClass.mergeClassesAll(parser.classes);
 	}
 
-	public int countNOM() {
-		int numOfMethods = 0;
+	public int countNOM() { 
+		int numOfMethods = 0; 
 		String numMethodsString = "";
 		for (MyClass c: parser.classes) {
 			int classNumMethods = c.getMethods().size();
@@ -54,7 +58,7 @@ public class MetricsCounter {
 			numInterfacesString = numInterfacesString + c.name + ":" + classNumInterfaces + "; ";
 		}
 		metricsStrings[3] = numInterfacesString;
-		System.out.println("!!!!!!!!!!!!!!!!!!!!" + numInterfacesString);
+//		System.out.println("!!!!!!!!!!!!!!!!!!!!" + numInterfacesString);
 		return numInterfaces;
 	}
 	
