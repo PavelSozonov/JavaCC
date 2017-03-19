@@ -11,7 +11,7 @@ public class RbParser implements RbParserConstants {
         // Metrics	
         private static int amountOfStatements = 0;
 
-        public MetricsCounter getMetrics() {
+        public MetricsCounter countMetrics() {
                 MetricsCounter metricsCounter = new MetricsCounter();
                 try {
                         clazz();

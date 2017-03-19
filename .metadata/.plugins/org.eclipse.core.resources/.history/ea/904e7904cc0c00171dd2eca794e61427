@@ -97,7 +97,7 @@ public class CLI {
 			fileContent = new FileInputStream(samples + "/" + fileName);
 			RbParser parser = new RbParser(fileContent); 
 			
-			MetricsCounter metricsCounter = parser.getMetrics();
+			MetricsCounter metricsCounter = parser.countMetrics();
 			writeReport(metricsCounter);
 			
 		} catch (FileNotFoundException e) {
@@ -105,6 +105,10 @@ public class CLI {
 		}
 	}
 
+	private void testAllFiles() {
+		
+	}
+	
 	private void fileProcessor(Consumer<File> consumer) {
 		File folder = new File(samples);
 		File[] listOfFiles = folder.listFiles();
