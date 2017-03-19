@@ -104,7 +104,7 @@ public class MetricsCounter {
 		ArrayList<String> superClassesNames = new ArrayList<>();
 		for (MyClass c: parser.classes) {
 			String parentName = c.getParent().name;
-			if (!parentName.equals("null")) {
+			if (!parentName.equals("null") && parentName != null) {
 				if (!superClassesNames.contains(parentName))
 				{
 					superClassesNames.add(c.getParent().name);
@@ -112,7 +112,11 @@ public class MetricsCounter {
 				}
 			}
 		}
-		reuseRatio = numOfSuperClasses /numOfClasses;
+		if (numOfClasses == 0) {return 1;}
+		reuseRatio = numOfSuperClasses / (double) numOfClasses;
+//		while (true) {
+//			System.out.println(numOfSuperClasses + " / " + numOfClasses + " = " + reuseRatio);
+//		}
 		metricsStrings[7] = reuseRatio + "";
 		return reuseRatio;
 	}
