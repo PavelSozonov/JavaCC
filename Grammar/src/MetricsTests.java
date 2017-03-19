@@ -1,15 +1,13 @@
-package tests;
+
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import metrics.MetricsCounter;
-
 public class MetricsTests {
 	// two metrics counters for two files
-	MetricsCounter mc1 = new MetricsCounter("/code1.rb");
-	MetricsCounter mc2 = new MetricsCounter("/code2.rb");
+	MetricsCounter mc1 = new MetricsCounter("Grammar/src/tests/code1.rb");
+	MetricsCounter mc2 = new MetricsCounter("Grammar/src/tests/code2.rb");
 
 	@Test
 	public void testNOM() {			
@@ -18,9 +16,53 @@ public class MetricsTests {
 	}
 	
 	@Test
+	public void testCountStatements() {			
+		assertEquals(37, mc1.countStatements());
+		assertEquals(37, mc2.countStatements());
+	}
+	
+	@Test
+	public void testCountClasses() {			
+		assertEquals(0, mc1.countClasses());
+		assertEquals(0, mc2.countClasses());
+	}
+	
+	
+	@Test
+	public void testCountInterfaces() {			
+		assertEquals(0, mc1.countInterfaces());
+		assertEquals(0, mc2.countInterfaces());
+	}
+	
+	
+	@Test
 	public void testNOA() {			
 		assertEquals(1, mc1.countNOA());
 		assertEquals(2, mc2.countNOA());
+	}
+	
+	@Test
+	public void testCountLoops() {			
+		assertEquals(0, mc1.countLoops());
+		assertEquals(0, mc2.countLoops());
+	}
+	
+	@Test
+	public void testCountConditions() {			
+		assertEquals(0, mc1.countConditions());
+		assertEquals(0, mc2.countConditions());
+	}
+	
+	@Test
+	public void testRR() {			
+		assertEquals(0, mc1.countRR());
+		assertEquals(1, mc2.countRR());
+	}
+	
+	@Test
+	public void testNOC() {			
+		assertEquals(0, mc1.countNOC());
+		assertEquals(1, mc2.countNOC());
 	}
 	
 	@Test
@@ -133,11 +175,7 @@ public class MetricsTests {
 		assertEquals(0.333, mc2.countPF());
 	}
 	
-	@Test
-	public void testRR() {			
-		assertEquals(0, mc1.countRR());
-		assertEquals(1, mc2.countRR());
-	}
+
 	
 	@Test
 	public void testSR() {			
