@@ -10,4 +10,7 @@
 <fullyQualifiedTypeName name="java.io.IOException"/>
 <fullyQualifiedTypeName name="metrics.MetricsCounter"/>
 <fullyQualifiedTypeName name="CLI"/>
+<fullyQualifiedTypeName name="MetricsCounter"/>
+<fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="java.text.SimpleDateFormat"/>
 </qualifiedTypeNameHistroy>

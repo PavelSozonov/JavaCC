@@ -3,8 +3,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Scanner;
 import java.util.function.Consumer;
 
@@ -121,15 +119,29 @@ public class CLI {
 		appendMetrics(metricsCounter);
 	}
 	
-	private void writeTimeStamp(FileWriter fw) throws IOException {
-		fw.write(new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss").format(new Date()) + "\t");
+	private void writeReportHeader() {
+		try {
+			FileWriter fw = new FileWriter(testReport, false); // Rewrite file
+			writeTimeStamp(fw);
+	        for (int colNum = 1; colNum <= MetricsCounter.NUMBER_OF_METRICS; colNum++) {
+	        	fw.append("Col" + colNum + "\t");
+	        }
+	        fw.append('\n'); 		
+	        fw.flush();
+	        fw.close();	
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
-	public void appendMetrics(MetricsCounter metricsCounter) {
+	private void writeTimeStamp(FileWriter fw) {
+		fw.write(new Date() + "\t");
+	}
+	
+	public static void appendMetrics(MetricsCounter metricsCounter) {
 
 		try {
 			FileWriter fw = new FileWriter(testReport, true); // Append file
-			writeTimeStamp(fw);
 			for (String metric : metricsCounter.getMetricsStrings()) {
 				fw.append(metric + "\t");
 			}

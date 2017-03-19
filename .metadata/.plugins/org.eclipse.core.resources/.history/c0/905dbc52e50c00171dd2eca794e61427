@@ -2,9 +2,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class MetricsCounter {
-	
-	public static final int NUMBER_OF_METRICS = 8;
-	String[] metricsStrings = new String[NUMBER_OF_METRICS];
+	String[] metricsStrings = new String[23];
 	
 	RubyParser15 parser;
 
@@ -25,15 +23,6 @@ public class MetricsCounter {
 			e.printStackTrace();
 		}
 		MyClass.mergeClassesAll(parser.classes);
-		countNOM();
-		countStatements();
-		countClasses();
-		countInterfaces();
-		countNOA();
-		countLoops();
-		countConditions();
-		countRR();
-		countNOC();
 	}
 
 	public int countNOM() { 

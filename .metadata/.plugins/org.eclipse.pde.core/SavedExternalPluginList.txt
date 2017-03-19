@@ -1,4 +1,4 @@
-# List of external plug-in models previously loaded. Timestamp: 1489734054755
+# List of external plug-in models previously loaded. Timestamp: 1489957684181
 file:/home/pavel/Programs/Eclipse/Neon/rcp-neon3/eclipse/dropins/JMemvit_1.0.0.201703062008.jar
 file:/home/pavel/.p2/pool/plugins/ch.qos.logback.classic_1.0.7.v20121108-1250.jar
 file:/home/pavel/.p2/pool/plugins/ch.qos.logback.core_1.0.7.v20121108-1250.jar

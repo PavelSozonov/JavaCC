@@ -3,7 +3,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 import java.util.function.Consumer;
@@ -122,7 +121,7 @@ public class CLI {
 	}
 	
 	private void writeTimeStamp(FileWriter fw) throws IOException {
-		fw.write(new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss").format(new Date()) + "\t");
+		fw.write(new Date() + "\t");
 	}
 	
 	public void appendMetrics(MetricsCounter metricsCounter) {
