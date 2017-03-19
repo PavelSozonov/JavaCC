@@ -19,14 +19,14 @@ public class MetricsTests {
 	
 	@Test
 	public void testCountStatements() {			
-		assertEquals(37, mc1.countStatements());
+		assertEquals(24, mc1.countStatements());
 		assertEquals(37, mc2.countStatements());
 	}
 	
 	@Test
 	public void testCountClasses() {			
-		assertEquals(0, mc1.countClasses());
-		assertEquals(0, mc2.countClasses());
+		assertEquals(1, mc1.countClasses());
+		assertEquals(2, mc2.countClasses());
 	}
 	
 	
@@ -40,7 +40,7 @@ public class MetricsTests {
 	@Test
 	public void testNOA() {			
 		assertEquals(1, mc1.countNOA());
-		assertEquals(2, mc2.countNOA());
+		assertEquals(3, mc2.countNOA());
 	}
 	
 	@Test
@@ -56,9 +56,13 @@ public class MetricsTests {
 	}
 	
 	@Test
-	public void testRR() {			
-		assertEquals(0, mc1.countRR());
-		assertEquals(1, mc2.countRR());
+	public void testRR() {
+		double num1 = (double) 0;
+		double num2 = (double) 0.5;
+		int comp1 = Double.compare(num1, mc1.countRR());
+		int comp2 = Double.compare(num2, mc2.countRR());
+		assertEquals(0, comp1);
+		assertEquals(0, comp2);
 	}
 	
 	@Test

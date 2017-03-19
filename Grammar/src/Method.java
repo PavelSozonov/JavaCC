@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-class Method {
+class Method implements Comparable<Method>{
 		String name;
 		ArrayList<String> args = new ArrayList<>();
 		
@@ -26,6 +26,12 @@ class Method {
 		
 		public String toString() {
 			return this.name;
+		}
+
+		@Override
+		public int compareTo(Method o) {
+			//if (this.name.equals(o.name)) {
+			return this.name.compareTo(o.name);
 		}
 		
 		
