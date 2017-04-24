@@ -5,8 +5,8 @@ import org.junit.Test;
 public class TestMetrics {
 	// two metrics counters for two files
 
-	MetricsCounter mc1 = new MetricsCounter("Grammar/src/tests/code1.rb");
-	MetricsCounter mc2 = new MetricsCounter("Grammar/src/tests/code2.rb");
+	MetricsCounter mc1 = new MetricsCounter(Global.filesPath + "code1.rb");
+	MetricsCounter mc2 = new MetricsCounter(Global.filesPath + "code2.rb");
 
 
 	// Number of methods

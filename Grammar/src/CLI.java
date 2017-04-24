@@ -10,8 +10,8 @@ import java.util.function.Consumer;
 
 public class CLI {
 
-	private static String samples = "Grammar/src/tests";
-	private static String testReport = "Grammar/src/tests/report.csv";
+	private static String samples = Global.filesPath;
+	private static String testReport = Global.filesPath + "report.csv";
 	
 	public void run() {
 

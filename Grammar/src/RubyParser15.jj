@@ -22,8 +22,8 @@ public class RubyParser15 {
 
 	private static boolean inputFromFile = true;
 
-	private static String file1 = "Grammar/src/tests/code1.rb";
-	private static String file2 = "Grammar/src/tests/code2.rb";
+	private static String file1 = Global.filesPath + "code1.rb";
+	private static String file2 = Global.filesPath + "code2.rb";
 
 	public int statementCounter = 0;	
 	public int loopCounter = 0;
