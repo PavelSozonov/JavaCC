@@ -3,7 +3,20 @@ import java.util.ArrayList;
 class Method implements Comparable<Method>{
 		String name;
 		ArrayList<String> args = new ArrayList<>();
+		ArrayList<String> attributesUsed = new ArrayList<>();
 		
+		public ArrayList<String> getAttributesUsed() {
+			return attributesUsed;
+		}
+
+		public void setAttributesUsed(ArrayList<String> attributesUsed) {
+			this.attributesUsed = attributesUsed;
+		}
+		
+		public void addAttributesUsed(ArrayList<String> attributesUsed) {
+			this.attributesUsed.addAll(attributesUsed);
+		}
+
 		public Method(String name) {
 			this.name = name;
 		}

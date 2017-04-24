@@ -33,6 +33,7 @@ public class RubyParser15 {
 	private int classCounter = 0;
 	private ArrayList<Method > methods = new ArrayList<Method >();
 	private ArrayList<String > attributes = new ArrayList<String >();
+	private ArrayList<String > attributesStack = new ArrayList<String >();
 	
 	private class Metrics {
 		private final static int AMOUNT_OF_METRICS = 23;
@@ -787,7 +788,7 @@ void STMT() :
 	{
 	  	if (varName != null) { 
 		  	String var = varName.toString();
-		  	if (var.startsWith("@")) { System.out.println("Attribute: " + var); }
+		  	if (var.startsWith("@")) { System.out.println("Attribute: " + var); attributesStack.add(var);}
 			if (var.startsWith("@") && !attributes.contains(var) ) {
 			  
 			  	attributes.add(var);
@@ -848,8 +849,12 @@ void FUNCTION_BODY():
    < keyword_def > (methodName = < identifier > [<dot > < identifier >]) [ARGS()] COMPSTMT() < keyword_end >
 
 	{
-		methods.add(new Method(methodName.toString()));
+	  	Method method = new Method(methodName.toString());
+	  	method.addAttributesUsed(attributesStack);
+	  	attributesStack.clear();
+		methods.add(method);
   		System.out.println("FUNCTION_BODY() " +  "   " + methods);
+  		
   	}
 	
 
@@ -884,7 +889,7 @@ void RETURN():
 	{
 	  	if (varName != null) { 
 		  	String var = varName.toString();
-		  	if (var.startsWith("@")) { System.out.println("Attribute: " + var); }
+		  	if (var.startsWith("@")) { System.out.println("Attribute: " + var);attributesStack.add(var) ;}
 			if (var.startsWith("@") && !attributes.contains(var) ) {
 			  
 			  	attributes.add(var);
@@ -953,7 +958,7 @@ void EXPR():
   	{
 	  	if (varName != null) { 
 		  	String var = varName.toString();
-		  	if (var.startsWith("@")) { System.out.println("Attribute: " + var); }
+		  	if (var.startsWith("@")) { System.out.println("Attribute: " + var); attributesStack.add(var);}
 			if (var.startsWith("@") && !attributes.contains(var) ) {
 			  
 			  	attributes.add(var);
