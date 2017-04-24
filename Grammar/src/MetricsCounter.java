@@ -71,6 +71,13 @@ public class MetricsCounter {
 			int classNumInterfaces = c.getInterfaces().size();
 			numInterfaces = numInterfaces + classNumInterfaces;
 			numInterfacesString = numInterfacesString + c.name + ":" + classNumInterfaces + "; ";
+			System.out.println(classNumInterfaces);
+//			try {
+//				Thread.sleep(2000);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 		}
 		metricsStrings[3] = numInterfacesString;
 		return numInterfaces;
