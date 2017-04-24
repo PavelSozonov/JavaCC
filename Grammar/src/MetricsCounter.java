@@ -1,9 +1,10 @@
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MetricsCounter {
 	
-	public static final int NUMBER_OF_METRICS = 9;
+	public static final int NUMBER_OF_METRICS = 14;
 	String[] metricsStrings = new String[NUMBER_OF_METRICS];
 	
 	RubyParser15 parser;
@@ -24,6 +25,8 @@ public class MetricsCounter {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+		
+		// TODO
 		MyClass.mergeClassesAll(parser.classes);
 		countNOM();
 		countStatements();
@@ -36,6 +39,7 @@ public class MetricsCounter {
 		countNOC();
 	}
 
+	// Number of methods
 	public int countNOM() { 
 		int numOfMethods = 0; 
 		String numMethodsString = "";
@@ -72,6 +76,8 @@ public class MetricsCounter {
 		return numInterfaces;
 	}
 	
+	
+	// Number of attributes
 	public int countNOA() {
 		int numOfAttributes = 0;
 		String numAttributesString = "";
@@ -96,6 +102,7 @@ public class MetricsCounter {
 		return numConditions;
 	}
 	
+	// Reuse ratio
 	public double countRR() {
 		double reuseRatio = 0;
 		int numOfClasses = parser.classes.size();
@@ -117,6 +124,7 @@ public class MetricsCounter {
 		return reuseRatio;
 	}
 	
+	// Number Of Children
 	public int countNOC() {
 		int numOfChildren = 0;
 		String classesNumberOfChildren = "";
@@ -139,101 +147,280 @@ public class MetricsCounter {
 		return numOfChildren;
 	}
 	
+	// Weighted Methods per Class
 	public int countWMC() {
 		// TODO Auto-generated method stub
 		return -1;
 	}
 
+	// Class complexity
 	public int countCC() {
 		// TODO Auto-generated method stub
 		return -1;
 	}
 
+	// Response For a Class
 	public int countRFC() {
 		// TODO Auto-generated method stub
 		return -1;
 	}
 
+	// Coupling Between Objects
 	public int countCBO() {
 		// TODO Auto-generated method stub
 		return -1;
 	}
 
+	// Data abstract coupling
 	public int countDAC() {
 		// TODO Auto-generated method stub
 		return -1;
 	}
 
+	// Message passing coupling
 	public int countMPC() {
 		// TODO Auto-generated method stub
 		return -1;
 	}
 
+	// Coupling factor
 	public int countCF() {
 		// TODO Auto-generated method stub
 		return -1;
 	}
 
+	// Lack of Cohesion in Methods
 	public int countLCOM() {
 		// TODO Auto-generated method stub
 		return -1;
 	}
 
+	// Tight class cohesion
 	public int countTCC() {
 		// TODO Auto-generated method stub
 		return -1;
 	}
 
+	// Loose class cohesion
 	public int countLCC() {
 		// TODO Auto-generated method stub
 		return -1;
 	}
 
+	// Information based cohesion
 	public int countICH() {
 		// TODO Auto-generated method stub
 		return -1;
 	}
 
+	// Depth of Inheritance Tree
 	public int countDIT() {
-		// TODO Auto-generated method stub
-		return -1;
+		
+		int maxDepth = 0;
+		
+		ArrayList<MyClass> allClasses = parser.classes;
+		ArrayList<MyClass> superClassesNames = new ArrayList<>();
+		for (MyClass c: allClasses) {
+			String parentName = c.getParent().name;
+			if (parentName.equals("null") || parentName == null) {
+				superClassesNames.add(c);
+			}
+		}
+		
+		for (MyClass parent: superClassesNames) {
+			int initialDepth = 0;
+			int depth = findDepth(parent, allClasses, initialDepth);
+			if (depth > maxDepth) {
+				maxDepth = depth;
+			}
+		}		
+
+		metricsStrings[10] = maxDepth + "";		
+		return maxDepth;
 	}
 
-	public int countMIF() {
-		// TODO Auto-generated method stub
-		return -1;
+	private int findDepth(MyClass classParent, ArrayList<MyClass> allClasses, int depth) {
+		if (classParent == null || classParent.name.equals("null")) {
+			return depth;
+		}
+		
+		for (MyClass c: allClasses) {			
+			if (c != null && !c.name.equals("null") && classParent.name.equals(c.parent.name)) {
+				MyClass children = c;
+				depth++;
+				findDepth(children, allClasses, depth);
+			} else {
+
+			}
+		}
+		
+		return depth;
 	}
 
-	public int countAIF() {
-		// TODO Auto-generated method stub
-		return -1;
+	// Method inheritance factor
+	public double countMIF() {
+		
+		
+		int methodsInhereted = 0;
+		int methodsDefAndInh = 0;
+		
+		ArrayList<MyClass> allClasses = parser.classes;	
+		
+		ArrayList<MyClass> superClassesNames = new ArrayList<>();
+		for (MyClass c: allClasses) {
+			String parentName = c.getParent().name;
+			if (parentName.equals("null") || parentName == null) {
+				superClassesNames.add(c);
+			}
+		}
+		
+		
+		for (MyClass c: allClasses) {
+			methodsDefAndInh = methodsDefAndInh + c.methods.size();
+			
+			String nameParent = c.name;
+			
+			MyClass currentClass = c.parent;
+			while (currentClass != null && !currentClass.name.equals("null")) {
+				currentClass = MyClass.getMyClassParent(currentClass, allClasses);
+				String name = currentClass.name;
+				ArrayList<Method> methods = currentClass.methods;
+				methodsInhereted = methodsInhereted + currentClass.getMethods().size();
+				currentClass = currentClass.parent;
+			}
+		}
+		if (methodsDefAndInh == 0) {
+			return 0;
+		}
+		methodsDefAndInh = methodsDefAndInh + methodsInhereted;
+		double MIF = methodsInhereted / (double) methodsDefAndInh;
+		metricsStrings[11] = MIF + "";	
+		return MIF;
 	}
 
+	// Attribute inheritance factor
+	public double countAIF() {
+		int attrInhereted = 0;
+		int attrDefAndInh = 0;
+		
+		ArrayList<MyClass> allClasses = parser.classes;	
+		
+		for (MyClass c: allClasses) {
+			attrDefAndInh = attrDefAndInh + c.attributes.size();
+			
+			String nameParent = c.name;
+			
+			MyClass currentClass = c.parent;
+			while (currentClass != null && !currentClass.name.equals("null")) {
+				//currentClass = MyClass.getMyClassParent(currentClass, allClasses);
+				String name = currentClass.name;
+				ArrayList<String> attr = currentClass.attributes;
+				attrInhereted = attrInhereted + currentClass.attributes.size();
+				currentClass = currentClass.parent;
+			}
+		}
+		if (attrDefAndInh == 0) {
+			return 0;
+		}
+		attrDefAndInh = attrDefAndInh + attrInhereted;
+		double AIF = attrInhereted / (double) attrDefAndInh;
+		metricsStrings[12] = AIF + "";	
+		return AIF;
+	}
+
+	// Method hiding factor
 	public int countMHF() {
 		// TODO Auto-generated method stub
 		return -1;
 	}
 
+	// Attribute hiding factor
 	public int countAHF() {
 		// TODO Auto-generated method stub
 		return -1;
 	}
 
+	// Number of methods overridden by a subclass
 	public int countNMO() {
-		// TODO Auto-generated method stub
-		return -1;
+		int NMO = 0;
+		
+		ArrayList<MyClass> allClasses = parser.classes;	
+		
+		for (MyClass c: allClasses) {
+			String nameParent = c.name;
+			
+			ArrayList<Method> methods = c.methods;
+			
+			MyClass currentClass = c.parent;
+			while (currentClass != null && !currentClass.name.equals("null")) {
+				String name = currentClass.name;
+				methods.addAll(currentClass.methods);
+				
+				
+				currentClass = currentClass.parent;
+			}
+			
+			NMO = NMO + findOverriden(methods);
+		}
+		metricsStrings[13] = NMO + "";	
+		return NMO;
 	}
 
+	
+	private int findOverriden(ArrayList<Method> methods) {
+		int overidden = 0;
+		Collections.sort(methods);
+		for (Method m: methods) {
+			int i = methods.indexOf(m);
+			if (i != 0 && m.compareTo(methods.get(i - 1)) == 0) {
+				overidden++;
+			}
+		}
+		return overidden;
+	}
+
+	// Polymorphism factor
 	public int countPF() {
 		// TODO Auto-generated method stub
 		return -1;
 	}
 
 	
-
-	public int countSR() {
-		// TODO Auto-generated method stub
-		return -1;
+	// Specialization ratio
+	public double countSR() {
+		double specializationRatio = 0;
+		int numOfSuperClasses = 0;
+		ArrayList<String> superClassesNames = new ArrayList<>();
+		for (MyClass c: parser.classes) {
+			String parentName = c.getParent().name;
+			if (parentName.equals("null") && parentName != null) {
+				if (!superClassesNames.contains(parentName))
+				{
+					superClassesNames.add(c.getParent().name);
+					numOfSuperClasses++;
+				}
+			}
+		}
+		
+		
+		ArrayList<String> classesStrings =  new ArrayList<>();
+		
+		
+		int numOfSubClasses = 0;		
+		ArrayList<String> subClassesNames = new ArrayList<>();
+		for (MyClass c: parser.classes) {
+			classesStrings.add(c.name);
+			String parentName = c.getParent().name;
+			if (!parentName.equals("null") && parentName != null) {
+				subClassesNames.add(c.name);
+				numOfSubClasses++;
+			}
+		}
+		
+		if (numOfSuperClasses == 0) {return 0;}
+		specializationRatio = numOfSubClasses / (double) numOfSuperClasses;
+		metricsStrings[9] = specializationRatio + "";
+		return specializationRatio;
 	}
 
 }

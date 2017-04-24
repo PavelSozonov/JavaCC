@@ -50,6 +50,8 @@ class Barney < Fred
 
 end
 
+# class Yuliya < Fred end
+
 # Objects are created by the new method of the class object.
 a = Fred.new(398)
 b = Barney.new(112)

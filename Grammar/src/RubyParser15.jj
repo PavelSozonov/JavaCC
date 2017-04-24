@@ -781,13 +781,15 @@ void STMT() :
 	|  LOOP_BODY()
 	|  EXCEPTION()
 	
-	|  RETURN()
+	|  RETURN() 
 	|  ( (varName = <  identifier >) | < keyword_super >)  (VARIABLE() | FUNCTION_CALL())
 
 	{
 	  	if (varName != null) { 
 		  	String var = varName.toString();
+		  	if (var.startsWith("@")) { System.out.println("Attribute: " + var); }
 			if (var.startsWith("@") && !attributes.contains(var) ) {
+			  
 			  	attributes.add(var);
 			}
 
@@ -863,18 +865,33 @@ void ARGS():
 }
 
 void RETURN():
-{ System.out.println("RETURN()"); }
+{ 	Token varName = null;
+	System.out.println("RETURN()");
+}
 {
    < keyword_return >
    (
-     LOOKAHEAD(100) < identifier >
+     
+     LOOKAHEAD(100)  varName = < identifier >
    | LOOKAHEAD(100) CONDITION()
    | LOOKAHEAD(100) ( LOOKAHEAD(100) EXPR())+
    | LOOKAHEAD(100) < string >
    | LOOKAHEAD(100) FUNCTION_CALL()
    | LOOKAHEAD(100) < DIGITS >
+   
    )
 
+	{
+	  	if (varName != null) { 
+		  	String var = varName.toString();
+		  	if (var.startsWith("@")) { System.out.println("Attribute: " + var); }
+			if (var.startsWith("@") && !attributes.contains(var) ) {
+			  
+			  	attributes.add(var);
+			}
+
+		}
+	}
 
 }
 
@@ -922,17 +939,28 @@ void CONDITION():
 
 }
 
-// TODO ñêîáêè
+// TODO ï¿½ï¿½ï¿½ï¿½MyClass_BODY()ï¿½ï¿½
 void EXPR():
-{ System.out.println("EXPR()"); }
+{ 	Token varName = null;
+	System.out.println("EXPR()"); }
 {
-        [(<  identifier > | < keyword_super >) [FUNCTION_CALL()] | < string >  | < DIGITS >]
+        [(varName = <  identifier > | < keyword_super >) [FUNCTION_CALL()] | < string >  | < DIGITS >]
   
 // ( LOOKAHEAD(100)    ( < plus > | < minus > | < star > | < power > | < slash > )
-    ( (<  identifier > | < keyword_super >) [FUNCTION_CALL()]  | < string >   | < DIGITS > )  
+    ( (varName = <  identifier > | < keyword_super >) [FUNCTION_CALL()]  | < string >   | < DIGITS > )  
  //)+
 
-  
+  	{
+	  	if (varName != null) { 
+		  	String var = varName.toString();
+		  	if (var.startsWith("@")) { System.out.println("Attribute: " + var); }
+			if (var.startsWith("@") && !attributes.contains(var) ) {
+			  
+			  	attributes.add(var);
+			}
+
+		}
+	}
 }
 
 void LOOP_BODY():

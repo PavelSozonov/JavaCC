@@ -73,48 +73,47 @@ public class MyClass {
 	
 	
 	public static void mergeClassesAll(ArrayList<MyClass> classes) {
-//		ArrayList<Integer> classesToRemove = new ArrayList<>();
-//		for (int i = 0 ; i < classes.size(); i++) {
-//			for (int j = 0; j <classes.size(); j++) {
-//				MyClass cl1 = classes.get(i);
-//				MyClass cl2 = classes.get(j);
-//				
-//				if (!cl1.equals(cl2) && cl1 != null && cl2 != null) {
-//					if (isOneClass(cl1, cl2)) {
-//						//cl1.attributes.addAll(cl2.attributes);
-//						for (String atrib: cl2.attributes) {
-//							if (!cl1.attributes.contains(atrib)) {
-//								cl1.attributes.add(atrib);
-//							}
-//						}
-//						//cl1.interfaces.addAll(cl2.interfaces);
-//						
-//						for (String interf: cl2.interfaces) {
-//							if (!cl1.interfaces.contains(interf)) {
-//								cl1.interfaces.add(interf);
-//							}
-//						}
-//						//cl1.methods.addAll(cl2.methods);
-//						
-//						for (Method meth: cl2.methods) {
-//							if (!cl1.methods.contains(meth)) {
-//								cl1.methods.add(meth);
-//							}
-//						}
-//						classes.set(j, null);
-//						classesToRemove.add(j);
-//					}
-//				}
-//			}
-//		}
-//		
-//		//classes.removeAll(classesToRemove);
-
+		for (MyClass c: classes) {
+			MyClass parent = c.getParent();
+			if (parent != null && !parent.name.equals("null")) {
+				c.setParent(getMyClassParent(parent, classes));			
+			}
+		}
 	}
 	
 	
 	private static boolean isOneClass(MyClass cl1, MyClass cl2) {
 		if (cl1.name.equals(cl2.name)) {
+			return true;
+		}
+		return false;
+	}
+	
+	public static MyClass getMyClassParent (MyClass myClass, ArrayList<MyClass> classes) {
+		for (MyClass c: classes) {
+			if (isOneClass(myClass, c)) {
+				return c;
+			}
+		}		
+		return myClass;
+		
+	}
+	
+	public static ArrayList<Method> getEqualMethods (ArrayList<Method> mlist1, ArrayList<Method> mlist2) {
+		ArrayList<Method> methodsList = new ArrayList<>();
+		for (Method m1: mlist1) {
+			for (Method m2: mlist2) {
+				if (isOneMethod(m1, m2)) {	
+					methodsList.add(m1) ;
+				}
+			}
+		}		
+		return methodsList;
+		
+	}
+
+	private static boolean isOneMethod(Method m1, Method m2) {
+		if (m1.name.equals(m2.name)) {
 			return true;
 		}
 		return false;
