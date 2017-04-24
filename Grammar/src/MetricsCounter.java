@@ -264,6 +264,9 @@ public class MetricsCounter {
 			}
 		}
 		double TCC = (numOfPairsSameAttrUsed/2) / (double) (numOfPairsOfPublicMethods/2);
+		if (numOfPairsOfPublicMethods == 0) {
+			TCC = 0;
+		}
 		metricsStrings[15] = TCC + "";
 		return TCC;
 	}

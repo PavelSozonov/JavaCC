@@ -24,6 +24,7 @@ public class RubyParser15 {
 
 	private static String file1 = Global.filesPath + "code1.rb";
 	private static String file2 = Global.filesPath + "code2.rb";
+	private static String file3 = Global.filesPath + "code3.rb";
 
 	public int statementCounter = 0;	
 	public int loopCounter = 0;
@@ -54,11 +55,11 @@ public class RubyParser15 {
                         //String inputProgram = "puts\n";
 
                         if (inputFromFile) {
-                                System.out.println("Reading from file " + file2 + " ...");
+                                System.out.println("Reading from file " + file3 + " ...");
                                 try {
-                                        input = new java.io.FileInputStream(file2);
+                                        input = new java.io.FileInputStream(file3);
                                 } catch (java.io.FileNotFoundException e) {
-                                        System.out.println("File " + file2 + " not found.");
+                                        System.out.println("File " + file3 + " not found.");
                                         return;
                                 }
                         } else {
@@ -69,7 +70,7 @@ public class RubyParser15 {
                         RubyParser15 parser = new RubyParser15(input);
                         parser.PROGRAM();
                         System.out.println("Done!");
-                        MetricsCounter metricsCounter = new MetricsCounter(file1);
+                       // MetricsCounter metricsCounter = new MetricsCounter(file3);
                         
                 }
                 catch(ParseException e) {
@@ -942,7 +943,7 @@ void CONDITION_BODY():
   	conditionsCounter++;
   	System.out.println("CONDITION_BODY()"); }
 {
-  < keyword_if > CONDITION() COMPSTMT() (< keyword_elsif > CONDITION() COMPSTMT())* (< keyword_else > COMPSTMT() )* < keyword_end >
+  < keyword_if > CONDITION() COMPSTMT() (< keyword_elsif > CONDITION() COMPSTMT())*   (< keyword_then > COMPSTMT())* (< keyword_else > COMPSTMT() )* < keyword_end >
 }
 
 void CONDITION():
@@ -950,8 +951,11 @@ void CONDITION():
 
   	System.out.println("CONDITION()"); }
 {
-	(< equal2 > | < exclamationequal > | < less > | < more > | < lessorequal > | < moreorequal >)
-	( <  identifier >  [FUNCTION_CALL()] |  < DIGITS > | < string > )
+    LOOKAHEAD(100) (      < identifier >  
+		(< equal2 > | < exclamationequal > | < less > | < more > | < lessorequal > | < moreorequal >)
+		( <  identifier >  [FUNCTION_CALL()] |  < DIGITS > | < string > ) )
+	| EXPR() (< equal2 > | < exclamationequal > | < less > | < more > | < lessorequal > | < moreorequal >)
+		( <  identifier >  [FUNCTION_CALL()] |  < DIGITS > | < string > )
 
 }
 
@@ -962,7 +966,7 @@ void EXPR():
 {
         [(varName = <  identifier > | < keyword_super >) [FUNCTION_CALL()] | < string >  | < DIGITS >]
   
-// ( LOOKAHEAD(100)    ( < plus > | < minus > | < star > | < power > | < slash > )
+// ( LOOKAHEAD(100)    ( < plus > | < minus > | < star > | < power > | < slash > | < percent >)
     ( (varName = <  identifier > | < keyword_super >) [FUNCTION_CALL()]  | < string >   | < DIGITS > )  
  //)+
 
