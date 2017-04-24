@@ -10,8 +10,8 @@ import java.util.function.Consumer;
 
 public class CLI {
 
-	private static String samples = "src/tests";
-	private static String testReport = "src/tests/report.csv";
+	private static String samples = "Grammar/src/tests";
+	private static String testReport = "Grammar/src/tests/report.csv";
 	
 	public void run() {
 
@@ -136,6 +136,13 @@ public class CLI {
 				fw.append("Conditions" + "\t");
 				fw.append("Reuse Ratio" + "\t");
 				fw.append("Children" + "\t");
+				fw.append("Specialization Ratio" + "\t");
+				fw.append("Depth of Inheritance tree" + "\t");
+				fw.append("Method Inheritance Factor" + "\t");
+				fw.append("Attributes Inheritance Factor" + "\t");
+				fw.append("Number of overridden methods" + "\t");
+				fw.append("Lack of cohesion methods" + "\t");
+				fw.append("Tight class cohesion" + "\t");
 				fw.append('\n');  
 	            fw.flush();
 	            fw.close();

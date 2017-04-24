@@ -1,3 +1,2 @@
-Date Time,Methods,Statements,Classes,Interfaces,Attributes,Loops,Conditions,Reuse Ratio,Children
-2017-03-19_22:26:52,Fred:4  ,24,1,Fred:0  ,Fred:1  ,0,0,0.0,Fred:0  
-2017-03-19_22:26:58,Fred:6  Barney:4  ,37,2,Fred:0  Barney:0  ,Fred:1  Barney:2  ,0,0,0.5,Fred:1  Barney:0  
+Date Time	Methods	Statements	Classes	Interfaces	Attributes	Loops	Conditions	Reuse Ratio	Children	Specialization Ratio	Depth of Inheritance tree	Method Inheritance Factor	Attributes Inheritance Factor	Number of overridden methods	Lack of cohesion methods	Tight class cohesion	
+2017-04-24_20:03:17	4	24	1	0	1	0	0	0.0	0	0.0	0	0.0	0.0	0	0	1.0	

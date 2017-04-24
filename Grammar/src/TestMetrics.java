@@ -128,15 +128,20 @@ public class TestMetrics {
 	// Lack of Cohesion in Methods
 	@Test
 	public void testLCOM() {			
-		assertEquals(6, mc1.countLCOM());
-		assertEquals(21, mc2.countLCOM());
+		assertEquals(0, mc1.countLCOM());
+		assertEquals(0, mc2.countLCOM());
 	}
 	
 	// Tight class cohesion
 	@Test
-	public void testTCC() {			
-		assertEquals(1, mc1.countTCC());
-		assertEquals(2, mc2.countTCC());
+	public void testTCC() {	
+		double num1 = (double) 1;
+		double num2 = (double) 1;
+		int comp1 = Double.compare(num1, mc1.countTCC());
+		int comp2 = Double.compare(num2, mc2.countTCC());
+		double i = mc2.countTCC();
+		assertEquals(0, comp1);
+		assertEquals(0, comp2);
 	}
 	
 	

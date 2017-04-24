@@ -902,15 +902,26 @@ void RETURN():
 
 void VARIABLE():
 {
+  Token varName = null;
   	System.out.println("VARIABLE()"); }
 {
 	< equal >
 	 
-	(	  < identifier > 	[ FUNCTION_CALL()]	 | < DIGITS > | < string >
+	(	  varName = < identifier > 	[ FUNCTION_CALL()]	 | < DIGITS > | < string >
 	)
 
 	(LOOKAHEAD(100) EXPR())*
-	
+	{
+	  	  	if (varName != null) { 
+		  	String var = varName.toString();
+		  	if (var.startsWith("@")) { System.out.println("Attribute: " + var); attributesStack.add(var);}
+			if (var.startsWith("@") && !attributes.contains(var) ) {
+			  
+			  	attributes.add(var);
+			}
+
+		}
+	}
 
 
 }

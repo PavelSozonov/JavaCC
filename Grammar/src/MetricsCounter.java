@@ -4,7 +4,7 @@ import java.util.Collections;
 
 public class MetricsCounter {
 	
-	public static final int NUMBER_OF_METRICS = 14;
+	public static final int NUMBER_OF_METRICS = 16;
 	String[] metricsStrings = new String[NUMBER_OF_METRICS];
 	
 	RubyParser15 parser;
@@ -37,6 +37,14 @@ public class MetricsCounter {
 		countConditions();
 		countRR();
 		countNOC();
+		countSR();
+		countDIT();
+		countMIF();
+		countAIF();
+		countNMO();
+		countLCOM();
+		countTCC();
+		
 	}
 
 	// Number of methods
@@ -48,7 +56,7 @@ public class MetricsCounter {
 			numOfMethods = numOfMethods + classNumMethods;
 			numMethodsString = numMethodsString + c.name + ":" + classNumMethods + "; ";
 		}
-		metricsStrings[0] = numMethodsString;
+		metricsStrings[0] = numOfMethods + "";
 		return numOfMethods;
 	}
 	
@@ -72,14 +80,8 @@ public class MetricsCounter {
 			numInterfaces = numInterfaces + classNumInterfaces;
 			numInterfacesString = numInterfacesString + c.name + ":" + classNumInterfaces + "; ";
 			System.out.println(classNumInterfaces);
-//			try {
-//				Thread.sleep(2000);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
 		}
-		metricsStrings[3] = numInterfacesString;
+		metricsStrings[3] = numInterfaces + "";
 		return numInterfaces;
 	}
 	
@@ -93,7 +95,7 @@ public class MetricsCounter {
 			numOfAttributes = numOfAttributes + classNumAttributes;
 			numAttributesString = numAttributesString + c.name + ":" + classNumAttributes + "; ";
 		}
-		metricsStrings[4] = numAttributesString;
+		metricsStrings[4] = numOfAttributes + "";
 		return numOfAttributes;
 	}
 
@@ -125,7 +127,11 @@ public class MetricsCounter {
 				}
 			}
 		}
-		if (numOfClasses == 0) {return 1;}
+		if (numOfClasses == 0) {
+			reuseRatio = 1;
+			metricsStrings[7] = reuseRatio + "";
+			return reuseRatio;
+			}
 		reuseRatio = numOfSuperClasses / (double) numOfClasses;
 		metricsStrings[7] = reuseRatio + "";
 		return reuseRatio;
@@ -150,7 +156,7 @@ public class MetricsCounter {
 			
 			classesNumberOfChildren = classesNumberOfChildren + c.name + ":" + classNumOfChildren + "; ";
 		}
-		metricsStrings[8] = classesNumberOfChildren;		
+		metricsStrings[8] = numOfChildren + "";		
 		return numOfChildren;
 	}
 	
@@ -198,14 +204,68 @@ public class MetricsCounter {
 
 	// Lack of Cohesion in Methods
 	public int countLCOM() {
-		// TODO Auto-generated method stub
-		return -1;
+		int NCM = 0;
+		int CM = 0;
+		
+		ArrayList<MyClass> allClasses = parser.classes;	
+		for (MyClass cl: allClasses) {
+			ArrayList<Method> methods = cl.getMethods();
+			for (Method m1: methods) {
+				for (Method m2: methods) {
+					if (!m1.equals(m2)) {
+						ArrayList<String> atrributesUsed1 = m1.getAttributesUsed();
+						ArrayList<String> atrributesUsed2 = m2.getAttributesUsed();
+						for (String atrributeUsed: atrributesUsed1) {
+							if (atrributesUsed2.contains(atrributeUsed)) {
+								CM++;
+								break;
+							} else {
+								int last = atrributesUsed1.size() - 1;
+								if (atrributeUsed.equals(atrributesUsed1.get(last))) {
+									NCM++;
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		int LCOM = NCM/2 - CM/2;
+		if (LCOM < 0) {
+			LCOM = 0;
+		}
+		metricsStrings[14] = LCOM + "";
+		return LCOM;
 	}
 
 	// Tight class cohesion
-	public int countTCC() {
-		// TODO Auto-generated method stub
-		return -1;
+	public double countTCC() {
+		int numOfPairsSameAttrUsed = 0;
+		int numOfPairsOfPublicMethods = 0;
+		
+		ArrayList<MyClass> allClasses = parser.classes;	
+		for (MyClass cl: allClasses) {
+			ArrayList<Method> methods = cl.getMethods();
+			for (Method m1: methods) {
+				for (Method m2: methods) {					
+					if (!m1.equals(m2)) {
+						numOfPairsOfPublicMethods++;
+						ArrayList<String> atrributesUsed1 = m1.getAttributesUsed();
+						ArrayList<String> atrributesUsed2 = m2.getAttributesUsed();
+						for (String atrributeUsed: atrributesUsed1) {
+							if (atrributesUsed2.contains(atrributeUsed)) {
+								numOfPairsSameAttrUsed++;
+								break;
+							} 
+						}
+					}
+				}
+			}
+		}
+		double TCC = (numOfPairsSameAttrUsed/2) / (double) (numOfPairsOfPublicMethods/2);
+		metricsStrings[15] = TCC + "";
+		return TCC;
 	}
 
 	// Loose class cohesion
@@ -289,18 +349,22 @@ public class MetricsCounter {
 			
 			MyClass currentClass = c.parent;
 			while (currentClass != null && !currentClass.name.equals("null")) {
-				currentClass = MyClass.getMyClassParent(currentClass, allClasses);
+				//currentClass = MyClass.getMyClassParent(currentClass, allClasses);
 				String name = currentClass.name;
 				ArrayList<Method> methods = currentClass.methods;
 				methodsInhereted = methodsInhereted + currentClass.getMethods().size();
 				currentClass = currentClass.parent;
 			}
 		}
+		
+		double MIF;
 		if (methodsDefAndInh == 0) {
-			return 0;
+			MIF = 0;
+			metricsStrings[11] = MIF + "";	
+			return MIF;
 		}
 		methodsDefAndInh = methodsDefAndInh + methodsInhereted;
-		double MIF = methodsInhereted / (double) methodsDefAndInh;
+		MIF = methodsInhereted / (double) methodsDefAndInh;
 		metricsStrings[11] = MIF + "";	
 		return MIF;
 	}
@@ -326,11 +390,14 @@ public class MetricsCounter {
 				currentClass = currentClass.parent;
 			}
 		}
+		double AIF;
 		if (attrDefAndInh == 0) {
-			return 0;
+			AIF =  0;
+			metricsStrings[12] = AIF + "";	
+			return AIF;
 		}
 		attrDefAndInh = attrDefAndInh + attrInhereted;
-		double AIF = attrInhereted / (double) attrDefAndInh;
+		AIF = attrInhereted / (double) attrDefAndInh;
 		metricsStrings[12] = AIF + "";	
 		return AIF;
 	}
@@ -356,7 +423,7 @@ public class MetricsCounter {
 		for (MyClass c: allClasses) {
 			String nameParent = c.name;
 			
-			ArrayList<Method> methods = c.methods;
+			ArrayList<Method> methods = (ArrayList<Method>) c.methods.clone();
 			
 			MyClass currentClass = c.parent;
 			while (currentClass != null && !currentClass.name.equals("null")) {
@@ -424,7 +491,11 @@ public class MetricsCounter {
 			}
 		}
 		
-		if (numOfSuperClasses == 0) {return 0;}
+		if (numOfSuperClasses == 0) {
+			specializationRatio = 0;
+			metricsStrings[9] = specializationRatio + "";
+			return specializationRatio;
+		}
 		specializationRatio = numOfSubClasses / (double) numOfSuperClasses;
 		metricsStrings[9] = specializationRatio + "";
 		return specializationRatio;
