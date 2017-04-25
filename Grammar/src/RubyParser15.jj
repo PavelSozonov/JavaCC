@@ -25,6 +25,10 @@ public class RubyParser15 {
 	private static String file1 = Global.filesPath + "code1.rb";
 	private static String file2 = Global.filesPath + "code2.rb";
 	private static String file3 = Global.filesPath + "code3.rb";
+	private static String file4 = Global.filesPath + "code4.rb";
+	private static String file5 = Global.filesPath + "code5.rb";
+	private static String file6 = Global.filesPath + "code6.rb";
+	private static String file7 = Global.filesPath + "code7.rb";
 
 	public int statementCounter = 0;	
 	public int loopCounter = 0;
@@ -55,11 +59,11 @@ public class RubyParser15 {
                         //String inputProgram = "puts\n";
 
                         if (inputFromFile) {
-                                System.out.println("Reading from file " + file3 + " ...");
+                                System.out.println("Reading from file " + file7 + " ...");
                                 try {
-                                        input = new java.io.FileInputStream(file3);
+                                        input = new java.io.FileInputStream(file7);
                                 } catch (java.io.FileNotFoundException e) {
-                                        System.out.println("File " + file3 + " not found.");
+                                        System.out.println("File " + file7 + " not found.");
                                         return;
                                 }
                         } else {
@@ -491,11 +495,11 @@ TOKEN : { <colon2 : "::"> }
  */
 TOKEN : { <keyword_do : "do"> }
 
-/*
- * @Token
- * Keyword "self"
- */
-TOKEN : { <keyword_self : "self"> }
+///*
+// * @Token
+// * Keyword "self"
+// */
+//TOKEN : { <keyword_self : "self"> }
 
 /*
  * @Token
@@ -685,6 +689,10 @@ TOKEN : { <keyword_not : "not"> }
  */
 TOKEN : { <keyword_super : "super"> }
 
+TOKEN: { < keyword_protected : "protected" > }
+TOKEN: { < keyword_public : "public" > }
+TOKEN: { < keyword_private : "private" > }
+TOKEN: { < keyword_times : "times" > }
 
 /*
  * @Token
@@ -704,7 +712,15 @@ TOKEN : { < LETTER	: ["a"-"z", "A"-"Z"]> }
  * @Token
  * Digits
  */
-TOKEN : { < DIGITS : (["0"-"9"])+ > }
+TOKEN : { < DIGITS :(["0"-"9"])+ > }
+
+
+TOKEN: {< string : (< quote >  ( ~["\""] )* < quote >) | (< apostr >( ~["\'"] )* < apostr >)>}
+
+TOKEN: { < array:  < lsqbracket > ( ~["["] )* < rsqbracket > >}
+
+TOKEN: { < parameters:  < lbrace > ( ~["{"] )* < rbrace > >}
+
 
 /*
  * @Token
@@ -718,7 +734,7 @@ TOKEN : { < DIGITS : (["0"-"9"])+ > }
  */
 //TOKEN : { < string : ("`" (~[])* "`") | ("\"" (~[])* "\"") >}
 
-TOKEN: {< string : < quote >  ( ~["\""] )* < quote > >}
+
 
 //TOKEN: { < string: (<RAW_STRING_LITERAL>) | (<INTERPRETED_STRING_LITERAL>)> }
 //TOKEN: { <#RAW_STRING_LITERAL: "`" (~[])* "`"> }
@@ -784,7 +800,7 @@ void STMT() :
 	|  EXCEPTION()
 	
 	|  RETURN() 
-	|  ( (varName = <  identifier >) | < keyword_super >)  (VARIABLE() | FUNCTION_CALL())
+	|  ( (varName = <  identifier >) (<comma > <  identifier >)* | < keyword_super >) (< dot > <  identifier >)* (VARIABLE() | FUNCTION_CALL())
 
 	{
 	  	if (varName != null) { 
@@ -814,7 +830,7 @@ void MyClass_BODY():
    < keyword_class > (t_className = < identifier > )
    [< less > (t_classNameParent = < identifier >)]
    ( < include > (t_interfaceName =  < identifier >) {if (t_interfaceName != null) {  t_interfacesNames.add(t_interfaceName.toString()); }; } )*
-   COMPSTMT()
+	 COMPSTMT() 
    < keyword_end >
 
 {
@@ -864,10 +880,13 @@ void FUNCTION_BODY():
 void ARGS():
 { System.out.println("ARGS()");}
 {
-	< lparen >  [
-	(< identifier > [FUNCTION_CALL()]| < string > | <DIGITS >) (EXPR())*
-	(< comma >(< identifier > [FUNCTION_CALL()] | < string > | <DIGITS >) (EXPR())*  )*
-	] < rparen >
+	(	  < lparen >  [
+		(< identifier > [FUNCTION_CALL()]| < string > | <DIGITS >) (EXPR())*
+		(< comma >(< identifier > [FUNCTION_CALL()] | < string > | <DIGITS >) (EXPR())*  )*
+		]  < rparen >)
+//		] (FUNCTION_CALL())* < rparen >)
+
+	| < parameters >
 }
 
 void RETURN():
@@ -878,7 +897,7 @@ void RETURN():
    < keyword_return >
    (
      
-     LOOKAHEAD(100)  varName = < identifier >
+     LOOKAHEAD(100)  varName = < identifier > [FUNCTION_CALL()]
    | LOOKAHEAD(100) CONDITION()
    | LOOKAHEAD(100) ( LOOKAHEAD(100) EXPR())+
    | LOOKAHEAD(100) < string >
@@ -908,10 +927,14 @@ void VARIABLE():
 {
 	< equal >
 	 
-	(	  varName = < identifier > 	[ FUNCTION_CALL()]	 | < DIGITS > | < string >
-	)
+	(		(varName = < identifier > 	[ FUNCTION_CALL()]	 | < DIGITS > | < string >	)
+		(LOOKAHEAD(100) EXPR())*
 
-	(LOOKAHEAD(100) EXPR())*
+	| (CONDITION_BODY() |  < array >)
+
+	)
+	
+	
 	{
 	  	  	if (varName != null) { 
 		  	String var = varName.toString();
@@ -931,8 +954,9 @@ void FUNCTION_CALL():
 { System.out.println("FUNCTION CALL()"); }
 {
 
-  		ARGS()
- 	| < dot > < identifier > FUNCTION_CALL() 
+	ARGS()
+ 	| (< dot > < identifier > FUNCTION_CALL())
+ 	
 
 }
 
@@ -943,7 +967,10 @@ void CONDITION_BODY():
   	conditionsCounter++;
   	System.out.println("CONDITION_BODY()"); }
 {
-  < keyword_if > CONDITION() COMPSTMT() (< keyword_elsif > CONDITION() COMPSTMT())*   (< keyword_then > COMPSTMT())* (< keyword_else > COMPSTMT() )* < keyword_end >
+  	(  	  < keyword_if > CONDITION() COMPSTMT()  (< keyword_elsif > CONDITION() COMPSTMT())*
+  	  (< keyword_then > ( < string > | COMPSTMT() ))* (< keyword_else > (< string > | COMPSTMT()) )*
+  	  [< keyword_end >])
+	|  (< keyword_unless >  CONDITION()  COMPSTMT() < keyword_end >)
 }
 
 void CONDITION():
@@ -951,11 +978,11 @@ void CONDITION():
 
   	System.out.println("CONDITION()"); }
 {
-    LOOKAHEAD(100) (      < identifier >  
+    LOOKAHEAD(100) (      < identifier >  [FUNCTION_CALL()]
 		(< equal2 > | < exclamationequal > | < less > | < more > | < lessorequal > | < moreorequal >)
-		( <  identifier >  [FUNCTION_CALL()] |  < DIGITS > | < string > ) )
+		( <  identifier >  [FUNCTION_CALL()] |  < DIGITS > | < string > ) ((<and >| <or >) CONDITION())*)
 	| EXPR() (< equal2 > | < exclamationequal > | < less > | < more > | < lessorequal > | < moreorequal >)
-		( <  identifier >  [FUNCTION_CALL()] |  < DIGITS > | < string > )
+		( <  identifier >  [FUNCTION_CALL()] |  < DIGITS > | < string > ) ((<and >| <or >) CONDITION())*
 
 }
 
@@ -988,14 +1015,18 @@ void LOOP_BODY():
   loopCounter++;
   System.out.println("LOOP BODY()"); }
 {
-  < keyword_for > <  identifier > < keyword_in >
-  (<  identifier >
+   (     < DIGITS >< dot > < keyword_times > < keyword_do > COMPSTMT() [< keyword_end >])
+  | (< keyword_while > CONDITION()  COMPSTMT() [< keyword_end >])
+  |  < keyword_for > <  identifier > < keyword_in >
+  	(<  identifier >
   | < lparen >
-  (   < DIGITS >  |  <  identifier > [FUNCTION_CALL()] )
-   < dot3 >
-   (< DIGITS >  |  <  identifier > [FUNCTION_CALL()])
-  < rparen > )
+  	(   < DIGITS >  |  <  identifier > [FUNCTION_CALL()] )
+   	< dot3 >
+   	(< DIGITS >  |  <  identifier > [FUNCTION_CALL()])
+  	< rparen > )
   COMPSTMT() < keyword_end >
+
+  
 }
 
 void  EXCEPTION():
