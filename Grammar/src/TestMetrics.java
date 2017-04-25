@@ -73,57 +73,6 @@ public class TestMetrics {
 		assertEquals(1, mc2.countNOC());
 	}
 	
-	// Weighted Methods per Class
-	@Test
-	public void testWMC() {			
-		assertEquals(4, mc1.countWMC());
-		assertEquals(10, mc2.countWMC());
-	}
-	
-	
-	// Class complexity
-	@Test
-	public void testCC() {			
-		assertEquals(10, mc1.countCC());
-		assertEquals(45, mc2.countCC());
-	}
-	
-	// Response For a Class
-	@Test
-	public void testRFC() {			
-		assertEquals(4, mc1.countRFC());
-		assertEquals(11, mc2.countRFC());
-	}
-	
-	
-	// Coupling Between Objects
-	@Test
-	public void testCBO() {			
-		assertEquals(0, mc1.countCBO());
-		assertEquals(1, mc2.countCBO());
-	}
-	
-	// Data abstract coupling
-	@Test
-	public void testDAC() {			
-		assertEquals(0, mc1.countDAC());
-		assertEquals(0, mc2.countDAC());
-	}
-	
-	// Message passing coupling
-	@Test
-	public void testMPC() {			
-		assertEquals(0, mc1.countMPC());
-		assertEquals(2, mc2.countMPC());
-	}
-	
-
-	// Coupling factor
-	@Test
-	public void testCF() {			
-		assertEquals(0, mc1.countCF());
-		assertEquals(0, mc2.countCF());
-	}
 	
 	// Lack of Cohesion in Methods
 	@Test
@@ -145,19 +94,6 @@ public class TestMetrics {
 	}
 	
 	
-	// Loose class cohesion
-	@Test
-	public void testLCC() {			
-		assertEquals(1, mc1.countLCC());
-		assertEquals(2, mc2.countLCC());
-	}
-	
-	// Information based cohesion
-	@Test
-	public void testICH() {			
-		assertEquals(0, mc1.countICH());
-		assertEquals(0, mc2.countICH());
-	}
 	
 	// Depth of Inheritance Tree
 	@Test
@@ -190,19 +126,7 @@ public class TestMetrics {
 		assertEquals(0, comp2);
 	}
 	
-	// Method hiding factor
-	@Test
-	public void testMHF() {			
-		assertEquals(0, mc1.countMHF());
-		assertEquals(0, mc2.countMHF());
-	}
-	
-	// Attribute hiding factor
-	@Test
-	public void testAHF() {			
-		assertEquals(0, mc1.countAHF());
-		assertEquals(0, mc2.countAHF());
-	}
+
 	
 	// Number of methods overridden by a subclass
 	@Test
@@ -211,12 +135,6 @@ public class TestMetrics {
 		assertEquals(2, mc2.countNMO());
 	}
 	
-	// Polymorphism factor
-	@Test
-	public void testPF() {			
-		assertEquals(0, mc1.countPF());
-		assertEquals(0.333, mc2.countPF());
-	}
 	
 
 	// Specialization ratio

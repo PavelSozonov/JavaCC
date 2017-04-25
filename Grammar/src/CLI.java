@@ -29,6 +29,9 @@ public class CLI {
 			case "t":
 				testFile(scanner);
 				break;
+			case "a":
+				testAllFiles();
+				break;
 			case "e": // exit
 				scanner.close();
 				return;
@@ -38,6 +41,20 @@ public class CLI {
 		}
 	}
 	
+	private void testAllFiles() {
+		System.out.println("Sample files:");
+		fileProcessor((File f) -> { if (f.isFile() && f.getName().endsWith(".rb")) testFile(f.getName()); });
+		
+	}
+
+	private void testFile(String fileName) {
+		if (checkFileName(fileName)) {
+			testFileAndWriteReport(fileName); // Old file will be overwritten
+		} else {
+			System.out.println("File name is incorrect!");
+		}
+	}
+
 	/*
 	 * Print names of all files from the sample folder
 	 */
@@ -54,6 +71,7 @@ public class CLI {
 				+ " h - show help\n"
 				+ " f - show sample files\n"
 				+ " t - test a file\n"
+				+ " a - test all file *.rb\n"
 				+ " e - exit");
 	}
 	

@@ -1,21 +1,52 @@
-fred = [ 4, 9, 18, 3, 87, 9, 12 ]
-alex = [ 'Susan', 'Joe', 'Alex', 'Alice', 'Sam' ]
+require("last")
 
-# Compute a new array with each member of fred doubled.
-fred = fred.map { |x| 2 * x }
-print (fred.join(" "), "\n")
+# Here is a linked list class.  Since there's not much point in writing
+# such a class when you already have all the Ruby data structures
+# available, you might have figured out it's here to demonstrate something:
+# including a module.
 
-# Create a new alex adding " went away" to each member.  Then join and
-# print the result.
-print ((alex.map { |z| z + " went away" }).join("  "))
+#
+# A linked list
+class List
+  # Nodes for the linked list.
+  class Node
+    # Get the last facility which scans to the end of the list.
+    include Follower
 
-# Print the members of fred which are more than five and less than 20.
-print ((fred.select { |z| z > 5 && z < 20 }).join(" "))
+    def initialize(d, n)
+      n = nil
+      @val = d
+      @next = n
+    end
+  end
 
-# Print the lengths of the members of alex that start with A or end with e.
-print ((alex.select { |n| n =~ /^A/ || n =~ /e$/ }).map { |z| z.length }).
-        join(" "), "\n"
 
-# Update alex by surround each of its members with [ ]
-alex.map! { |a| "[" + a + "]" }
-print alex.join(" "), "\n"
+  # Create the list with its first node.
+  def initialize(first)
+    @head = Node.new(first)
+  end
+
+  # Add at the front.  We can only add, and the list is created with one
+  # node, so no special case for empty list.  How nice.
+  def at_front(v)
+    n = Node.new(v)
+    n.next = @head
+    @head = n
+  end
+
+  # Add to the end of the list.
+  def at_end(v)
+    n = Node.new(v)
+    @head.last.next = n
+  end
+
+  # Process each member of the list.  The yield operator calls the block
+  # sent to the function.
+  def each
+    p = @head
+    while p != nil
+      p.val()
+      p = p.next()
+    end
+  end
+end

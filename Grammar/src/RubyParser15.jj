@@ -653,11 +653,11 @@ TOKEN : { <keyword_until : "until"> }
  */
 TOKEN : { <keyword_yield : "yield"> }
 
-/*
- * @Token
- * Keyword "nil"
- */
-TOKEN : { <keyword_nil : "nil"> }
+///*
+// * @Token
+// * Keyword "nil"
+// */
+//TOKEN : { <keyword_nil : "nil"> }
 
 /*
  * @Token

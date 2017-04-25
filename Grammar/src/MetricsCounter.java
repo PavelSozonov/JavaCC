@@ -160,47 +160,7 @@ public class MetricsCounter {
 		return numOfChildren;
 	}
 	
-	// Weighted Methods per Class
-	public int countWMC() {
-		// TODO Auto-generated method stub
-		return -1;
-	}
 
-	// Class complexity
-	public int countCC() {
-		// TODO Auto-generated method stub
-		return -1;
-	}
-
-	// Response For a Class
-	public int countRFC() {
-		// TODO Auto-generated method stub
-		return -1;
-	}
-
-	// Coupling Between Objects
-	public int countCBO() {
-		// TODO Auto-generated method stub
-		return -1;
-	}
-
-	// Data abstract coupling
-	public int countDAC() {
-		// TODO Auto-generated method stub
-		return -1;
-	}
-
-	// Message passing coupling
-	public int countMPC() {
-		// TODO Auto-generated method stub
-		return -1;
-	}
-
-	// Coupling factor
-	public int countCF() {
-		// TODO Auto-generated method stub
-		return -1;
-	}
 
 	// Lack of Cohesion in Methods
 	public int countLCOM() {
@@ -271,17 +231,6 @@ public class MetricsCounter {
 		return TCC;
 	}
 
-	// Loose class cohesion
-	public int countLCC() {
-		// TODO Auto-generated method stub
-		return -1;
-	}
-
-	// Information based cohesion
-	public int countICH() {
-		// TODO Auto-generated method stub
-		return -1;
-	}
 
 	// Depth of Inheritance Tree
 	public int countDIT() {
@@ -405,17 +354,9 @@ public class MetricsCounter {
 		return AIF;
 	}
 
-	// Method hiding factor
-	public int countMHF() {
-		// TODO Auto-generated method stub
-		return -1;
-	}
 
-	// Attribute hiding factor
-	public int countAHF() {
-		// TODO Auto-generated method stub
-		return -1;
-	}
+
+
 
 	// Number of methods overridden by a subclass
 	public int countNMO() {
@@ -454,12 +395,6 @@ public class MetricsCounter {
 			}
 		}
 		return overidden;
-	}
-
-	// Polymorphism factor
-	public int countPF() {
-		// TODO Auto-generated method stub
-		return -1;
 	}
 
 	
