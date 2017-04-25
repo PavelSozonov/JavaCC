@@ -115,7 +115,7 @@ public class CLI {
 			fileContent = new FileInputStream(samples + "/" + fileName);
 			
 			MetricsCounter metricsCounter = new MetricsCounter(samples + "/" + fileName);
-			writeReport(metricsCounter);
+			writeReport(metricsCounter, fileName);
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -134,9 +134,9 @@ public class CLI {
 	/*
 	 * Write report in csv file, append line to file
 	 */
-	private void writeReport(MetricsCounter metricsCounter) {
+	private void writeReport(MetricsCounter metricsCounter, String filename) {
 		writeReportHeader();
-		appendMetrics(metricsCounter);
+		appendMetrics(metricsCounter, filename);
 	}
 	
 	private void writeReportHeader() {
@@ -144,6 +144,7 @@ public class CLI {
 		if (!file.exists()) {
 			try {
 				FileWriter fw = new FileWriter(testReport, false);
+				fw.write("Filename" + "\t");
 				fw.write("Date Time" + "\t");
 				fw.append("Methods" + "\t");
 				fw.append("Statements" + "\t");
@@ -174,10 +175,11 @@ public class CLI {
 		fw.write(new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss").format(new Date()) + "\t");
 	}
 	
-	public void appendMetrics(MetricsCounter metricsCounter) {
+	public void appendMetrics(MetricsCounter metricsCounter, String filename) {
 
 		try {
 			FileWriter fw = new FileWriter(testReport, true); // Append file
+			fw.append(filename + "\t");
 			writeTimeStamp(fw);
 			for (String metric : metricsCounter.getMetricsStrings()) {
 				fw.append(metric.replace(";", " ") + "\t");
